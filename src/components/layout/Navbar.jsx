@@ -8,6 +8,7 @@ import { HiMenu, HiX } from "react-icons/hi";
 import { Sun, Moon, ChevronRight, ChevronDown } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
+import { Avatar } from "@heroui/react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -37,14 +38,8 @@ export default function Navbar() {
     librarian: "/dashboard/librarian",
     admin: "/dashboard/admin",
   };
-
-  if (user?.email) {
-    const userRole = user?.role || "user";
-    links.push({
-      label: "Dashboard",
-      path: dashboardRoutes[userRole] || "/dashboard/user",
-    });
-  }
+  const userRole = user?.role || "user";
+  const userDashboardPath = dashboardRoutes[userRole] || "/dashboard/user";
 
   // logout function
   const handleLogout = async () => {
@@ -116,6 +111,90 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+
+              {/* Dashboard Dropdown Link Trigger */}
+              {user && (
+                <div className="relative pb-2 pt-1">
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className={`text-sm font-semibold transition-all flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
+                      pathname.startsWith("/dashboard")
+                        ? "text-primary font-bold"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Dashboard
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform duration-300 ${dropdownOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  {/* ড্যাশবোর্ডের জন্য ডট অ্যানিমেশন কন্ডিশন */}
+                  <span
+                    className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300 ${
+                      pathname.startsWith("/dashboard")
+                        ? "scale-100 opacity-100 shadow-[0_0_10px_rgb(var(--primary))]"
+                        : "scale-0 opacity-0"
+                    }`}
+                  />
+
+                  {dropdownOpen && (
+                    <div className="absolute top-full mt-3 right-0 w-56 rounded-md border border-border bg-card p-2 shadow-2xl z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+                      <div className="px-4 py-2 border-b border-border mb-1.5 flex items-center justify-between">
+                        <div>
+                          {" "}
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
+                            Active Session
+                          </span>
+                          <span className="text-xs text-muted-foreground font-medium truncate block">
+                            {user?.email}
+                          </span>
+                        </div>
+                        <div>
+                          <Avatar>
+                            <Avatar.Image
+                              alt={session?.user?.name || "User Profile"}
+                              src={
+                                session?.user?.image ||
+                                "https://api.dicebear.com/7.x/adventurer/svg"
+                              }
+                              size="sm"
+                              referrerPolicy="no-referrer"
+                            />
+                            <Avatar.Fallback className="bg-[#D95C78] text-white font-semibold">
+                              {session?.user?.name
+                                ? session.user.name.charAt(0).toUpperCase()
+                                : "B"}
+                            </Avatar.Fallback>
+                          </Avatar>
+                        </div>
+                      </div>
+                      <Link
+                        href="/dashboard/user"
+                        onClick={() => setDropdownOpen(false)}
+                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user?.role === "user" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
+                      >
+                        Reader Dashboard {user?.role === "user" && "•"}
+                      </Link>
+                      <Link
+                        href="/dashboard/librarian"
+                        onClick={() => setDropdownOpen(false)}
+                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user?.role === "librarian" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
+                      >
+                        Librarian Dashboard {user?.role === "librarian" && "•"}
+                      </Link>
+                      <Link
+                        href="/dashboard/admin"
+                        onClick={() => setDropdownOpen(false)}
+                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user?.role === "admin" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
+                      >
+                        Admin Dashboard {user?.role === "admin" && "•"}
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* রাইট সাইড অ্যাকশন প্যানেল */}
@@ -134,22 +213,12 @@ export default function Navbar() {
 
               <div>
                 {!isPending && user && (
-                  <>
-                    <button className="btn-secondary !py-2.5 !px-5 !text-sm !rounded-xl font-semibold cursor-pointer mr-2">
-                      Hi, {session?.user?.name} (
-                      {session?.user?.role === "librarian"
-                        ? "Librarian"
-                        : "Reader"}
-                      )
-                    </button>
-
-                    <button
-                      onClick={handleLogout}
-                      className="btn-secondary !py-2.5 !px-5 !text-sm !rounded-xl font-semibold cursor-pointer"
-                    >
-                      Logout
-                    </button>
-                  </>
+                  <button
+                    onClick={handleLogout}
+                    className="btn-secondary !py-2.5 !px-5 !text-sm !rounded-xl font-semibold cursor-pointer"
+                  >
+                    Logout
+                  </button>
                 )}
               </div>
 
@@ -197,6 +266,22 @@ export default function Navbar() {
         <div className="h-full bg-card border-r border-border flex flex-col shadow-2xl text-foreground">
           {/* স্লাইডার হেডার */}
           <div className="h-20 px-6 border-b border-border flex items-center justify-between">
+            <Avatar>
+              <Avatar.Image
+                alt={session?.user?.name || "User Profile"}
+                src={
+                  session?.user?.image ||
+                  "https://api.dicebear.com/7.x/adventurer/svg"
+                }
+                size="sm"
+                referrerPolicy="no-referrer"
+              />
+              <Avatar.Fallback className=" bg-background text-white font-semibold">
+                {session?.user?.name
+                  ? session.user.name.charAt(0).toUpperCase()
+                  : "B"}
+              </Avatar.Fallback>
+            </Avatar>
             <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
               Biblio<span>Drop</span>
             </span>
@@ -224,9 +309,13 @@ export default function Navbar() {
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    {/* 📱 মোবাইলের জন্য বাম পাশে চমত্কার লিডিং ডট ইফেক্ট */}
+                    {/* মোবাইলের জন্য বাম পাশে চমত্কার লিডিং ডট ইফেক্ট */}
                     <span
-                      className={`w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300 ${isActive ? "scale-100 opacity-100 shadow-[0_0_8px_rgb(var(--primary))]" : "scale-0 opacity-0"}`}
+                      className={`w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300 ${
+                        isActive
+                          ? "scale-100 opacity-100 shadow-[0_0_8px_rgb(var(--primary))]"
+                          : "scale-0 opacity-0"
+                      }`}
                     />
                     <span>{link.label}</span>
                   </div>
@@ -242,52 +331,23 @@ export default function Navbar() {
               );
             })}
 
-            {/* মোবাইল রোল বেসড ড্যাশবোর্ড রুট শর্টকাটস */}
-            {user && (
-              <div className="pt-4 border-t border-border/60 mt-4 flex flex-col gap-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-3 mb-1 block">
-                  Role Dashboards
-                </span>
-                <Link
-                  href="/dashboard/user"
-                  onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-xl ${pathname === "/dashboard/user" ? "text-primary font-bold bg-primary/5" : "text-muted-foreground hover:bg-card-soft"}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`w-1.5 h-1.5 rounded-full bg-primary ${pathname === "/dashboard/user" ? "scale-100" : "scale-0"}`}
-                    />
-                    <span>Reader Dashboard</span>
-                  </div>
-                  <ChevronRight size={16} />
-                </Link>
-                <Link
-                  href="/dashboard/librarian"
-                  onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-xl ${pathname === "/dashboard/librarian" ? "text-primary font-bold bg-primary/5" : "text-muted-foreground hover:bg-card-soft"}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`w-1.5 h-1.5 rounded-full bg-primary ${pathname === "/dashboard/librarian" ? "scale-100" : "scale-0"}`}
-                    />
-                    <span>Librarian Dashboard</span>
-                  </div>
-                  <ChevronRight size={16} />
-                </Link>
-                <Link
-                  href="/dashboard/admin"
-                  onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-xl ${pathname === "/dashboard/admin" ? "text-primary font-bold bg-primary/5" : "text-muted-foreground hover:bg-card-soft"}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`w-1.5 h-1.5 rounded-full bg-primary ${pathname === "/dashboard/admin" ? "scale-100" : "scale-0"}`}
-                    />
-                    <span>Admin Dashboard</span>
-                  </div>
-                  <ChevronRight size={16} />
-                </Link>
-              </div>
+            {/*  ম্যাজিক পার্ট: ইউজার লগইন থাকলে ঠিক একই প্রিমিয়াম স্টাইলে শুধু মোবাইলেই ড্যাশবোর্ড শো করবে */}
+            {user?.email && (
+              <Link
+                href={userDashboardPath}
+                onClick={() => setOpen(false)}
+                className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all border border-transparent mt-2 group bg-primary/5 text-primary border-primary/10 font-semibold`}
+              >
+                <div className="flex items-center gap-3">
+                  {/* ড্যাশবোর্ডের জন্য একটি স্ট্যাটিক ডট ইন্ডিকেটর */}
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary scale-100 opacity-100 shadow-[0_0_8px_rgb(var(--primary))]" />
+                  <span>Dashboard</span>
+                </div>
+                <ChevronRight
+                  size={18}
+                  className="text-primary group-hover:translate-x-0.5 transition-transform"
+                />
+              </Link>
             )}
           </div>
 
@@ -310,7 +370,7 @@ export default function Navbar() {
                 onClick={handleLogout}
                 className="w-full text-center btn-secondary !py-3 font-bold cursor-pointer text-red-500 bg-red-500/5 hover:bg-red-500/10 border-red-500/20"
               >
-                Logout Session
+                Logout
               </button>
             ) : (
               <div className="flex flex-col gap-2">
