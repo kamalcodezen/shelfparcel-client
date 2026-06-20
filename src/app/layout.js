@@ -1,6 +1,7 @@
 import { Urbanist, Poppins } from "next/font/google";
 import "./globals.css";
 import Providers from "@/providers/theme-provider";
+import { ToastContainer } from 'react-toastify';
 
 // বডি টেক্সটের জন্য আরবানিস্ট ফন্ট লোড
 const urbanist = Urbanist({
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
             {children}
           </main>
         </Providers>
+        <ToastContainer />
       </body>
     </html>
   );
