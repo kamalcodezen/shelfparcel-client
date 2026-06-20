@@ -1,26 +1,240 @@
 @import "tailwindcss";
 
+/* =========================================
+   LIGHT THEME
+========================================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 252 240 222;
+  /* #fcf0de */
+  --foreground: 44 28 16;
+
+  --card: 255 255 240;
+  /* #fef7f0 */
+  --card-soft: 253 243 233;
+  /* #fdf3e9 */
+  --card-foreground: 44 28 16;
+
+  --primary: 196 132 74;
+  /* #c4844a */
+  --secondary: 107 66 38;
+  /* #6b4226 */
+  --accent: 222 184 135;
+
+  --border: 232 213 193;
+
+  --muted: 253 243 233;
+  --muted-foreground: 120 90 60;
+
+  --sidebar: 254 247 240;
+  /* #fef7f0 */
+
+  --shadow: 0 10px 30px rgba(196, 132, 74, 0.12);
+
+  /* Light mode body background template */
+  --body-bg: rgb(var(--background));
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =========================================
+   DARK THEME (Premium Teal Gradient & Glow)
+========================================= */
+.dark {
+  --background: 25 55 63;
+  /* #19373f base */
+  --foreground: 212 245 242;
+
+  --card: 16 39 46;
+  --card-soft: 20 47 54;
+  --card-foreground: 230 255 255;
+
+  --primary: 0 245 212;
+  --secondary: 0 184 180;
+  --accent: 100 255 218;
+
+  --border: 32 72 82;
+
+  --muted: 20 47 54;
+  --muted-foreground: 130 160 168;
+
+  --sidebar: 13 32 38;
+
+  --shadow: 0 0 25px rgba(0, 245, 212, 0.15);
+
+  /* ইমেজ অনুযায়ী প্রিমিয়াম ডার্ক গ্রাডিয়েন্ট আর্কিটেকচার */
+  --body-bg: radial-gradient(circle at top right, rgb(25 65 75), rgb(15 35 40)),
+    linear-gradient(to bottom, rgb(25 55 63), rgb(10 24 28));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================================
+   TAILWIND V4 TOKENS
+========================================= */
+@theme {
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+
+  --color-card: rgb(var(--card));
+  --color-card-soft: rgb(var(--card-soft));
+  --color-card-foreground: rgb(var(--card-foreground));
+
+  --color-primary: rgb(var(--primary));
+  --color-secondary: rgb(var(--secondary));
+  --color-accent: rgb(var(--accent));
+
+  --color-border: rgb(var(--border));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+
+  --color-sidebar: rgb(var(--sidebar));
+}
+
+/* =========================================
+   GLOBAL OVERRIDES WITH GRADIENT SUPPORT
+========================================= */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--body-bg);
+  background-attachment: fixed;
+  /* স্ক্রোল করার সময়ও যেন গ্রাডিয়েন্ট স্মুথ থাকে */
+  color: rgb(var(--foreground));
+  min-height: 100vh;
+  font-family: var(--font-geist-sans);
+}
+
+* {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================================
+   CUSTOM SCROLLBAR
+========================================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--primary));
+  border-radius: 999px;
+}
+
+/* =========================================
+   COMPONENTS
+========================================= */
+@layer components {
+  .container-custom {
+    @apply mx-auto w-[90%] max-w-[1440px];
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight;
+  }
+
+  .section-description {
+    color: rgb(var(--muted-foreground));
+    @apply leading-7;
+  }
+
+  .dashboard-card {
+    @apply rounded-3xl border p-6 backdrop-blur-md transition-all duration-300;
+    background: rgba(var(--card), 0.85);
+    /* গ্রাডিয়েন্টের ওপর গ্লাস ফিল আসার জন্য */
+    border-color: rgb(var(--border));
+    box-shadow: var(--shadow);
+  }
+
+  .soft-card {
+    @apply rounded-3xl border p-6;
+    background: rgb(var(--card-soft));
+    border-color: rgb(var(--border));
+  }
+
+  .book-card {
+    @apply overflow-hidden rounded-3xl border transition-all duration-300;
+    background: rgba(var(--card), 0.85);
+    border-color: rgb(var(--border));
+    box-shadow: var(--shadow);
+  }
+
+  .table-wrapper {
+    @apply overflow-hidden rounded-3xl border;
+    background: rgb(var(--card));
+    border-color: rgb(var(--border));
+  }
+
+  .input-field {
+    @apply h-12 w-full rounded-xl border px-4 outline-none transition-all;
+    background: rgb(var(--card));
+    border-color: rgb(var(--border));
+  }
+
+  .input-field:focus {
+    border-color: rgb(var(--primary));
+  }
+
+  .sidebar {
+    background: rgb(var(--sidebar));
+    border-right: 1px solid rgb(var(--border));
+  }
+
+  .btn-primary {
+    @apply rounded-xl px-6 py-3 text-white font-semibold transition-all duration-200 active:scale-95 shadow-md;
+  }
+
+  .btn-secondary {
+    @apply rounded-xl border px-6 py-3 transition-all duration-200 active:scale-95;
+    background: rgb(var(--card));
+    border-color: rgb(var(--border));
+  }
+}
+
+/* =========================================
+   LIGHT BUTTON
+========================================= */
+.btn-primary {
+  background: linear-gradient(135deg, #c4844a, #6b4226);
+}
+
+/* =========================================
+   DARK BUTTON
+========================================= */
+.dark .btn-primary {
+  background: linear-gradient(135deg, rgb(var(--primary)), rgb(var(--secondary)));
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.25);
+  color: #071a1d;
+  /* ডার্ক মোডে নিয়ন বাটনের ওপর টেক্সট ডার্ক থাকবে ক্লিয়ারিটির জন্য */
+}
+
+/* =========================================
+   DARK GLOW & SCALING EFFECT ON HOVER
+========================================= */
+.dark .dashboard-card:hover,
+.dark .book-card:hover {
+  box-shadow:
+    0 0 25px rgba(0, 245, 212, 0.20),
+    0 0 50px rgba(0, 245, 212, 0.08);
+  transform: translateY(-3px);
+  border-color: rgba(0, 245, 212, 0.4);
+}
+
+/* =========================================
+   HERO GRADIENT MESH EFFECT
+========================================= */
+.hero-gradient {
+  background: radial-gradient(circle at top left, rgba(196, 132, 74, 0.15), transparent 40%);
+}
+
+.dark .hero-gradient {
+  background: radial-gradient(circle at top left, rgba(0, 245, 212, 0.12), transparent 40%);
 }
