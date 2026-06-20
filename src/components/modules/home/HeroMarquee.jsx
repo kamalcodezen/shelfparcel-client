@@ -50,9 +50,9 @@ export default function HeroMarquee() {
   const doubleCol2 = [...col2Items, ...col2Items];
 
   return (
-    <section className="relative py-20 bg-background overflow-hidden border-y border-border select-none">
+    <section className="relative py-20 bg-background overflow-hidden  select-none">
       <div className="container-custom grid lg:grid-cols-12 gap-12 items-center">
-        {/* 👑 বাম পাশ: স্ট্যাটিক মিনিমালিস্ট টেক্সট জোন (আপনার font-serif ভাইব সহ) */}
+       
         <div className="lg:col-span-5 space-y-4">
           <span className="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 w-fit inline-block">
             Live Ecosystem
@@ -67,7 +67,7 @@ export default function HeroMarquee() {
           </p>
         </div>
 
-        {/* 👑 ডান পাশ: কিলার ৩D ভার্টিক্যাল ডাবল মারকুই ট্র্যাক */}
+        {/*  ডান পাশ: কিলার ৩D ভার্টিক্যাল ডাবল মারকুই ট্র্যাক */}
         <div className="lg:col-span-7 h-[380px] relative grid grid-cols-2 gap-6 overflow-hidden rounded-[30px] border border-border/40 bg-card-soft/20 p-6">
           {/* গ্লাস মরফিজম টপ ও বটম ফেডিং মাস্ক */}
           <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-background via-background/60 to-transparent z-20 pointer-events-none" />
