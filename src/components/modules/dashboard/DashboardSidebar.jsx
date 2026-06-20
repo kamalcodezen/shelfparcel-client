@@ -18,15 +18,18 @@ import {
   CreditCard,
   BriefcaseBusiness,
 } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
+
 import { toast } from "react-toastify";
+import { Avatar } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
+import Loader from "../shared/Loader";
 
 const DashboardSidebar = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
   const handleSignOut = async () => {
@@ -41,7 +44,7 @@ const DashboardSidebar = () => {
     });
   };
 
-  // 👑 User Tabs Links (ডক অনুযায়ী ম্যাচড)
+  //  User Tabs Links (ডক অনুযায়ী ম্যাচড)
   const userNavLinks = [
     {
       title: "Overview",
@@ -128,7 +131,9 @@ const DashboardSidebar = () => {
       <div className="lg:hidden h-16 border-b border-border bg-card px-4 flex items-center justify-between sticky top-0 z-40">
         <h2 className="text-xl font-bold tracking-tight text-foreground Poppins">
           <Link href="/">
-            Biblio<span className="text-primary">Drop</span>
+            <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              Biblio<span>Drop</span>
+            </span>
           </Link>
         </h2>
         <button
@@ -151,9 +156,17 @@ const DashboardSidebar = () => {
         className={`lg:hidden fixed top-0 left-0 w-[280px] h-screen bg-card border-r border-border z-50 transition-transform duration-300 flex flex-col ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="p-5 flex items-center justify-between border-b border-border">
-          <h2 className="text-2xl font-black tracking-tight text-foreground Poppins">
-            Biblio<span className="text-primary">Drop</span>
-          </h2>
+          <div>
+            <h2 className="text-2xl font-black tracking-tight text-foreground Poppins">
+              <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                Biblio<span>Drop</span>
+              </span>
+            </h2>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
+              {user?.role || "user"} Dashboard
+            </p>
+          </div>
+
           <button
             onClick={() => setOpen(false)}
             className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground"
@@ -178,6 +191,31 @@ const DashboardSidebar = () => {
           })}
         </div>
         <div className="p-4 border-t border-border/60">
+          <div className="flex items-center gap-3 py-4">
+            {" "}
+            <Avatar>
+              <Avatar.Image
+                alt={session?.user?.name || "User Profile"}
+                src={
+                  session?.user?.image ||
+                  "https://api.dicebear.com/7.x/adventurer/svg"
+                }
+                size="sm"
+                referrerPolicy="no-referrer"
+              />
+              <Avatar.Fallback className="bg-primary text-white font-semibold">
+                {session?.user?.name
+                  ? session.user.name.charAt(0).toUpperCase()
+                  : "B"}
+              </Avatar.Fallback>
+            </Avatar>
+            <div>
+              <p>{session?.user?.name}</p>
+              <p className="text-xs text-muted-foreground">
+                {session?.user?.email}
+              </p>
+            </div>
+          </div>
           <button
             onClick={handleSignOut}
             className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer"
@@ -192,11 +230,13 @@ const DashboardSidebar = () => {
         <div>
           <h2 className="text-3xl font-black tracking-tight text-foreground Poppins">
             <Link href="/">
-              Biblio<span className="text-primary">Drop</span>
+              <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                Biblio<span>Drop</span>
+              </span>
             </Link>
           </h2>
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
-            {user?.role || "user"} Workspace
+            {user?.role || "user"} Dashboard
           </p>
         </div>
         <div className="mt-10 space-y-1.5 flex-1 overflow-y-auto Urbanist">
@@ -221,6 +261,31 @@ const DashboardSidebar = () => {
           })}
         </div>
         <div className="mt-auto pt-4 border-t border-border/60">
+          <div className="flex items-center gap-3 py-4">
+            {" "}
+            <Avatar>
+              <Avatar.Image
+                alt={session?.user?.name || "User Profile"}
+                src={
+                  session?.user?.image ||
+                  "https://api.dicebear.com/7.x/adventurer/svg"
+                }
+                size="sm"
+                referrerPolicy="no-referrer"
+              />
+              <Avatar.Fallback className="bg-primary text-white font-semibold">
+                {session?.user?.name
+                  ? session.user.name.charAt(0).toUpperCase()
+                  : "B"}
+              </Avatar.Fallback>
+            </Avatar>
+            <div>
+              <p>{session?.user?.name}</p>
+              <p className="text-xs text-muted-foreground">
+                {session?.user?.email}
+              </p>
+            </div>
+          </div>
           <button
             onClick={handleSignOut}
             className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer Urbanist"
