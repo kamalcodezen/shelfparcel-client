@@ -9,6 +9,7 @@ import { Sun, Moon, ChevronRight, ChevronDown } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 import { Avatar } from "@heroui/react";
+import logo from "../../../public/images/logo.png";
 
 export default function Navbar() {
   const pathname = usePathname();
