@@ -185,6 +185,7 @@ export default function Footer() {
               </button>
             </div>
             <button
+              suppressHydrationWarning
               type="submit"
               className="btn-primary w-full !py-2 !h-10 !text-xs !rounded-lg font-medium cursor-pointer"
             >

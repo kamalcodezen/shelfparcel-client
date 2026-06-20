@@ -1,10 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
-// 👑 🎯 COUNTUP INTEGRATION
+// 👑 CountUp লাইব্রেরি ইম্পোর্ট
 import CountUp from "react-countup";
 
 export default function StatsSection() {
-  // 👑 ডাটা স্ট্রাকচার মডিফাই করা হলো যাতে CountUp লাইব্রেরি নিখুঁতভাবে রিড করতে পারে
   const stats = [
     {
       start: 0,
@@ -30,8 +29,7 @@ export default function StatsSection() {
   ];
 
   return (
-    <section className="py-16 relative overflow-hidden select-none bg-background text-foreground">
-      {/* globals.css এর কাস্টম dashboard-card ক্লাস */}
+    <section className="py-16 relative overflow-hidden select-none">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -41,7 +39,7 @@ export default function StatsSection() {
       >
         {stats.map((stat, idx) => (
           <div key={idx} className="space-y-1 relative group">
-           
+            {/* 👑 🎯 FIX: Render Props ব্যবহার করে টার্গেট নোড লক করা হলো যাতে Null এরর না আসে */}
             <h3 className="text-4xl lg:text-5xl font-black text-primary tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent Poppins">
               <CountUp
                 start={stat.start}
@@ -51,7 +49,9 @@ export default function StatsSection() {
                 duration={2.5}
                 enableScrollSpy={true}
                 scrollSpyOnce={true}
-              />
+              >
+                {({ countUpRef }) => <span ref={countUpRef} />}
+              </CountUp>
             </h3>
 
             <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground pt-1 Urbanist">
