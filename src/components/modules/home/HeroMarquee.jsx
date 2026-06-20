@@ -3,80 +3,137 @@ import { motion } from "framer-motion";
 import { BookOpen, Star, Bookmark, Share2, Award, Zap } from "lucide-react";
 
 export default function HeroMarquee() {
-  const items = [
-    { text: "Trending Fiction", icon: <Zap size={18} />, angle: 0 },
-    { text: "Best Sellers 2026", icon: <Award size={18} />, angle: 60 },
-    { text: "Sci-Fi Masterpieces", icon: <BookOpen size={18} />, angle: 120 },
-    { text: "Academic Archives", icon: <Bookmark size={18} />, angle: 180 },
-    { text: "Librarian's Choice", icon: <Star size={18} />, angle: 240 },
-    { text: "BiblioDrop Specials", icon: <Share2 size={18} />, angle: 300 },
+  const col1Items = [
+    {
+      text: "Trending Fiction",
+      count: "12K+ Readers",
+      icon: <Zap size={18} />,
+    },
+    {
+      text: "Best Sellers 2026",
+      count: "Top Choice",
+      icon: <Award size={18} />,
+    },
+    {
+      text: "Sci-Fi Masterpieces",
+      count: "New Uploads",
+      icon: <BookOpen size={18} />,
+    },
+    {
+      text: "Academic Archives",
+      count: "Verified",
+      icon: <Bookmark size={18} />,
+    },
   ];
 
+  const col2Items = [
+    { text: "Librarian's Choice", count: "Premium", icon: <Star size={18} /> },
+    {
+      text: "Doorstep Delivered",
+      count: "99% Success",
+      icon: <Zap size={18} />,
+    },
+    {
+      text: "Rare Manuscripts",
+      count: "Exclusive",
+      icon: <BookOpen size={18} />,
+    },
+    {
+      text: "BiblioDrop Specials",
+      count: "Featured",
+      icon: <Share2 size={18} />,
+    },
+  ];
+
+  // ইনফিনিটি স্ক্রোলিং স্মুথ রাখার জন্য ডেটা ডাবল করা হলো
+  const doubleCol1 = [...col1Items, ...col1Items];
+  const doubleCol2 = [...col2Items, ...col2Items];
+
   return (
-    <section className="relative py-18 bg-background overflow-hidden border-y border-border select-none flex flex-col items-center justify-center">
-      
-      {/* 👑 অরবিটের মাঝখানের ব্র্যান্ড টেক্সট কোর জোন */}
-      <div className="absolute z-20 text-center pointer-events-none space-y-2">
-        <h3 className="text-2xl font-black tracking-widest text-primary font-mono">BIBLIODROP</h3>
-        <p className="text-xs font-serif italic text-muted-foreground">Live Circulation Track</p>
-      </div>
+    <section className="relative py-20 bg-background overflow-hidden border-y border-border select-none">
+      <div className="container-custom grid lg:grid-cols-12 gap-12 items-center">
+        {/* 👑 বাম পাশ: স্ট্যাটিক মিনিমালিস্ট টেক্সট জোন (আপনার font-serif ভাইব সহ) */}
+        <div className="lg:col-span-5 space-y-4">
+          <span className="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 w-fit inline-block">
+            Live Ecosystem
+          </span>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight italic font-serif text-foreground">
+            Elegance in <br />
+            <span className="text-primary font-serif">Every Chapter.</span>
+          </h2>
+          <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-sm">
+            Real-time status of trending categories, verified library catalogs,
+            and fast doorstep distribution routes.
+          </p>
+        </div>
 
-      {/* 👑 ৩D অরবিট ট্র্যাক কন্টেইনার */}
-      <div className="relative w-[320px] h-[320px] md:w-[450px] md:h-[450px] flex items-center justify-center">
-        
-        {/* ব্যাকগ্রাউন্ড গ্লো ইফেক্ট */}
-        <div className="absolute w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-        
-        {/* অরবিট গাইড রিং (Visual Guide Line) */}
-        <div className="absolute inset-0 rounded-full border border-dashed border-border/60 animate-[spin_80s_linear_infinite]" />
+        {/* 👑 ডান পাশ: কিলার ৩D ভার্টিক্যাল ডাবল মারকুই ট্র্যাক */}
+        <div className="lg:col-span-7 h-[380px] relative grid grid-cols-2 gap-6 overflow-hidden rounded-[30px] border border-border/40 bg-card-soft/20 p-6">
+          {/* গ্লাস মরফিজম টপ ও বটম ফেডিং মাস্ক */}
+          <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-background via-background/60 to-transparent z-20 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-background via-background/60 to-transparent z-20 pointer-events-none" />
 
-        {/* 👑 মেকানিজম: প্রতিটা কার্ড বৃত্তের নির্দিষ্ট এঙ্গেলে থ্রিডি স্পেসে ঘুরবে */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{
-            ease: "linear",
-            duration: 30,
-            repeat: Infinity,
-          }}
-          className="absolute inset-0 w-full h-full"
-        >
-          {items.map((item, idx) => {
-            return (
-              <div
-                key={idx}
-                className="absolute top-1/2 left-1/2 w-[160px] md:w-[180px]"
-                style={{
-                  transform: `translate(-50%, -50%) rotate(${item.angle}deg) translate(160px) rotate(-${item.angle}deg)`,
-                  // এখানে মেলাচ্ছি আসল ট্রিক: এঙ্গেল ম্যাপ করে এলিমেন্টগুলোকে সার্কেলে পুশ করা
-                }}
-              >
-                {/* 👑 ভেতরের কার্ড যা নিজের রোটেশন ঠিক রেখে সোজা হয়ে ভাসবে */}
-                <motion.div
-                  animate={{ rotate: -360 }}
-                  transition={{
-                    ease: "linear",
-                    duration: 30,
-                    repeat: Infinity,
-                  }}
-                  whileHover={{ scale: 1.08, y: -5 }}
-                  className="p-4 rounded-2xl border border-border bg-card/90 shadow-lg backdrop-blur-sm hover:border-primary/50 transition-all duration-300 flex items-center gap-3 cursor-pointer group"
+          {/* COLUMN 1: ওপর থেকে নিচে স্ক্রোল হবে (UP TO DOWN) */}
+          <div className="w-full overflow-hidden relative">
+            <motion.div
+              animate={{ y: [0, -400] }}
+              transition={{
+                ease: "linear",
+                duration: 20,
+                repeat: Infinity,
+              }}
+              className="flex flex-col gap-4"
+            >
+              {doubleCol1.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="w-full p-5 rounded-2xl border border-border bg-card hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 shadow-sm flex flex-col gap-2 group cursor-pointer"
                 >
-                  <div className="w-9 h-9 rounded-xl bg-card-soft border border-border flex items-center justify-center text-primary group-hover:bg-primary/10 transition-colors">
+                  <div className="flex items-center justify-between text-primary">
                     {item.icon}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-xs tracking-wide text-foreground group-hover:text-primary transition-colors">
-                      {item.text}
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-card-soft px-2 py-0.5 rounded border border-border text-muted-foreground group-hover:text-primary transition-colors">
+                      {item.count}
                     </span>
-                    <span className="text-[10px] text-muted-foreground font-medium">Explore →</span>
                   </div>
-                </motion.div>
-              </div>
-            );
-          })}
-        </motion.div>
+                  <span className="font-bold text-sm tracking-wide text-foreground mt-1">
+                    {item.text}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* COLUMN 2: নিচ থেকে ওপরে স্ক্রোল হবে (DOWN TO UP REVERSE) */}
+          <div className="w-full overflow-hidden relative">
+            <motion.div
+              animate={{ y: [-400, 0] }}
+              transition={{
+                ease: "linear",
+                duration: 22, // ভিন্ন স্পিড ছন্দ ধরে রাখার জন্য
+                repeat: Infinity,
+              }}
+              className="flex flex-col gap-4"
+            >
+              {doubleCol2.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="w-full p-5 rounded-2xl border border-border bg-card hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 shadow-sm flex flex-col gap-2 group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between text-primary">
+                    {item.icon}
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-card-soft px-2 py-0.5 rounded border border-border text-muted-foreground group-hover:text-primary transition-colors">
+                      {item.count}
+                    </span>
+                  </div>
+                  <span className="font-bold text-sm tracking-wide text-foreground mt-1">
+                    {item.text}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
       </div>
-      
     </section>
   );
 }
