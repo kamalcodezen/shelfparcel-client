@@ -1,6 +1,6 @@
 "use client";
 
-export default function DeliveryTruckLoader() {
+export default function Loader() {
   return (
     <div className="flex flex-col items-center justify-center p-8 w-full min-h-[250px] ">
       {/* Container holding the custom animated elements */}
