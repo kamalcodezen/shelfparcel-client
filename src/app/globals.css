@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* =========================================
-   LIGHT THEME
+   LIGHT THEME (উষ্ণ এবং রাজকীয় থিম)
 ========================================= */
 :root {
   --background: 252 240 222;
@@ -26,20 +26,19 @@
   --muted-foreground: 120 90 60;
 
   --sidebar: 254 247 240;
-  /* #fef7f0 */
 
   --shadow: 0 10px 30px rgba(196, 132, 74, 0.12);
 
-  /* Light mode body background template */
+  /* লাইট মোড বডি ব্যাকগ্রাউন্ড টেমপ্লেট */
   --body-bg: rgb(var(--background));
 }
 
 /* =========================================
-   DARK THEME (Premium Teal Gradient & Glow)
+   DARK THEME (প্রিমিয়াম টিল গ্রেডিয়েন্ট এবং গ্লো)
 ========================================= */
 .dark {
   --background: 25 55 63;
-  /* #19373f base */
+  /* #19373f বেস */
   --foreground: 212 245 242;
 
   --card: 16 39 46;
@@ -59,13 +58,13 @@
 
   --shadow: 0 0 25px rgba(0, 245, 212, 0.15);
 
-  /* ইমেজ অনুযায়ী প্রিমিয়াম ডার্ক গ্রাডিয়েন্ট আর্কিটেকচার */
+  /* ইমেজ অনুযায়ী প্রিমিয়াম ডার্ক রেডিয়াল-লিনিয়ার গ্রাডিয়েন্ট */
   --body-bg: radial-gradient(circle at top right, rgb(25 65 75), rgb(15 35 40)),
     linear-gradient(to bottom, rgb(25 55 63), rgb(10 24 28));
 }
 
 /* =========================================
-   TAILWIND V4 TOKENS
+   TAILWIND V4 TOKENS MAPPING
 ========================================= */
 @theme {
   --color-background: rgb(var(--background));
@@ -87,7 +86,7 @@
 }
 
 /* =========================================
-   GLOBAL OVERRIDES WITH GRADIENT SUPPORT
+   GLOBAL OVERRIDES & FONTS INJECTION
 ========================================= */
 html {
   scroll-behavior: smooth;
@@ -96,10 +95,21 @@ html {
 body {
   background: var(--body-bg);
   background-attachment: fixed;
-  /* স্ক্রোল করার সময়ও যেন গ্রাডিয়েন্ট স্মুথ থাকে */
+  /* স্ক্রোল করার সময়ও ব্যাকগ্রাউন্ড গ্রাডিয়েন্ট ফিক্সড থাকবে */
   color: rgb(var(--foreground));
   min-height: 100vh;
-  font-family: var(--font-geist-sans);
+  /* বডি টেক্সটের জন্য নতুন আরবানিস্ট ফন্ট সেটআপ */
+  font-family: var(--font-urbanist), sans-serif;
+}
+
+/* প্রিমিয়াম লুকের জন্য সমস্ত হেডিং ট্যাগগুলোতে পপিন্স ফন্ট সেটআপ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-poppins), sans-serif;
 }
 
 * {
@@ -114,7 +124,7 @@ button {
 }
 
 /* =========================================
-   CUSTOM SCROLLBAR
+   CUSTOM SCROLLBAR SYSTEM
 ========================================= */
 ::-webkit-scrollbar {
   width: 8px;
@@ -130,7 +140,7 @@ button {
 }
 
 /* =========================================
-   COMPONENTS
+   REUSABLE COMPONENTS LAYER
 ========================================= */
 @layer components {
   .container-custom {
@@ -149,7 +159,7 @@ button {
   .dashboard-card {
     @apply rounded-3xl border p-6 backdrop-blur-md transition-all duration-300;
     background: rgba(var(--card), 0.85);
-    /* গ্রাডিয়েন্টের ওপর গ্লাস ফিল আসার জন্য */
+    /* গ্রাডিয়েন্টের ওপর গ্লাস মরফিজম ইফেক্ট */
     border-color: rgb(var(--border));
     box-shadow: var(--shadow);
   }
@@ -200,24 +210,24 @@ button {
 }
 
 /* =========================================
-   LIGHT BUTTON
+   LIGHT MODE PRIMARY BUTTON
 ========================================= */
 .btn-primary {
   background: linear-gradient(135deg, #c4844a, #6b4226);
 }
 
 /* =========================================
-   DARK BUTTON
+   DARK MODE PRIMARY BUTTON
 ========================================= */
 .dark .btn-primary {
   background: linear-gradient(135deg, rgb(var(--primary)), rgb(var(--secondary)));
   box-shadow: 0 0 20px rgba(0, 245, 212, 0.25);
   color: #071a1d;
-  /* ডার্ক মোডে নিয়ন বাটনের ওপর টেক্সট ডার্ক থাকবে ক্লিয়ারিটির জন্য */
+  /* টিল নিয়নের ওপর ডার্ক টেক্সট রিডাবিলিটি নিশ্চিত করে */
 }
 
 /* =========================================
-   DARK GLOW & SCALING EFFECT ON HOVER
+   DARK HOVER GLOW SYSTEM
 ========================================= */
 .dark .dashboard-card:hover,
 .dark .book-card:hover {
@@ -229,7 +239,7 @@ button {
 }
 
 /* =========================================
-   HERO GRADIENT MESH EFFECT
+   HERO BANNER GRADIENT MESH EFFECT
 ========================================= */
 .hero-gradient {
   background: radial-gradient(circle at top left, rgba(196, 132, 74, 0.15), transparent 40%);

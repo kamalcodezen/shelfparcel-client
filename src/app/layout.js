@@ -1,32 +1,37 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Urbanist, Poppins } from "next/font/google";
 import "./globals.css";
-import { Providers } from "@/providers/theme-provider";
+import Providers from "@/providers/theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// বডি টেক্সটের জন্য আরবানিস্ট ফন্ট লোড
+const urbanist = Urbanist({
+  variable: "--font-urbanist",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// হেডিং ও টাইটেলের জন্য পপিন্স ফন্ট লোড
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata = {
-  title: "ShelfParcel",
-  description: "Knowledge Delivered to Your Door",
+  title: "BiblioDrop - Knowledge Delivered to Your Door",
+  description: "Premium and secure web architecture for modern libraries.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable}`}
-    >
-      <body className="min-h-screen bg-background text-foreground">
+    <html lang="en" suppressHydrationWarning>
+
+      <body className={`${urbanist.variable} ${poppins.variable} antialiased min-h-full`}>
         <Providers>
-          <main className="min-h-screen"> {children}</main>
+          <main className="bg-background text-foreground min-h-screen transition-colors duration-300">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>
