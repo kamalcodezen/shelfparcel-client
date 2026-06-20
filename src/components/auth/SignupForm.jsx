@@ -174,7 +174,7 @@ export default function SignupForm() {
           relative
           w-full
           max-w-xl
-          rounded-[40px]
+          rounded-lg
           border
           border-white/20
           bg-white/10
@@ -366,7 +366,7 @@ export default function SignupForm() {
             {googleLoading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                <span>Connecting Google...</span>
+                <span>Signup with Google...</span>{" "}
               </>
             ) : (
               <>
