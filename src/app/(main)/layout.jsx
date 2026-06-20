@@ -4,7 +4,9 @@ const MainLayout = ({ children }) => {
   return (
     <div>
       <Navbar />
-      {children}
+      <main className=" min-h-screen transition-colors duration-300">
+        {children}
+      </main>
     </div>
   );
 };

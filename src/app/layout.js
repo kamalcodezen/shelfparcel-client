@@ -25,11 +25,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${urbanist.variable} ${poppins.variable} antialiased h-full scroll-smooth`}>
 
-      <body className={`${urbanist.variable} ${poppins.variable} antialiased min-h-full`}>
+      <body className="min-h-full flex flex-col scroll-smooth">
         <Providers>
-          <main className="bg-background text-foreground min-h-screen transition-colors duration-300">
+          <main className=" min-h-screen transition-colors duration-300">
             {children}
           </main>
         </Providers>
