@@ -1,4 +1,4 @@
-import Loader from "@/components/shared/Loader";
+import Loader from "@/components/modules/shared/Loader";
 
 const AuthLoading = () => {
   return (
