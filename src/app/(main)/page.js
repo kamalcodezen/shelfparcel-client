@@ -1,6 +1,7 @@
 import Banner from "@/components/modules/home/Banner";
 import FeaturedBooks from "@/components/modules/home/FeaturedBooks";
 import HeroMarquee from "@/components/modules/home/HeroMarquee";
+import HowItWorks from "@/components/modules/home/HowItWorks";
 import TopLibrarians from "@/components/modules/home/TopLibrarians";
 
 
@@ -11,6 +12,7 @@ export default function HomePage() {
       <HeroMarquee />
       <FeaturedBooks />
       <TopLibrarians />
+      <HowItWorks />
     </>
   );
 }
