@@ -13,7 +13,7 @@ export default function PopularCategories() {
   ];
 
   return (
-    <section className="container-custom py-16 bg-background text-foreground select-none">
+    <section className=" py-16 bg-background text-foreground select-none">
       {/* শিরোনাম জোন (আপনার Poppins ফন্ট সিঙ্কড) */}
       <div className="flex flex-col items-center text-center space-y-4 mb-16">
         <span className="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 Urbanist">
@@ -34,7 +34,7 @@ export default function PopularCategories() {
           hidden: { opacity: 0 },
           visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
         }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+        className="w-11/12 mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6"
       >
         {categories.map((cat, idx) => (
           // 🎯 ক্লিক করলেই ডাইরেক্ট কুয়েরি প্যারামিটারসহ অল-বুকস রাউটে নিয়ে যাবে

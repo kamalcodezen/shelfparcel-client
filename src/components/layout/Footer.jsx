@@ -11,7 +11,7 @@ export default function Footer() {
 
   return (
     // 👑 FIXED: ফুটারের মেইন ব্যাকগ্রাউন্ডে কাস্টম থিম গ্রেডিয়েন্ট এবং ডার্ক রেডিয়াল ম্যাশ মাস্ক সিঙ্ক করা হলো
-    <footer className="w-full  pt-17 select-none text-foreground transition-all duration-300 relative bg-gradient-to-b from-card/30 via-card-soft/40 to-card">
+    <footer className="w-full  pt-17 transition-all duration-300 relative bg-gradient-to-b from-card/30 via-card-soft/40 to-card bg-background text-foreground select-none">
       {/* এক্সট্রা ভিজ্যুয়াল লাক্সারি: ডার্ক মোডে ব্যাকগ্রাউন্ড গ্লো মাস্কিং */}
       <div className="absolute inset-0 bg-radial-gradient from-primary/5 via-transparent to-transparent opacity-60 pointer-events-none z-0" />
 

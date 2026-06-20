@@ -31,8 +31,8 @@ export default function TopLibrarians() {
           Ecosystem Pillars
         </span>
         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight italic font-serif">
-          Top{" "}
-          <span className="text-primary font-serif">
+          Top 
+           <span className="text-primary font-serif">
             Librarians & Providers
           </span>
         </h2>
