@@ -164,9 +164,9 @@ export default function SigninForm() {
         >
           {/* MOBILE LOGO */}
           <div className="flex lg:hidden items-center justify-center gap-3 mb-8">
-            <div className="h-12 w-12 rounded-xl btn-primary flex items-center justify-center">
+            {/* <div className="h-12 w-12 rounded-xl btn-primary flex items-center justify-center">
               <BookOpen size={22} />
-            </div>
+            </div> */}
             <h2 className="text-2xl font-bold">BiblioDrop</h2>
           </div>
 

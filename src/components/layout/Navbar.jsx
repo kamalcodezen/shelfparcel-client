@@ -6,6 +6,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Sun, Moon, ChevronRight, ChevronDown } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -21,14 +23,9 @@ export default function Navbar() {
     setMounted(true);
   }, []);
 
-  // ⚠️ [TEMPORARY STATE]: Better Auth ইন্টিগ্রেশনের আগ পর্যন্ত ডামি সেশন
-  const [user, setUser] = useState({
-    name: "Kamaluddin",
-    email: "admin@gmail.com",
-    role: "admin",
-  });
-
-  const isPending = false;
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+  console.log(user, "navabr");
 
   const links = [
     { label: "Home", path: "/" },
@@ -41,11 +38,29 @@ export default function Navbar() {
     admin: "/dashboard/admin",
   };
 
-  const handleLogout = () => {
-    setUser(null);
-    setOpen(false);
-    setDropdownOpen(false);
-    router.push("/");
+  if (user?.email) {
+    const userRole = user?.role || "user";
+    links.push({
+      label: "Dashboard",
+      path: dashboardRoutes[userRole] || "/dashboard/user",
+    });
+  }
+
+  // logout function
+  const handleLogout = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("See you soon! 👋 Logged out successfully", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+
+          router.push("/");
+          router.refresh();
+        },
+      },
+    });
   };
 
   if (!mounted) return null;
@@ -58,7 +73,7 @@ export default function Navbar() {
       <header className="fixed top-0 left-0 w-full z-50 ">
         <nav className="border border-border bg-card/70 backdrop-blur-xl  transition-all duration-300 shadow-sm">
           <div className="container-custom h-15 flex items-center justify-between">
-            {/* 🎯 LOGO SECTION */}
+            {/*  LOGO SECTION */}
             <Link href={"/"} className="flex items-center gap-3 group">
               <svg
                 viewBox="0 0 24 24"
@@ -73,7 +88,7 @@ export default function Navbar() {
               </span>
             </Link>
 
-            {/* 💻 🎯 ডেসক্রিপশন অনুযায়ী ইউনিক নিচে ছোট বল (Dot) সহ ডেস্কটপ মেনু */}
+            {/* ডেসক্রিপশন অনুযায়ী ইউনিক নিচে ছোট বল (Dot) সহ ডেস্কটপ মেনু */}
             <div className="hidden md:flex items-center gap-6 ml-8">
               {links.map((link) => {
                 const isActive = pathname === link.path;
@@ -101,73 +116,11 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-
-              {/* Dashboard Dropdown Link Trigger */}
-              {user && (
-                <div className="relative pb-2 pt-1">
-                  <button
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className={`text-sm font-semibold transition-all flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
-                      pathname.startsWith("/dashboard")
-                        ? "text-primary font-bold"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    Dashboard
-                    <ChevronDown
-                      size={14}
-                      className={`transition-transform duration-300 ${dropdownOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
-
-                  {/* ড্যাশবোর্ডের জন্য ডট অ্যানিমেশন কন্ডিশন */}
-                  <span
-                    className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300 ${
-                      pathname.startsWith("/dashboard")
-                        ? "scale-100 opacity-100 shadow-[0_0_10px_rgb(var(--primary))]"
-                        : "scale-0 opacity-0"
-                    }`}
-                  />
-
-                  {dropdownOpen && (
-                    <div className="absolute top-full mt-3 right-0 w-56 rounded-2xl border border-border bg-card p-2 shadow-2xl z-50 animate-in fade-in slide-in-from-top-3 duration-200">
-                      <div className="px-4 py-2 border-b border-border mb-1.5">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
-                          Active Session
-                        </span>
-                        <span className="text-xs text-muted-foreground font-medium truncate block">
-                          {user.email}
-                        </span>
-                      </div>
-                      <Link
-                        href="/dashboard/user"
-                        onClick={() => setDropdownOpen(false)}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user.role === "user" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
-                      >
-                        Reader Dashboard {user.role === "user" && "•"}
-                      </Link>
-                      <Link
-                        href="/dashboard/librarian"
-                        onClick={() => setDropdownOpen(false)}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user.role === "librarian" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
-                      >
-                        Librarian Dashboard {user.role === "librarian" && "•"}
-                      </Link>
-                      <Link
-                        href="/dashboard/admin"
-                        onClick={() => setDropdownOpen(false)}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user.role === "admin" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
-                      >
-                        Admin Dashboard {user.role === "admin" && "•"}
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
 
-            {/* 🌗 রাইট সাইড অ্যাকশন প্যানেল */}
-            <div className="hidden md:flex items-center gap-4">
+            {/* রাইট সাইড অ্যাকশন প্যানেল */}
+
+            <div className="hidden md:flex items-center gap-3">
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="w-10 h-10 rounded-xl border border-border bg-card hover:bg-muted flex items-center justify-center text-primary transition-all duration-300 shadow-xs cursor-pointer active:scale-95"
@@ -175,32 +128,44 @@ export default function Navbar() {
                 {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
               </button>
 
-              {user ? (
-                <button
-                  onClick={handleLogout}
-                  className="btn-secondary !py-2.5 !px-5 !text-sm !rounded-xl font-semibold cursor-pointer"
-                >
-                  Logout
-                </button>
-              ) : (
+              {isPending && !user && (
+                <div className="h-10 w-24 animate-pulse rounded-2xl bg-muted" />
+              )}
+
+              <div>
+                {!isPending && user && (
+                  <>
+                    <button className="btn-secondary !py-2.5 !px-5 !text-sm !rounded-xl font-semibold cursor-pointer mr-2">
+                      Hi, {session?.user?.name} (
+                      {session?.user?.role === "librarian"
+                        ? "Librarian"
+                        : "Reader"}
+                      )
+                    </button>
+
+                    <button
+                      onClick={handleLogout}
+                      className="btn-secondary !py-2.5 !px-5 !text-sm !rounded-xl font-semibold cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {!isPending && !user && (
                 <div className="flex items-center gap-2">
                   <Link
-                    href="/login"
-                    className="text-muted-foreground hover:text-foreground text-sm font-semibold px-4 py-2 transition-colors"
+                    href="/signin"
+                    className="btn-primary !py-2 !px-5 !text-sm !rounded-md font-bold"
                   >
                     Login
-                  </Link>
-                  <Link
-                    href="/signup"
-                    className="btn-primary !py-2.5 !px-5 !text-sm !rounded-xl font-bold"
-                  >
-                    Register
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* 📱 মোবাইল মেনু টগল হ্যামবার্গার বাটন */}
+            {/*  মোবাইল মেনু টগল হ্যামবার্গার বাটন */}
             <button
               onClick={() => setOpen(true)}
               className="md:hidden h-11 w-11 rounded-xl border border-border bg-card flex items-center justify-center text-foreground cursor-pointer"
@@ -222,7 +187,7 @@ export default function Navbar() {
       />
 
       {/* ==========================
-          MOBILE DRAWER PANEL (৮০% মাখনের মতো স্মুথ স্লাইডার)
+          MOBILE DRAWER PANEL 
       ========================== */}
       <div
         className={`fixed top-0 left-0 h-screen w-[80%] max-w-[340px] z-[100]
@@ -350,7 +315,7 @@ export default function Navbar() {
             ) : (
               <div className="flex flex-col gap-2">
                 <Link
-                  href="/login"
+                  href="/signin"
                   onClick={() => setOpen(false)}
                   className="block text-center btn-secondary !py-3 font-semibold"
                 >
