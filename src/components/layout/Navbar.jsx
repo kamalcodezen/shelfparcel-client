@@ -67,7 +67,7 @@ export default function Navbar() {
           NAVBAR MAIN CONTAINER
       ========================== */}
       <header className="fixed top-0 left-0 w-full z-50 ">
-        <nav className="border border-border bg-card/70 backdrop-blur-xl  transition-all duration-300 shadow-sm">
+        <nav className=" bg-card/50 backdrop-blur  transition-all duration-300 shadow-sm">
           <div className="container-custom h-15 flex items-center justify-between">
             {/*  LOGO SECTION */}
             <Link href={"/"} className="flex items-center gap-3 group">
