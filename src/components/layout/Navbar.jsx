@@ -101,7 +101,7 @@ export default function Navbar() {
                   </Link>
                 );
               })}
- 
+
               {/* Dashboard Dropdown Link Trigger */}
               {user && (
                 <div className="relative pb-2 pt-1">
