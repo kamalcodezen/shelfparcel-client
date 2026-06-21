@@ -3,20 +3,30 @@
 import React from "react";
 import { Avatar, Tooltip } from "@heroui/react";
 import { Edit3, Trash2, Eye, EyeOff, Lock } from "lucide-react";
+import { toggleBooksStatusById } from "@/lib/actions/books";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const ManageInventory = ({ books = [] }) => {
-  
-  // status toggle
-  const handleToggleStatus = (bookId, currentStatus) => {
-    console.log(
-      "Toggle Status clicked for ID:",
-      bookId,
-      "Current:",
-      currentStatus,
-    );
+  const router = useRouter();
+
+  // status change
+  const handleToggleStatus = async (bookId, currentStatus) => {
+    try {
+      const res = await toggleBooksStatusById({ bookId, currentStatus });
+
+      if (res?.success) {
+        toast.success(res.message);
+        router.refresh();
+      } else {
+        toast.error(res?.message || "Failed to update status.");
+      }
+    } catch (error) {
+      toast.error("Something went wrong while toggling status ❌");
+    }
   };
 
-//  edit book
+  //  edit book
   const handleEditBook = (bookId) => {
     console.log("Edit clicked for ID:", bookId);
   };
