@@ -155,7 +155,6 @@ button {
   .dashboard-card {
     @apply rounded-3xl border p-6 backdrop-blur-md transition-all duration-300;
     background: rgba(var(--card), 0.85);
-    /* গ্রাডিয়েন্টের ওপর গ্লাস মরফিজম ইফেক্ট */
     border-color: rgb(var(--border));
     box-shadow: var(--shadow);
   }

@@ -77,7 +77,7 @@ const DashboardSidebar = () => {
     },
     {
       title: "Add Book",
-      href: "/dashboard/librarian?tab=add-book",
+      href: "/dashboard/librarian/addBook",
       icon: FileText,
     },
     {

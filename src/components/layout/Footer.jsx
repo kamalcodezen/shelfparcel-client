@@ -27,11 +27,8 @@ export default function Footer() {
               <path d="M2 7h5v2H2zm-1 4h7v2H1zm2 4h5v2H3z" />
               <path d="M20 8h-3V4H9v13h2c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM14 17c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm0-4V7h2v6h-2zm4 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" />
             </svg>
-            <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
-              Biblio
-              <span className="font-serif italic font-normal text-primary">
-                Drop
-              </span>
+            <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              Biblio<span>Drop</span>
             </span>
           </Link>
           <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
