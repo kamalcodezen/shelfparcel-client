@@ -126,7 +126,7 @@ const LibrarianAddBook = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 select-none animate-fadeIn">
+    <div className="max-w-3xl pt-6 mx-auto space-y-6 select-none animate-fadeIn">
       <div>
         <h1 className="text-3xl font-bold tracking-tight Poppins">
           Add New Book

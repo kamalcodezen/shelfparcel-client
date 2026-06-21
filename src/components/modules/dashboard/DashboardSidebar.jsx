@@ -78,7 +78,7 @@ const DashboardSidebar = () => {
   const librarianNavLinks = [
     {
       title: "Overview",
-      href: "/dashboard/librarian?tab=overview",
+      href: "/dashboard/librarian/overview",
       icon: LayoutDashboard,
     },
     {
