@@ -8,8 +8,7 @@ import { HiMenu, HiX } from "react-icons/hi";
 import { Sun, Moon, ChevronRight, ChevronDown } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
-import { Avatar } from "@heroui/react";
-import logo from "../../../public/images/logo.png";
+import { Avatar, Dropdown } from "@heroui/react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -18,7 +17,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -27,7 +26,6 @@ export default function Navbar() {
 
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
- 
 
   const links = [
     { label: "Home", path: "/" },
@@ -69,7 +67,7 @@ export default function Navbar() {
       <header className="fixed top-0 left-0 w-full z-50 ">
         <nav className=" bg-card/50 backdrop-blur  transition-all duration-300 shadow-sm">
           <div className="container-custom h-15 flex items-center justify-between">
-            {/*  LOGO SECTION */}
+            {/* LOGO SECTION */}
             <Link href={"/"} className="flex items-center gap-3 group">
               <svg
                 viewBox="0 0 24 24"
@@ -84,7 +82,7 @@ export default function Navbar() {
               </span>
             </Link>
 
-            {/* ডেসক্রিপশন অনুযায়ী ইউনিক নিচে ছোট বল (Dot) সহ ডেস্কটপ মেনু */}
+            {/* ডেসক্রিপশন অনুযায়ী ইউনিক নিচে ছোট বল (Dot) সহ ডেক্সটপ মেনু */}
             <div className="hidden md:flex items-center gap-6 ml-8">
               {links.map((link) => {
                 const isActive = pathname === link.path;
@@ -94,14 +92,12 @@ export default function Navbar() {
                     href={link.path}
                     className="relative pb-2 pt-1 px-1 text-sm font-semibold transition-all duration-300 flex flex-col items-center group"
                   >
-                    {/* একটিভ থাকলে মেইন টেক্সটের কালার চেঞ্জ হবে */}
                     <span
                       className={`transition-colors duration-300 ${isActive ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground"}`}
                     >
                       {link.label}
                     </span>
 
-                    {/* 👑 ইউনিক গোল বল ইফেক্ট: একটিভ থাকলে নিচে সুন্দর রাউন্ড ডট এবং গ্লো ফ্ল্যাশ করবে */}
                     <span
                       className={`absolute bottom-0 w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300 transform-gpu ${
                         isActive
@@ -131,7 +127,6 @@ export default function Navbar() {
                     />
                   </button>
 
-                  {/* ড্যাশবোর্ডের জন্য ডট অ্যানিমেশন কন্ডিশন */}
                   <span
                     className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300 ${
                       pathname.startsWith("/dashboard")
@@ -144,7 +139,6 @@ export default function Navbar() {
                     <div className="absolute top-full mt-3 right-0 w-56 rounded-md border border-border bg-card p-2 shadow-2xl z-50 animate-in fade-in slide-in-from-top-3 duration-200">
                       <div className="px-4 py-2 border-b border-border mb-1.5 flex items-center justify-between">
                         <div>
-                          {" "}
                           <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
                             Active Session
                           </span>
@@ -199,7 +193,6 @@ export default function Navbar() {
             </div>
 
             {/* রাইট সাইড অ্যাকশন প্যানেল */}
-
             <div className="hidden md:flex items-center gap-3">
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -212,14 +205,109 @@ export default function Navbar() {
                 <div className="h-10 w-24 animate-pulse rounded-2xl bg-muted" />
               )}
 
-              <div>
+              <div className="flex items-center justify-center">
                 {!isPending && user && (
-                  <button
-                    onClick={handleLogout}
-                    className="btn-secondary !py-2.5 !px-5 !text-sm !rounded-xl font-semibold cursor-pointer"
-                  >
-                    Logout
-                  </button>
+                  <Dropdown>
+                    {/*  ড্রপডাউন ট্রিগার বাটন — আপনার কাস্টম বর্ডার ও প্রাইমারি রিং সহ */}
+                    <Dropdown.Trigger className="rounded-full cursor-pointer focus:outline-none">
+                      <Avatar className="ring-1 ring-primary/40 hover:ring-primary transition-all duration-300">
+                        <Avatar.Image
+                          alt={user?.name || "User Profile"}
+                          src={user?.image}
+                          referrerPolicy="no-referrer"
+                        />
+                        <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-sm">
+                          {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
+                        </Avatar.Fallback>
+                      </Avatar>
+                    </Dropdown.Trigger>
+
+                    {/* ড্রপডাউন পপওভার — আপনার নিজস্ব 'bg-card' এবং 'border' থিমে সাজানো */}
+                    <Dropdown.Popover
+                      className="bg-card border border-border rounded-3xl min-w-[240px] md:min-w-[280px] p-2"
+                      style={{ boxShadow: "var(--shadow)" }}
+                    >
+                      {/* ইউজারের একটিভ সেশন হেডার কার্ড */}
+                      <div className="px-4 pt-3 pb-3 border-b border-border/60 mb-1.5">
+                        <div className="flex items-center gap-3">
+                          <Avatar size="sm">
+                            <Avatar.Image
+                              alt={user?.name || "User"}
+                              src={user?.image}
+                              referrerPolicy="no-referrer"
+                            />
+                            <Avatar.Fallback className="bg-primary text-background font-semibold">
+                              {user?.name
+                                ? user.name.charAt(0).toUpperCase()
+                                : "B"}
+                            </Avatar.Fallback>
+                          </Avatar>
+                          <div className="flex flex-col gap-0 overflow-hidden">
+                            <p className="text-sm font-semibold text-foreground font-poppins truncate">
+                              {user?.name || "Anonymous User"}
+                            </p>
+                            <p className="text-xs text-muted-foreground truncate font-urbanist">
+                              {user?.email}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 🎯 মেইন মেনু আইটেমসমূহ — আপনার প্রজেক্টের ফন্ট ও কালার সিঙ্কড */}
+                      <Dropdown.Menu className="text-foreground font-urbanist flex flex-col gap-0.5">
+                        
+                        <Dropdown.Item
+                          id="dashboard"
+                          textValue="My Dashboard"
+                          className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all"
+                        >
+                          <Link
+                            href={userDashboardPath}
+                            className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground font-medium"
+                          >
+                            <span>📊</span>
+                            <span>My Dashboard</span>
+                          </Link>
+                        </Dropdown.Item>
+
+                        {/* ২. মাই প্রোফাইল লিংক */}
+                        <Dropdown.Item
+                          id="profile"
+                          textValue="My Profile"
+                          className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all mt-0.5"
+                        >
+                          <Link
+                            href="/profile"
+                            className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground"
+                          >
+                            <span>👤</span>
+                            <span>My Profile</span>
+                          </Link>
+                        </Dropdown.Item>
+
+                        {/* ৩. কাস্টম ডিজাইনড রাজকীয় লগআউট বাটন */}
+                        <Dropdown.Item
+                          id="logout"
+                          textValue="Logout"
+                          className="p-0 mt-3 border-t border-border/60 pt-2 hover:bg-transparent focus:bg-transparent"
+                        >
+                          <button
+                            onClick={handleLogout}
+                            className="w-full flex justify-center px-4 py-2.5 rounded-xl text-background font-semibold transition-all cursor-pointer"
+                            style={{
+                              background:
+                                theme === "dark"
+                                  ? "linear-gradient(135deg, rgb(var(--primary)), rgb(var(--secondary)))"
+                                  : "linear-gradient(135deg, #c4844a, #6b4226)",
+                              color: theme === "dark" ? "#071a1d" : "#fff",
+                            }}
+                          >
+                            Logout
+                          </button>
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown.Popover>
+                  </Dropdown>
                 )}
               </div>
 
@@ -235,7 +323,7 @@ export default function Navbar() {
               )}
             </div>
 
-            {/*  মোবাইল মেনু টগল হ্যামবার্গার বাটন */}
+            {/* মোবাইল মেনু টগল হ্যামবার্গার বাটন */}
             <button
               onClick={() => setOpen(true)}
               className="md:hidden h-11 w-11 rounded-xl border border-border bg-card flex items-center justify-center text-foreground cursor-pointer"
@@ -294,7 +382,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* মোবাইল স্লাইডারেও ইউনিক বল/ডট মেকানিজম ইন্টিগ্রেশন */}
+          {/* মোবাইল স্লাইডারে লিঙ্কসমূহ */}
           <div className="flex-1 p-6 space-y-3 overflow-y-auto">
             {links.map((link) => {
               const isActive = pathname === link.path;
@@ -303,14 +391,13 @@ export default function Navbar() {
                   key={link.path}
                   href={link.path}
                   onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all border relative overflow-hidden group ${
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all border border-transparent relative overflow-hidden group ${
                     isActive
                       ? "bg-primary/5 text-primary border-primary/20 font-bold"
                       : "text-muted-foreground border-transparent hover:text-foreground hover:bg-card-soft"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    {/* মোবাইলের জন্য বাম পাশে চমত্কার লিডিং ডট ইফেক্ট */}
                     <span
                       className={`w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300 ${
                         isActive
@@ -332,7 +419,6 @@ export default function Navbar() {
               );
             })}
 
-            {/*  ম্যাজিক পার্ট: ইউজার লগইন থাকলে ঠিক একই প্রিমিয়াম স্টাইলে শুধু মোবাইলেই ড্যাশবোর্ড শো করবে */}
             {user?.email && (
               <Link
                 href={userDashboardPath}
@@ -340,7 +426,6 @@ export default function Navbar() {
                 className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all border border-transparent mt-2 group bg-primary/5 text-primary border-primary/10 font-semibold`}
               >
                 <div className="flex items-center gap-3">
-                  {/* ড্যাশবোর্ডের জন্য একটি স্ট্যাটিক ডট ইন্ডিকেটর */}
                   <span className="w-1.5 h-1.5 rounded-full bg-primary scale-100 opacity-100 shadow-[0_0_8px_rgb(var(--primary))]" />
                   <span>Dashboard</span>
                 </div>
