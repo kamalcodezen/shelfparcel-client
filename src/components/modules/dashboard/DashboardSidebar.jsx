@@ -17,6 +17,7 @@ import {
   BriefcaseBusiness,
   HomeIcon,
   BookOpen,
+  UserPen,
 } from "lucide-react";
 
 import { toast } from "react-toastify";
@@ -29,7 +30,7 @@ const DashboardSidebar = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme} = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -76,6 +77,11 @@ const DashboardSidebar = () => {
 
   // Librarian Tabs Links
   const librarianNavLinks = [
+    {
+      title: "Profile",
+      href: "/dashboard/librarian/profile",
+      icon: UserPen,
+    },
     {
       title: "Overview",
       href: "/dashboard/librarian/overview",
@@ -130,7 +136,6 @@ const DashboardSidebar = () => {
   };
 
   const userRole = user?.role || "user";
-
   const menus = dashboardNavLinks[userRole];
 
   if (!mounted) return null;
@@ -185,15 +190,19 @@ const DashboardSidebar = () => {
           </button>
         </div>
         <div className="p-4 space-y-1.5 flex-1 overflow-y-auto Urbanist">
-          {menus?.map((item) => {
+          {menus?.map((item, ind) => {
             const Icon = item.icon;
-            const isActive = pathname + window?.location?.search === item.href;
+
+            // 🎯 উন্ডো বা প্যারামিটার ট্র্যাকিং ছাড়াই শুধু usePathname এবং ডাইরেক্ট লিঙ্ক দিয়ে একটিভ কন্ডিশন
+            const isActive =
+              pathname === item.href || item.href.includes(pathname + "?");
+
             return (
               <Link
-                key={item.href}
+                key={ind}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${isActive ? "bg-primary text-white" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
               >
                 <Icon size={18} /> {item.title}
               </Link>
@@ -201,9 +210,9 @@ const DashboardSidebar = () => {
           })}
         </div>
 
-        {/* bottom profile section dropdownOpen*/}
+        {/* bottom profile section */}
         <div className="mt-auto pt-4 border-t border-border/60">
-          <div className="flex items-center gap-3 py-4">
+          <div className="flex items-center gap-3 py-4 px-4">
             <Dropdown>
               <Dropdown.Trigger className="rounded-full cursor-pointer focus:outline-none">
                 <Avatar className="ring-2 ring-primary/40 hover:ring-primary transition-all duration-300">
@@ -222,37 +231,31 @@ const DashboardSidebar = () => {
                 className="bg-card border border-border rounded-3xl min-w-[240px] md:min-w-[260px] p-2 z-50"
                 style={{ boxShadow: "var(--shadow)" }}
               >
-                {/* প্রোফাইল হেডার */}
-
                 <Dropdown.Menu className="text-foreground font-urbanist flex flex-col gap-0.5">
                   <Dropdown.Item
                     id="dashboard"
-                    textValue="My Dashboard"
+                    textValue="Home"
                     className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all"
                   >
                     <Link
                       href={"/"}
                       className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground font-medium"
                     >
-                      <span>
-                        <HomeIcon size={18} />
-                      </span>
+                      <HomeIcon size={18} />
                       <span>Home</span>
                     </Link>
                   </Dropdown.Item>
 
                   <Dropdown.Item
                     id="profile"
-                    textValue="My Profile"
+                    textValue="Browse Books"
                     className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all mt-0.5"
                   >
                     <Link
                       href="/profile"
                       className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground"
                     >
-                      <span>
-                        <BookOpen size={18} />
-                      </span>
+                      <BookOpen size={18} />
                       <span>Browse Books</span>
                     </Link>
                   </Dropdown.Item>
@@ -289,12 +292,14 @@ const DashboardSidebar = () => {
               </p>
             </div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer Urbanist"
-          >
-            <LogOut size={16} /> Logout
-          </button>
+          <div className="p-4">
+            <button
+              onClick={handleLogout}
+              className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer Urbanist"
+            >
+              <LogOut size={16} /> Logout
+            </button>
+          </div>
         </div>
       </div>
 
@@ -315,17 +320,16 @@ const DashboardSidebar = () => {
         <div className="mt-10 space-y-1.5 flex-1 overflow-y-auto Urbanist">
           {menus?.map((item, ind) => {
             const Icon = item.icon;
-            const currentFullUrl =
-              typeof window !== "undefined"
-                ? pathname + window.location.search
-                : pathname;
-            const isActive = currentFullUrl.includes(item.href);
+
+            // 🎯 উইন্ডো ছাড়া শুধুমাত্র ব্রাউজারের পাথনেম ম্যাচিং দিয়ে ক্লিন একটিভ কন্ডিশন
+            const isActive =
+              pathname === item.href || item.href.includes(pathname + "?");
 
             return (
               <Link
                 key={ind}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive ? "bg-primary text-white shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
               >
                 <Icon size={18} /> {item.title}
               </Link>
@@ -333,7 +337,7 @@ const DashboardSidebar = () => {
           })}
         </div>
 
-        {/*  bottom profile section dropdownOpen*/}
+        {/* bottom profile section */}
         <div className="mt-auto pt-4 border-t border-border/60">
           <div className="flex items-center gap-3 py-4">
             <Dropdown>
@@ -354,37 +358,31 @@ const DashboardSidebar = () => {
                 className="bg-card border border-border rounded-3xl min-w-[240px] md:min-w-[260px] p-2 z-50"
                 style={{ boxShadow: "var(--shadow)" }}
               >
-                {/* প্রোফাইল হেডার */}
-
                 <Dropdown.Menu className="text-foreground font-urbanist flex flex-col gap-0.5">
                   <Dropdown.Item
                     id="dashboard"
-                    textValue="My Dashboard"
+                    textValue="Home"
                     className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all"
                   >
                     <Link
                       href={"/"}
                       className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground font-medium"
                     >
-                      <span>
-                        <HomeIcon size={18} />
-                      </span>
+                      <HomeIcon size={18} />
                       <span>Home</span>
                     </Link>
                   </Dropdown.Item>
 
                   <Dropdown.Item
                     id="profile"
-                    textValue="My Profile"
+                    textValue="Browse Books"
                     className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all mt-0.5"
                   >
                     <Link
                       href="/profile"
                       className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground"
                     >
-                      <span>
-                        <BookOpen size={18} />
-                      </span>
+                      <BookOpen size={18} />
                       <span>Browse Books</span>
                     </Link>
                   </Dropdown.Item>
