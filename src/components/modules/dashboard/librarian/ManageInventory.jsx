@@ -1,14 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Tooltip } from "@heroui/react";
 import { Edit3, Trash2, Eye, EyeOff, Lock } from "lucide-react";
 import { toggleBooksStatusById } from "@/lib/actions/books";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import EditBookModal from "./EditBookModal";
 
 const ManageInventory = ({ books = [] }) => {
   const router = useRouter();
+
+  // edit modal state
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   // status change
   const handleToggleStatus = async (bookId, currentStatus) => {
@@ -26,16 +31,27 @@ const ManageInventory = ({ books = [] }) => {
     }
   };
 
-  //  edit book
-  const handleEditBook = (bookId) => {
-    console.log("Edit clicked for ID:", bookId);
-  };
-
   // delete book
   const handleDeleteBook = (bookId) => {
     console.log("Delete clicked for ID:", bookId);
   };
 
+  const handleEditClick = (book) => {
+    setSelectedBook(book);
+    setIsEditing(true);
+  };
+  // Edit Book Modal
+  if (isEditing) {
+    return (
+      <EditBookModal
+        selectedBook={selectedBook}
+        onCancel={() => setIsEditing(false)}
+        onUpdateSuccess={() => router.refresh()}
+      />
+    );
+  }
+
+  // 📊 ডিফল্ট টেবল ভিউ
   return (
     <div className="space-y-6 font-urbanist p-4 md:p-6 text-foreground">
       <div>
@@ -51,8 +67,8 @@ const ManageInventory = ({ books = [] }) => {
         </div>
       ) : (
         <>
-          {/* =================(Hidden on Mobile) ================= */}
-          <div className="hidden md:block table-wrapper border border-border bg-card rounded-3xl  shadow-sm overflow-x-auto">
+          {/* ================= (ডেস্কটপ টেবিল ভিউ) ================= */}
+          <div className="hidden md:block table-wrapper border border-border bg-card rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-muted/40 text-muted-foreground font-semibold text-xs uppercase tracking-wider border-b border-border">
@@ -141,8 +157,9 @@ const ManageInventory = ({ books = [] }) => {
                           </Tooltip>
                         )}
                         <Tooltip content="Edit Book" className="rounded-xl">
+                          {/* 🎯 মডাল হুক ছাড়া পিওর রিঅ্যাক্ট ফাংশন কল */}
                           <button
-                            onClick={() => handleEditBook(book._id)}
+                            onClick={() => handleEditClick(book)}
                             className="p-2 text-primary bg-primary/10 rounded-xl hover:bg-primary/20 transition-all cursor-pointer"
                           >
                             <Edit3 size={18} />
@@ -168,14 +185,13 @@ const ManageInventory = ({ books = [] }) => {
             </table>
           </div>
 
-          {/* ================= (Hidden on Desktop) ================= */}
+          {/* ================= (মোবাইল কার্ড ভিউ) ================= */}
           <div className="block md:hidden space-y-4">
             {books.map((book) => (
               <div
                 key={book._id}
                 className="border border-border bg-card rounded-2xl p-4 shadow-sm space-y-3"
               >
-                {/* content*/}
                 <div className="flex gap-3">
                   <Avatar
                     src={book.cover}
@@ -199,10 +215,7 @@ const ManageInventory = ({ books = [] }) => {
                     </div>
                   </div>
                 </div>
-
                 <hr className="border-border/60" />
-
-                {/* start requests */}
                 <div className="flex items-center justify-between text-xs font-semibold">
                   <div className="text-muted-foreground">
                     Requests:{" "}
@@ -222,10 +235,7 @@ const ManageInventory = ({ books = [] }) => {
                     {book.status}
                   </span>
                 </div>
-
                 <hr className="border-border/60" />
-
-                {/* Actions */}
                 <div className="flex items-center justify-end gap-2 pt-1">
                   {book.status === "Pending Approval" ? (
                     <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-muted-foreground/50 bg-muted/30 rounded-xl cursor-not-allowed">
@@ -234,11 +244,7 @@ const ManageInventory = ({ books = [] }) => {
                   ) : (
                     <button
                       onClick={() => handleToggleStatus(book._id, book.status)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-xl font-medium transition-all cursor-pointer ${
-                        book.status === "Published"
-                          ? "text-amber-500 bg-amber-500/10"
-                          : "text-emerald-500 bg-emerald-500/10"
-                      }`}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-xl font-medium transition-all cursor-pointer ${book.status === "Published" ? "text-amber-500 bg-amber-500/10" : "text-emerald-500 bg-emerald-500/10"}`}
                     >
                       {book.status === "Published" ? (
                         <EyeOff size={14} />
@@ -248,14 +254,13 @@ const ManageInventory = ({ books = [] }) => {
                       {book.status === "Published" ? "Unpublish" : "Publish"}
                     </button>
                   )}
-
+                  {/* Edit & Delete Buttons */}
                   <button
-                    onClick={() => handleEditBook(book._id)}
+                    onClick={() => handleEditClick(book)}
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-primary bg-primary/10 rounded-xl font-medium cursor-pointer"
                   >
                     <Edit3 size={14} /> Edit
                   </button>
-
                   <button
                     onClick={() => handleDeleteBook(book._id)}
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-red-500 bg-red-500/10 rounded-xl font-medium cursor-pointer"
