@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -9,30 +9,36 @@ import {
   FileText,
   Building2,
   Users,
-  Settings,
   Menu,
   X,
   LogOut,
-  Search,
   Bookmark,
   CreditCard,
   BriefcaseBusiness,
+  HomeIcon,
+  BookOpen,
 } from "lucide-react";
 
 import { toast } from "react-toastify";
-import { Avatar } from "@heroui/react";
+import { Avatar, Dropdown } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
-import Loader from "../shared/Loader";
+import { useTheme } from "next-themes";
 
 const DashboardSidebar = () => {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
-  const handleSignOut = async () => {
+  const handleLogout = async () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
@@ -44,7 +50,7 @@ const DashboardSidebar = () => {
     });
   };
 
-  //  User Tabs Links (ডক অনুযায়ী ম্যাচড)
+  // User Tabs Links
   const userNavLinks = [
     {
       title: "Overview",
@@ -68,7 +74,7 @@ const DashboardSidebar = () => {
     },
   ];
 
-  // 👑 Librarian Tabs Links (ডক অনুযায়ী ম্যাচড)
+  // Librarian Tabs Links
   const librarianNavLinks = [
     {
       title: "Overview",
@@ -92,7 +98,7 @@ const DashboardSidebar = () => {
     },
   ];
 
-  // 👑 Admin Tabs Links (ডক অনুযায়ী ম্যাচড)
+  // Admin Tabs Links
   const adminNavLinks = [
     {
       title: "Overview",
@@ -123,7 +129,11 @@ const DashboardSidebar = () => {
     admin: adminNavLinks,
   };
 
-  const menus = dashboardNavLinks[user?.role || "user"];
+  const userRole = user?.role || "user";
+
+  const menus = dashboardNavLinks[userRole];
+
+  if (!mounted) return null;
 
   return (
     <>
@@ -190,35 +200,98 @@ const DashboardSidebar = () => {
             );
           })}
         </div>
-        <div className="p-4 border-t border-border/60">
+
+        {/* bottom profile section dropdownOpen*/}
+        <div className="mt-auto pt-4 border-t border-border/60">
           <div className="flex items-center gap-3 py-4">
-            {" "}
-            <Avatar>
-              <Avatar.Image
-                alt={session?.user?.name || "User Profile"}
-                src={
-                  session?.user?.image ||
-                  "https://api.dicebear.com/7.x/adventurer/svg"
-                }
-                size="sm"
-                referrerPolicy="no-referrer"
-              />
-              <Avatar.Fallback className="bg-primary text-white font-semibold">
-                {session?.user?.name
-                  ? session.user.name.charAt(0).toUpperCase()
-                  : "B"}
-              </Avatar.Fallback>
-            </Avatar>
-            <div>
-              <p>{session?.user?.name}</p>
-              <p className="text-xs text-muted-foreground">
+            <Dropdown>
+              <Dropdown.Trigger className="rounded-full cursor-pointer focus:outline-none">
+                <Avatar className="ring-2 ring-primary/40 hover:ring-primary transition-all duration-300">
+                  <Avatar.Image
+                    alt={user?.name || "User Profile"}
+                    src={user?.image}
+                    referrerPolicy="no-referrer"
+                  />
+                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-sm">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
+                  </Avatar.Fallback>
+                </Avatar>
+              </Dropdown.Trigger>
+
+              <Dropdown.Popover
+                className="bg-card border border-border rounded-3xl min-w-[240px] md:min-w-[260px] p-2 z-50"
+                style={{ boxShadow: "var(--shadow)" }}
+              >
+                {/* প্রোফাইল হেডার */}
+
+                <Dropdown.Menu className="text-foreground font-urbanist flex flex-col gap-0.5">
+                  <Dropdown.Item
+                    id="dashboard"
+                    textValue="My Dashboard"
+                    className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all"
+                  >
+                    <Link
+                      href={"/"}
+                      className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground font-medium"
+                    >
+                      <span>
+                        <HomeIcon size={18} />
+                      </span>
+                      <span>Home</span>
+                    </Link>
+                  </Dropdown.Item>
+
+                  <Dropdown.Item
+                    id="profile"
+                    textValue="My Profile"
+                    className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all mt-0.5"
+                  >
+                    <Link
+                      href="/profile"
+                      className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground"
+                    >
+                      <span>
+                        <BookOpen size={18} />
+                      </span>
+                      <span>Browse Books</span>
+                    </Link>
+                  </Dropdown.Item>
+
+                  <Dropdown.Item
+                    id="logout"
+                    textValue="Logout"
+                    className="p-0 mt-3 border-t border-border/60 pt-2 hover:bg-transparent focus:bg-transparent"
+                  >
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex justify-center px-4 py-2.5 rounded-xl text-background font-semibold transition-all cursor-pointer"
+                      style={{
+                        background:
+                          theme === "dark"
+                            ? "linear-gradient(135deg, rgb(var(--primary)), rgb(var(--secondary)))"
+                            : "linear-gradient(135deg, #c4844a, #6b4226)",
+                        color: theme === "dark" ? "#071a1d" : "#fff",
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown.Popover>
+            </Dropdown>
+
+            <div className="overflow-hidden">
+              <p className="font-semibold text-sm text-foreground truncate">
+                {session?.user?.name}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
                 {session?.user?.email}
               </p>
             </div>
           </div>
           <button
-            onClick={handleSignOut}
-            className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer"
+            onClick={handleLogout}
+            className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer Urbanist"
           >
             <LogOut size={16} /> Logout
           </button>
@@ -242,7 +315,6 @@ const DashboardSidebar = () => {
         <div className="mt-10 space-y-1.5 flex-1 overflow-y-auto Urbanist">
           {menus?.map((item, ind) => {
             const Icon = item.icon;
-            // বর্তমান URL কুয়েরি প্যারামিটারের সাথে লিংক চেক করা
             const currentFullUrl =
               typeof window !== "undefined"
                 ? pathname + window.location.search
@@ -260,34 +332,97 @@ const DashboardSidebar = () => {
             );
           })}
         </div>
+
+        {/*  bottom profile section dropdownOpen*/}
         <div className="mt-auto pt-4 border-t border-border/60">
           <div className="flex items-center gap-3 py-4">
-            {" "}
-            <Avatar>
-              <Avatar.Image
-                alt={session?.user?.name || "User Profile"}
-                src={
-                  session?.user?.image ||
-                  "https://api.dicebear.com/7.x/adventurer/svg"
-                }
-                size="sm"
-                referrerPolicy="no-referrer"
-              />
-              <Avatar.Fallback className="bg-primary text-white font-semibold">
-                {session?.user?.name
-                  ? session.user.name.charAt(0).toUpperCase()
-                  : "B"}
-              </Avatar.Fallback>
-            </Avatar>
-            <div>
-              <p>{session?.user?.name}</p>
-              <p className="text-xs text-muted-foreground">
+            <Dropdown>
+              <Dropdown.Trigger className="rounded-full cursor-pointer focus:outline-none">
+                <Avatar className="ring-2 ring-primary/40 hover:ring-primary transition-all duration-300">
+                  <Avatar.Image
+                    alt={user?.name || "User Profile"}
+                    src={user?.image}
+                    referrerPolicy="no-referrer"
+                  />
+                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-sm">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
+                  </Avatar.Fallback>
+                </Avatar>
+              </Dropdown.Trigger>
+
+              <Dropdown.Popover
+                className="bg-card border border-border rounded-3xl min-w-[240px] md:min-w-[260px] p-2 z-50"
+                style={{ boxShadow: "var(--shadow)" }}
+              >
+                {/* প্রোফাইল হেডার */}
+
+                <Dropdown.Menu className="text-foreground font-urbanist flex flex-col gap-0.5">
+                  <Dropdown.Item
+                    id="dashboard"
+                    textValue="My Dashboard"
+                    className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all"
+                  >
+                    <Link
+                      href={"/"}
+                      className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground font-medium"
+                    >
+                      <span>
+                        <HomeIcon size={18} />
+                      </span>
+                      <span>Home</span>
+                    </Link>
+                  </Dropdown.Item>
+
+                  <Dropdown.Item
+                    id="profile"
+                    textValue="My Profile"
+                    className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all mt-0.5"
+                  >
+                    <Link
+                      href="/profile"
+                      className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground"
+                    >
+                      <span>
+                        <BookOpen size={18} />
+                      </span>
+                      <span>Browse Books</span>
+                    </Link>
+                  </Dropdown.Item>
+
+                  <Dropdown.Item
+                    id="logout"
+                    textValue="Logout"
+                    className="p-0 mt-3 border-t border-border/60 pt-2 hover:bg-transparent focus:bg-transparent"
+                  >
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex justify-center px-4 py-2.5 rounded-xl text-background font-semibold transition-all cursor-pointer"
+                      style={{
+                        background:
+                          theme === "dark"
+                            ? "linear-gradient(135deg, rgb(var(--primary)), rgb(var(--secondary)))"
+                            : "linear-gradient(135deg, #c4844a, #6b4226)",
+                        color: theme === "dark" ? "#071a1d" : "#fff",
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown.Popover>
+            </Dropdown>
+
+            <div className="overflow-hidden">
+              <p className="font-semibold text-sm text-foreground truncate">
+                {session?.user?.name}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
                 {session?.user?.email}
               </p>
             </div>
           </div>
           <button
-            onClick={handleSignOut}
+            onClick={handleLogout}
             className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer Urbanist"
           >
             <LogOut size={16} /> Logout
