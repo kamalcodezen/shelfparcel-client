@@ -94,7 +94,7 @@ const DashboardSidebar = () => {
     },
     {
       title: "Manage Inventory",
-      href: "/dashboard/librarian?tab=inventory",
+      href: "/dashboard/librarian/manageInventory",
       icon: Briefcase,
     },
     {
