@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@heroui/react";
 import { Save, ArrowLeft, RefreshCw, BookOpen } from "lucide-react";
 import { toast } from "react-toastify";
+import { updateBookDetailsById } from "@/lib/actions/books";
 
 const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
   const [isUpdating, setIsUpdating] = useState(false);
@@ -23,24 +24,21 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
     };
 
     try {
-      console.log(
-        "Saving Book ID:",
-        selectedBook?._id,
-        "With Data:",
-        updatedData,
-      );
+      const res = await updateBookDetailsById(selectedBook._id, updatedData);
+      if (
+        res?.success ||
+        (res?.result?.acknowledged && res?.result?.modifiedCount > 0)
+      ) {
+        toast.success(res?.message || "Book details updated successfully!");
 
-      
-      // const res = await updateBookDetailsById({ bookId: selectedBook._id, updatedData });
-
-      setTimeout(() => {
-        toast.success("Book details updated successfully!");
-        setIsUpdating(false);
         if (onUpdateSuccess) onUpdateSuccess();
         if (onCancel) onCancel();
-      }, 500);
+      } else {
+        toast.warning(res?.message || "No changes were made to update.");
+      }
     } catch (error) {
-      toast.error("Failed to update book details.");
+      toast.error("Failed to update book details. Something went wrong");
+    } finally {
       setIsUpdating(false);
     }
   };
