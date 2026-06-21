@@ -2,7 +2,7 @@ import LibrarianAddBook from "@/components/modules/dashboard/librarian/AddBook";
 
 const LibrarianAddBookPage = () => {
   return (
-    <div>
+    <div className="min-h-screen">
       <LibrarianAddBook />
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { addBooksByLibrarian } from "@/lib/actions/addBooks";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { FiPlusCircle, FiLoader, FiUploadCloud } from "react-icons/fi";
@@ -34,22 +35,21 @@ const LibrarianAddBook = () => {
     }
   };
 
-  // ফর্ম সাবমিট ও imgBB আপলোড হ্যান্ডেলার
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //  ইমেজ সিলেক্ট না থাকলে আগেই আটকে দেওয়া
     if (!imageFile) {
-      toast.error("Please upload a book cover image!");
-      return;
+      return toast.error("Please upload a book cover image before submitting!");
     }
 
     setLoading(true);
 
     try {
-      // ১. imgBB ক্লাউডে ইমেজ পাঠানোর জন্য ফর্ম ডেটা রেডি করা
+      //  imgBB ক্লাউড স্টোরেজে ইমেজ আপলোড পাইপলাইন
       const imgApiData = new FormData();
       imgApiData.append("image", imageFile);
 
-      // imgBB API Key
       const IMGBB_API_KEY = `5d110d0078bf4b9705ee35ce04c569ac`;
       const imgbbUrl = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
 
@@ -58,53 +58,68 @@ const LibrarianAddBook = () => {
         body: imgApiData,
       });
 
-      const imgResult = await imgResponse.json();
-
-      if (!imgResult.success) {
-        throw new Error("Image upload to imgBB failed!");
+      if (!imgResponse.ok) {
+        throw new Error(
+          `Cloud storage handshake failed with status ${imgResponse.status}`,
+        );
       }
 
-      // imgBB থেকে জেনারেট হওয়া লাইভ ইমেজ ইউআরএল
+      const imgResult = await imgResponse.json();
+
+      if (!imgResult?.success || !imgResult?.data?.display_url) {
+        throw new Error(
+          imgResult?.message || "Image extraction from imgBB failed!",
+        );
+      }
+
+      // imgBB ক্লাউড থেকে জেনারেট হওয়া রিয়েল-টাইম লাইভ সিডিএন লিঙ্ক
       const liveImageUrl = imgResult.data.display_url;
 
       const finalBookPayload = {
-        title: formData.title,
-        author: formData.author,
-        fee: Number(formData.fee),
+        title: formData.title?.trim(),
+        author: formData.author?.trim(),
+        fee: Number(formData.fee) || 0,
         category: formData.category,
-        description: formData.description,
+        description: formData.description?.trim(),
         cover: liveImageUrl,
         status: "Pending Approval",
-        librarianName: user?.name,
+        librarianName: user?.name || "Anonymous Provider",
         librarianEmail: user?.email,
         librarianId: user?.id,
         librarianImage: user?.image,
       };
 
-      console.log("Form Ready to hit backend with Payload:", finalBookPayload);
+      const res = await addBooksByLibrarian(finalBookPayload);
 
-      toast.success(
-        "Success! Image hosted on imgBB. Ready to insert in database.",
-      );
+      if (res?.success || res?.insertedId || res?.acknowledged) {
+        toast.success(
+          `"${formData.title}" added successfully! Awaiting Admin Approval.`,
+        );
 
+        // ফর্ম ও প্রিভিউ মেমোরি ফ্লাশ (Reset) করা
+        // setFormData({
+        //   title: "",
+        //   author: "",
+        //   fee: "",
+        //   category: "Fiction",
+        //   description: "",
+        // });
+        // setImageFile(null);
+        // e.target.reset();
 
-      
-
-
-      // স্টেট এবং ফরম রিসেট করা
-      //   setFormData({
-      //     title: "",
-      //     author: "",
-      //     fee: "",
-      //     category: "Fiction",
-      //     description: "",
-      //   });
-      //   setImageFile(null);
-      //   setPreviewUrl("");
-      //   e.target.reset();
+        // প্রজেক্টের ফ্লো অনুযায়ী রাউটার একশন
+        // router.push("/dashboard/librarian");
+        // router.refresh();
+      } else {
+        throw new Error(
+          res?.message || "Database engine declined the ingestion request.",
+        );
+      }
     } catch (error) {
-      console.error(error);
-      toast.error(error.message || "Something went wrong!");
+      console.error("⛔ [CRITICAL PIPELINE ERROR]:", error);
+      toast.error(
+        error.message || "An unexpected system execution failure occurred!",
+      );
     } finally {
       setLoading(false);
     }
@@ -255,11 +270,10 @@ const LibrarianAddBook = () => {
             >
               {loading ? (
                 <>
-                  <FiLoader className="animate-spin" /> Syncing with imgBB
-                  Pipelines...
+                  <FiLoader className="animate-spin" /> Uploading...
                 </>
               ) : (
-                "Submit Book to System Queue"
+                "Add Book"
               )}
             </button>
           </div>
