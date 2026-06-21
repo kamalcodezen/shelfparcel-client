@@ -7,19 +7,21 @@ import { toggleBooksStatusById } from "@/lib/actions/books";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import EditBookModal from "./EditBookModal";
+import DeleteBookModal from "./DeleteBookModal";
 
 const ManageInventory = ({ books = [] }) => {
   const router = useRouter();
 
-  // edit modal state
   const [isEditing, setIsEditing] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState(null);
 
   // status change
   const handleToggleStatus = async (bookId, currentStatus) => {
     try {
       const res = await toggleBooksStatusById({ bookId, currentStatus });
-
       if (res?.success) {
         toast.success(res.message);
         router.refresh();
@@ -27,20 +29,15 @@ const ManageInventory = ({ books = [] }) => {
         toast.error(res?.message || "Failed to update status.");
       }
     } catch (error) {
-      toast.error("Something went wrong while toggling status ❌");
+      toast.error("Something went wrong while toggling status ");
     }
-  };
-
-  // delete book
-  const handleDeleteBook = (bookId) => {
-    console.log("Delete clicked for ID:", bookId);
   };
 
   const handleEditClick = (book) => {
     setSelectedBook(book);
     setIsEditing(true);
   };
-  // Edit Book Modal
+
   if (isEditing) {
     return (
       <EditBookModal
@@ -50,8 +47,12 @@ const ManageInventory = ({ books = [] }) => {
       />
     );
   }
+  // Delete Book Modal
+  const handleDeleteClick = (book) => {
+    setBookToDelete(book);
+    setIsDeleteOpen(true);
+  };
 
-  // 📊 ডিফল্ট টেবল ভিউ
   return (
     <div className="space-y-6 font-urbanist p-4 md:p-6 text-foreground">
       <div>
@@ -157,7 +158,6 @@ const ManageInventory = ({ books = [] }) => {
                           </Tooltip>
                         )}
                         <Tooltip content="Edit Book" className="rounded-xl">
-                          {/* 🎯 মডাল হুক ছাড়া পিওর রিঅ্যাক্ট ফাংশন কল */}
                           <button
                             onClick={() => handleEditClick(book)}
                             className="p-2 text-primary bg-primary/10 rounded-xl hover:bg-primary/20 transition-all cursor-pointer"
@@ -170,8 +170,9 @@ const ManageInventory = ({ books = [] }) => {
                           color="danger"
                           className="rounded-xl"
                         >
+                          {/*Delete Book Button */}
                           <button
-                            onClick={() => handleDeleteBook(book._id)}
+                            onClick={() => handleDeleteClick(book)}
                             className="p-2 text-red-500 bg-red-500/10 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer"
                           >
                             <Trash2 size={18} />
@@ -216,53 +217,16 @@ const ManageInventory = ({ books = [] }) => {
                   </div>
                 </div>
                 <hr className="border-border/60" />
-                <div className="flex items-center justify-between text-xs font-semibold">
-                  <div className="text-muted-foreground">
-                    Requests:{" "}
-                    <span className="font-bold text-foreground font-poppins">
-                      {book.requests || 0}
-                    </span>
-                  </div>
-                  <span
-                    className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold font-poppins tracking-wide ${
-                      book.status === "Published"
-                        ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
-                        : book.status === "Unpublished"
-                          ? "bg-amber-500/10 text-amber-500 border border-amber-500/20"
-                          : "bg-blue-500/10 text-blue-500 border border-blue-500/20"
-                    }`}
-                  >
-                    {book.status}
-                  </span>
-                </div>
-                <hr className="border-border/60" />
                 <div className="flex items-center justify-end gap-2 pt-1">
-                  {book.status === "Pending Approval" ? (
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-muted-foreground/50 bg-muted/30 rounded-xl cursor-not-allowed">
-                      <Lock size={14} /> Locked
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleToggleStatus(book._id, book.status)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-xl font-medium transition-all cursor-pointer ${book.status === "Published" ? "text-amber-500 bg-amber-500/10" : "text-emerald-500 bg-emerald-500/10"}`}
-                    >
-                      {book.status === "Published" ? (
-                        <EyeOff size={14} />
-                      ) : (
-                        <Eye size={14} />
-                      )}
-                      {book.status === "Published" ? "Unpublish" : "Publish"}
-                    </button>
-                  )}
-                  {/* Edit & Delete Buttons */}
                   <button
                     onClick={() => handleEditClick(book)}
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-primary bg-primary/10 rounded-xl font-medium cursor-pointer"
                   >
                     <Edit3 size={14} /> Edit
                   </button>
+                  {/* Delete Book Button */}
                   <button
-                    onClick={() => handleDeleteBook(book._id)}
+                    onClick={() => handleDeleteClick(book)}
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-red-500 bg-red-500/10 rounded-xl font-medium cursor-pointer"
                   >
                     <Trash2 size={14} /> Delete
@@ -273,6 +237,17 @@ const ManageInventory = ({ books = [] }) => {
           </div>
         </>
       )}
+
+      {/* Delete Book Modal */}
+      <DeleteBookModal
+        isOpen={isDeleteOpen}
+        onClose={() => {
+          setIsDeleteOpen(false);
+          setBookToDelete(null);
+        }}
+        bookToDelete={bookToDelete}
+        onDeleteSuccess={() => router.refresh()}
+      />
     </div>
   );
 };
