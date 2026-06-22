@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // এনিমেশনের জন্য যোগ করা হয়েছে
+import { motion, AnimatePresence } from "framer-motion"; 
 import { Button } from "@heroui/react";
 import { Check, Trash2, Clock, AlertCircle, User } from "lucide-react";
 import DeleteBookModal from "../librarian/DeleteBookModal";
 import { useRouter } from "next/navigation";
+import { adminUpdateApprovedStatusById } from "@/lib/actions/books";
+import { toast } from "react-toastify";
 
 const BookApproval = ({ books = [] }) => {
   const router = useRouter();
@@ -13,9 +15,23 @@ const BookApproval = ({ books = [] }) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
 
-  const handleApprove = async (bookId, title) => {};
-
-  const handleDelete = async (bookId, title) => {};
+  // approved status change
+  const handleApprove = async (bookId, status) => {
+    try {
+      const res = await adminUpdateApprovedStatusById({
+        bookId,
+        status,
+      });
+      if (res?.success) {
+        toast.success(res.message);
+        router.refresh();
+      } else {
+        toast.error(res?.message || "Failed to update status.");
+      }
+    } catch (error) {
+      toast.error("Something went wrong while approving the book ");
+    }
+  };
 
   //  AnimatePresence motion
   const containerVariants = {
@@ -133,7 +149,7 @@ const BookApproval = ({ books = [] }) => {
                         <div className="flex items-center justify-center gap-2">
                           <Button
                             size="sm"
-                            onClick={() => handleApprove(book._id, book.title)}
+                            onClick={() => handleApprove(book._id, book.status)}
                             className="bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-9 cursor-pointer"
                             startContent={<Check size={14} strokeWidth={3} />}
                           >
@@ -201,7 +217,7 @@ const BookApproval = ({ books = [] }) => {
                   <div className="flex gap-2">
                     <Button
                       size="sm"
-                      onClick={() => handleApprove(book._id, book.title)}
+                      onClick={() => handleApprove(book._id, book.status)}
                       className="flex-1 bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-10"
                       startContent={<Check size={14} strokeWidth={3} />}
                     >

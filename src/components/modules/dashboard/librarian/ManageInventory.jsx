@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Avatar, Tooltip } from "@heroui/react";
-import { Edit3, Trash2, Eye, EyeOff, Lock } from "lucide-react";
+import { Edit3, Trash2, Eye, EyeOff, Lock, BookAIcon, BookHeartIcon, BookOpen } from "lucide-react";
 import { toggleBooksStatusById } from "@/lib/actions/books";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -69,7 +69,7 @@ const ManageInventory = ({ books = [] }) => {
         </div>
       ) : (
         <>
-          {/* ================= (ডেস্কটপ টেবিল ভিউ) ================= */}
+          {/* ================= Desktop View ================= */}
           <div className="hidden md:block table-wrapper border border-border bg-card rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -132,9 +132,9 @@ const ManageInventory = ({ books = [] }) => {
                         >
                           <Link
                             href={`/books/${book._id}`}
-                            className="p-2  text-[#fbeee1] bg-blue-500/10 rounded-xl hover:bg-blue-500/20 transition-all"
+                            className="p-2  text-blue-500 bg-blue-500/10 rounded-xl hover:bg-blue-500/20 transition-all"
                           >
-                            <Eye size={18} />
+                            <BookOpen size={18} />
                           </Link>
                         </Tooltip>
 
@@ -200,7 +200,7 @@ const ManageInventory = ({ books = [] }) => {
             </table>
           </div>
 
-          {/* ================= (মোবাইল কার্ড ভিউ) ================= */}
+          {/* ================= Mobile View ================= */}
           <div className="block md:hidden space-y-4">
             {books.map((book) => (
               <div
@@ -208,20 +208,44 @@ const ManageInventory = ({ books = [] }) => {
                 className="border border-border bg-card rounded-2xl p-4 shadow-sm space-y-3"
               >
                 <div className="flex gap-3">
-                  <Avatar
+                  <img
                     src={book.cover}
+                    alt={book.title}
                     radius="lg"
-                    className="w-14 h-16 object-cover flex-shrink-0"
+                    className="w-16 h-16 rounded-full object-cover flex-shrink-0"
                   />
                   <div className="overflow-hidden flex-1">
                     <div className="flex justify-between items-start gap-1">
                       <h4 className="font-bold text-foreground text-sm font-poppins truncate flex-1">
                         {book.title}
                       </h4>
-                      {/* মোবাইল স্ট্যাটাস ডট ইন্ডিকেটর */}
-                      <span
-                        className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${book.status === "Published" ? "bg-emerald-500" : book.status === "Unpublished" ? "bg-amber-500" : "bg-blue-500"}`}
-                      />
+                      {/* Status change */}
+                      <div className="flex items-center gap-1.5">
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-bold font-poppins tracking-wide ${
+                            book.status === "Published"
+                              ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
+                              : book.status === "Unpublished"
+                                ? "bg-amber-500/10 text-amber-500 border border-amber-500/20"
+                                : "bg-blue-500/10 text-blue-500 border border-blue-500/20"
+                          }`}
+                        >
+                          {book.status.slice(0, 10)}
+                        </span>
+
+                        <button
+                          onClick={() =>
+                            handleToggleStatus(book._id, book.status)
+                          }
+                          className={`p-2 rounded-xl transition-all cursor-pointer ${book.status === "Published" ? "text-amber-500 bg-amber-500/10 hover:bg-amber-500/20" : "text-emerald-500 bg-emerald-500/10 hover:bg-emerald-500/20"}`}
+                        >
+                          {book.status === "Published" ? (
+                            <EyeOff size={18} />
+                          ) : (
+                            <Eye size={18} />
+                          )}
+                        </button>
+                      </div>
                     </div>
                     <p className="text-xs text-muted-foreground truncate">
                       by {book.author}
@@ -241,7 +265,7 @@ const ManageInventory = ({ books = [] }) => {
                   {/* details page */}
                   <Link
                     href={`/books/${book._id}`}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#fbeee1] bg-blue-500/10 rounded-xl font-medium"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-blue-500 bg-blue-500/10 rounded-xl font-medium"
                   >
                     <Eye size={14} /> View
                   </Link>
