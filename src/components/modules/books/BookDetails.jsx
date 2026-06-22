@@ -15,6 +15,7 @@ import {
   Star,
   MessageSquare,
   ArrowLeft,
+  Eye,
 } from "lucide-react";
 import { Button } from "@heroui/react";
 import Link from "next/link";
@@ -23,6 +24,8 @@ import EditBookModal from "../dashboard/librarian/EditBookModal";
 import { useRouter } from "next/navigation";
 import DeleteBookModal from "../dashboard/librarian/DeleteBookModal";
 import DeletedAssetScreen from "./DeletedAssetScreen";
+import { toggleBooksStatusById } from "@/lib/actions/books";
+import { toast } from "react-toastify";
 
 // Reviews Mock Data
 const mockReviews = [
@@ -109,6 +112,21 @@ export default function BookDetails({ books }) {
     setIsDeleteOpen(true);
   };
 
+  // status change
+  const handleToggleStatus = async (bookId, currentStatus) => {
+    try {
+      const res = await toggleBooksStatusById({ bookId, currentStatus });
+      if (res?.success) {
+        toast.success(res.message);
+        router.refresh();
+      } else {
+        toast.error(res?.message || "Failed to update status.");
+      }
+    } catch (error) {
+      toast.error("Something went wrong while toggling status ");
+    }
+  };
+
   if (!books) {
     return <DeletedAssetScreen />;
   }
@@ -182,7 +200,7 @@ export default function BookDetails({ books }) {
             </div>
 
             <div className="space-y-2">
-              <h1 className="text-3xl md:text-5xl font-black font-poppins text-foreground tracking-tight leading-none">
+              <h1 className="text-3xl md:text-5xl font-semibold font-poppins text-foreground tracking-tight leading-none">
                 {books?.title || "Untitled Asset"}
               </h1>
               <p className="text-sm md:text-base text-muted-foreground font-medium flex items-center gap-2 pt-1">
@@ -250,20 +268,28 @@ export default function BookDetails({ books }) {
               <div className="grid grid-cols-3 gap-3 pt-2 w-full">
                 <Button
                   onClick={() => handleEditClick(books)}
-                  className="bg-blue-500/10 text-blue-500 border border-blue-500/20 h-10 font-bold rounded-lg text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  className="bg-blue-500/10 px-8 text-blue-500 border border-blue-500/20 h-10 font-bold rounded-lg text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<Edit3 size={14} />}
                 >
                   Edit
                 </Button>
+
                 <Button
-                  className="bg-amber-500/10 text-amber-500 border border-amber-500/20 h-10 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
-                  startContent={<EyeOff size={14} />}
+                  onClick={() => handleToggleStatus(books?._id, books?.status)}
+                  className={`h-10 px-3  font-poppins tracking-wider text-xs uppercase cursor-pointer transition-transform active:scale-95 border rounded-lg ${
+                    books?.status === "Published"
+                      ? "bg-amber-500/10 text-amber-500 border-amber-500/20 hover:bg-amber-500/20"
+                      : books?.status === "Unpublished"
+                        ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20 hover:bg-emerald-500/20"
+                        : "bg-red-500/10 text-red-500 border-red-500/20"
+                  }`}
                 >
-                  Unpublish
+                  {books?.status === "Published" ? "Unpublish" : "Publish"}
                 </Button>
+
                 <Button
                   onClick={() => handleDeleteClick(books)}
-                  className="bg-red-500/10 text-red-500 border border-red-500/20 h-10 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  className="px-5 bg-red-500/10 text-red-500 border border-red-500/20 h-10 font-bold rounded-lg text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<Trash2 size={14} />}
                 >
                   Delete
