@@ -1,88 +1,118 @@
+"use client";
+
 import Link from "next/link";
 
 const BookCard = ({ book }) => {
   return (
-    <div className="group relative overflow-hidden rounded-lg border border-border bg-card">
-      {/* Light Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-primary/10 blur-[140px] rounded-full" />
+    <div className="group relative overflow-hidden rounded-xl border border-border bg-card h-[390px] shadow-sm transition-all duration-300 hover:shadow-lg">
+      {/* Glow Effect */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-primary/5 blur-[140px] rounded-full pointer-events-none" />
 
-      {/* Dark Glow */}
-      <div className="hidden dark:block absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-primary/12 blur-[180px] rounded-full" />
-
-      {/* Normal View */}
-      <div className="p-6 transition-all duration-500 group-hover:-translate-y-full">
-        <div className="flex flex-col items-center text-center">
-          <div className="h-30 w-full  rounded-full flex items-center justify-center">
-            <img src={book.cover} alt={book.title} className="h-30 w-full rounded-md" />
+      {/* ================= Normal View ================= */}
+      <div className="h-full p-5 flex flex-col transition-all duration-500 group-hover:-translate-y-full">
+        <div className="space-y-4">
+          {/* Book Cover */}
+          <div className="h-30 w-full overflow-hidden rounded-lg border border-border/30">
+            <img
+              src={book?.cover}
+              alt={book?.title}
+              className="h-full w-full object-cover"
+            />
           </div>
 
-          <h3 className="mt-4 text-xl font-bold">
-            {book?.title ? `${book.title.slice(0, 10)}...` : "No Title"}
-          </h3>
+          {/* Book Info */}
+          <div className="text-center space-y-1">
+            <h3
+              className="text-lg font-bold font-poppins text-foreground line-clamp-1"
+              title={book?.title}
+            >
+              {book?.title || "Untitled Book"}
+            </h3>
 
-          <p className="mt-1 text-muted-foreground">{book.author}</p>
-
-          <div className="mt-2 space-y-2">
-            <p className="text-primary font-semibold">${book.fee}</p>
-
-            <p className="text-sm text-muted-foreground">{book.category}</p>
+            <p className="text-sm text-muted-foreground line-clamp-1">
+              by {book?.author || "Unknown Author"}
+            </p>
           </div>
 
-          <Link
-            href={`/books/${book._id}`}
-            className="btn-primary mt-5 h-10 px-5 inline-flex items-center justify-center font-poppins text-sm tracking-wide group hover:scale-[1.02] transition-all"
-          >
-            View Details
-          </Link>
+          {/* Category + Fee */}
+          <div className="flex items-center justify-between rounded-xl border border-border/40 bg-card-soft/50 px-4 py-3">
+            <span className="text-xs text-muted-foreground">
+              {book?.category || "General"}
+            </span>
+
+            <span className="font-bold text-primary">${book?.fee || 0}</span>
+          </div>
         </div>
+
+        {/* Button */}
+        <Link
+          href={`/books/${book?._id}`}
+          className="btn-primary mt-auto w-full inline-flex items-center justify-center text-sm font-semibold"
+        >
+          View Details
+        </Link>
       </div>
 
-      {/* Hover Content */}
-      <div
-        className="
-      absolute
-      inset-0
-      p-6
-      bg-card
-      translate-y-full
-      group-hover:translate-y-0
-      transition-all
-      duration-500
-      flex
-      flex-col
-    "
-      >
-        <div className="flex justify-between">
-          <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs">
-            {book.category}
-          </span>
+      {/* ================= Hover View ================= */}
+      <div className="absolute inset-0 p-5 bg-card translate-y-full group-hover:translate-y-0 transition-all duration-500 flex flex-col justify-between z-10">
+        <div>
+          {/* Top Badges */}
+          <div className="flex items-center justify-between">
+            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
+              {book?.category || "General"}
+            </span>
 
-          <span
-            className={`px-3 py-1 rounded-full text-xs ${
-              book.isAvailable
-                ? "bg-green-500/10 text-green-500"
-                : "bg-red-500/10 text-red-500"
-            }`}
-          >
-            {book.isAvailable ? "Available" : "Checked Out"}
-          </span>
+            <span
+              className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                book?.isAvailable
+                  ? "bg-green-500/10 text-green-500"
+                  : "bg-red-500/10 text-red-500"
+              }`}
+            >
+              {book?.isAvailable ? "Available" : "Checked Out"}
+            </span>
+          </div>
+
+          {/* Title */}
+          <div className="mt-5">
+            <h3 className="text-xl font-bold font-poppins line-clamp-2">
+              {book?.title}
+            </h3>
+
+            <p className="mt-1 text-sm text-muted-foreground">
+              by {book?.author}
+            </p>
+          </div>
+
+          {/* Details */}
+          <div className="mt-5 space-y-3 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Delivery Fee</span>
+              <span className="font-semibold text-primary">
+                ${book?.fee || 0}
+              </span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Added Date</span>
+              <span>{book?.dateAdded || "N/A"}</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Category</span>
+              <span>{book?.category || "General"}</span>
+            </div>
+
+            <div className="rounded-xl bg-primary/5 border border-primary/10 p-3 text-xs text-primary">
+              ✓ Home Delivery Available
+            </div>
+          </div>
         </div>
 
-        <h3 className="mt-4 text-xl font-bold">{book.title}</h3>
-
-        <p className="mt-3 text-sm text-muted-foreground">
-          Written by {book.author}
-        </p>
-
-        <div className="mt-4 space-y-2 text-sm">
-          <p>Delivery Fee: ${book.fee}</p>
-          <p>Added: {book.dateAdded}</p>
-          <p>Home Delivery Available</p>
-        </div>
-
+        {/* Bottom Button */}
         <Link
-          href={`/books/${book._id}`}
-          className="btn-primary mt-15 h-10 px-5 inline-flex items-center justify-center font-poppins text-sm tracking-wide group hover:scale-[1.02] transition-all"
+          href={`/books/${book?._id}`}
+          className="btn-primary w-full inline-flex items-center justify-center text-sm font-semibold"
         >
           View Details
         </Link>

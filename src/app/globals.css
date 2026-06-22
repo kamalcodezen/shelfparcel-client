@@ -153,27 +153,27 @@ button {
   }
 
   .dashboard-card {
-    @apply rounded-3xl border p-6 backdrop-blur-md transition-all duration-300;
+    @apply rounded-lg border p-6 backdrop-blur-md transition-all duration-300;
     background: rgba(var(--card), 0.85);
     border-color: rgb(var(--border));
     box-shadow: var(--shadow);
   }
 
   .soft-card {
-    @apply rounded-3xl border p-6;
+    @apply rounded-lg border p-6;
     background: rgb(var(--card-soft));
     border-color: rgb(var(--border));
   }
 
   .book-card {
-    @apply overflow-hidden rounded-3xl border transition-all duration-300;
+    @apply overflow-hidden rounded-lg border transition-all duration-300;
     background: rgba(var(--card), 0.85);
     border-color: rgb(var(--border));
     box-shadow: var(--shadow);
   }
 
   .table-wrapper {
-    @apply overflow-hidden rounded-3xl border;
+    @apply overflow-hidden rounded-lg border;
     background: rgb(var(--card));
     border-color: rgb(var(--border));
   }
@@ -194,7 +194,7 @@ button {
   }
 
   .btn-primary {
-    @apply rounded-xl px-6 py-3 text-white font-semibold transition-all duration-200 active:scale-95 shadow-md;
+    @apply rounded-lg px-6 py-3 text-white font-semibold transition-all duration-200 active:scale-95 shadow-md;
   }
 
   .btn-secondary {
