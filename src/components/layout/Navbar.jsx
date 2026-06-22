@@ -29,7 +29,7 @@ export default function Navbar() {
 
   const links = [
     { label: "Home", path: "/" },
-    { label: "Browse Books", path: "/browse" },
+    { label: "Browse Books", path: "/books" },
   ];
 
   const dashboardRoutes = {
