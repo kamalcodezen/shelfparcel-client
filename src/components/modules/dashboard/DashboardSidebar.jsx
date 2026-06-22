@@ -108,7 +108,7 @@ const DashboardSidebar = () => {
   const adminNavLinks = [
     {
       title: "Overview",
-      href: "/dashboard/admin?tab=overview",
+      href: "/dashboard/admin/overview",
       icon: LayoutDashboard,
     },
     {
