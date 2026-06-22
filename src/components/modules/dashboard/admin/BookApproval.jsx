@@ -1,11 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion"; // এনিমেশনের জন্য যোগ করা হয়েছে
 import { Button } from "@heroui/react";
 import { Check, Trash2, Clock, AlertCircle, User } from "lucide-react";
+import DeleteBookModal from "../librarian/DeleteBookModal";
+import { useRouter } from "next/navigation";
 
 const BookApproval = ({ books = [] }) => {
+  const router = useRouter();
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState(null);
+
   const handleApprove = async (bookId, title) => {};
 
   const handleDelete = async (bookId, title) => {};
@@ -22,6 +29,12 @@ const BookApproval = ({ books = [] }) => {
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacity: 1 },
+  };
+
+  //   Delete Book Modal
+  const handleDeleteClick = (book) => {
+    setBookToDelete(book);
+    setIsDeleteOpen(true);
   };
 
   return (
@@ -128,7 +141,7 @@ const BookApproval = ({ books = [] }) => {
                           </Button>
                           <motion.button
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => handleDelete(book._id, book.title)}
+                            onClick={() => handleDeleteClick(book)}
                             className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer"
                           >
                             <Trash2 size={15} />
@@ -196,7 +209,7 @@ const BookApproval = ({ books = [] }) => {
                     </Button>
                     <Button
                       size="sm"
-                      onClick={() => handleDelete(book._id, book.title)}
+                      onClick={() => handleDeleteClick(book)}
                       className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-10 px-4"
                     >
                       <Trash2 size={14} />
@@ -208,6 +221,16 @@ const BookApproval = ({ books = [] }) => {
           </div>
         </>
       )}
+
+      <DeleteBookModal
+        isOpen={isDeleteOpen}
+        onClose={() => {
+          setIsDeleteOpen(false);
+          setBookToDelete(null);
+        }}
+        bookToDelete={bookToDelete}
+        onDeleteSuccess={() => router.refresh()}
+      />
     </motion.div>
   );
 };
