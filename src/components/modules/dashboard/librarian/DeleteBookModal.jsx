@@ -61,7 +61,7 @@ const DeleteBookModal = ({
             <p className="text-sm text-muted-foreground px-2">
               Are you absolutely sure you want to delete{" "}
               <span className="text-primary font-semibold">
-                "{bookToDelete?.title}"
+                {bookToDelete?.title}
               </span>
               ? This action cannot be undone.
             </p>

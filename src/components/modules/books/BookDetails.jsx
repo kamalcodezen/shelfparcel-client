@@ -14,12 +14,15 @@ import {
   EyeOff,
   Star,
   MessageSquare,
+  ArrowLeft,
 } from "lucide-react";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import EditBookModal from "../dashboard/librarian/EditBookModal";
 import { useRouter } from "next/navigation";
+import DeleteBookModal from "../dashboard/librarian/DeleteBookModal";
+import DeletedAssetScreen from "./DeletedAssetScreen";
 
 // Reviews Mock Data
 const mockReviews = [
@@ -48,6 +51,9 @@ export default function BookDetails({ books }) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState(null);
 
   const { data: session } = authClient.useSession();
   const loggedInUser = session?.user;
@@ -95,6 +101,16 @@ export default function BookDetails({ books }) {
         onUpdateSuccess={() => router.refresh()}
       />
     );
+  }
+
+  // book delete modal function
+  const handleDeleteClick = (book) => {
+    setBookToDelete(book);
+    setIsDeleteOpen(true);
+  };
+
+  if (!books) {
+    return <DeletedAssetScreen />;
   }
 
   return (
@@ -234,19 +250,20 @@ export default function BookDetails({ books }) {
               <div className="grid grid-cols-3 gap-3 pt-2 w-full">
                 <Button
                   onClick={() => handleEditClick(books)}
-                  className="bg-blue-500/10 text-blue-500 border border-blue-500/20 h-12 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  className="bg-blue-500/10 text-blue-500 border border-blue-500/20 h-10 font-bold rounded-lg text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<Edit3 size={14} />}
                 >
                   Edit
                 </Button>
                 <Button
-                  className="bg-amber-500/10 text-amber-500 border border-amber-500/20 h-12 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  className="bg-amber-500/10 text-amber-500 border border-amber-500/20 h-10 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<EyeOff size={14} />}
                 >
                   Unpublish
                 </Button>
                 <Button
-                  className="bg-red-500/10 text-red-500 border border-red-500/20 h-12 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  onClick={() => handleDeleteClick(books)}
+                  className="bg-red-500/10 text-red-500 border border-red-500/20 h-10 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<Trash2 size={14} />}
                 >
                   Delete
@@ -306,6 +323,17 @@ export default function BookDetails({ books }) {
           ))}
         </div>
       </div>
+
+      {/* Delete Book Modal */}
+      <DeleteBookModal
+        isOpen={isDeleteOpen}
+        onClose={() => {
+          setIsDeleteOpen(false);
+          setBookToDelete(null);
+        }}
+        bookToDelete={bookToDelete}
+        onDeleteSuccess={() => router.refresh()}
+      />
     </div>
   );
 }
