@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import EditBookModal from "./EditBookModal";
 import DeleteBookModal from "./DeleteBookModal";
+import Link from "next/link"; // 🎯 লিংক রাউটিং এর জন্য ইম্পোর্ট করা হলো ভাই
 
 const ManageInventory = ({ books = [] }) => {
   const router = useRouter();
@@ -88,14 +89,14 @@ const ManageInventory = ({ books = [] }) => {
                     className="hover:bg-muted/20 transition-all"
                   >
                     <td className="p-4 flex items-center gap-3">
-                      <Avatar
-                        src={book.cover}
+                      <img
+                        src={book?.cover}
                         radius="lg"
-                        className="w-12 h-14 flex-shrink-0 object-cover"
+                        className="w-14 h-14 flex-shrink-0 object-cover rounded-full"
                       />
                       <div className="overflow-hidden">
-                        <h4 className="font-bold text-foreground text-sm font-poppins truncate max-w-[180px]">
-                          {book.title}
+                        <h4 className="font-bold text-foreground text-sm font-poppins truncate max-w-[180px] ">
+                          {book.title.slice(0, 10)}
                         </h4>
                         <p className="text-xs text-muted-foreground truncate max-w-[180px]">
                           by {book.author}
@@ -119,11 +120,24 @@ const ManageInventory = ({ books = [] }) => {
                               : "bg-blue-500/10 text-blue-500 border border-blue-500/20"
                         }`}
                       >
-                        {book.status}
+                        {book.status.slice(0, 10)}
                       </span>
                     </td>
                     <td className="p-4">
-                      <div className="flex items-center justify-center gap-3">
+                      <div className="flex items-center justify-center gap-2">
+                        {/* details page */}
+                        <Tooltip
+                          content="View Live Details"
+                          className="rounded-xl"
+                        >
+                          <Link
+                            href={`/books/${book._id}`}
+                            className="p-2  text-[#fbeee1] bg-blue-500/10 rounded-xl hover:bg-blue-500/20 transition-all"
+                          >
+                            <Eye size={18} />
+                          </Link>
+                        </Tooltip>
+
                         {book.status === "Pending Approval" ? (
                           <Tooltip
                             content="Locked: Waiting for Admin approval"
@@ -200,9 +214,15 @@ const ManageInventory = ({ books = [] }) => {
                     className="w-14 h-16 object-cover flex-shrink-0"
                   />
                   <div className="overflow-hidden flex-1">
-                    <h4 className="font-bold text-foreground text-sm font-poppins truncate">
-                      {book.title}
-                    </h4>
+                    <div className="flex justify-between items-start gap-1">
+                      <h4 className="font-bold text-foreground text-sm font-poppins truncate flex-1">
+                        {book.title}
+                      </h4>
+                      {/* মোবাইল স্ট্যাটাস ডট ইন্ডিকেটর */}
+                      <span
+                        className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${book.status === "Published" ? "bg-emerald-500" : book.status === "Unpublished" ? "bg-amber-500" : "bg-blue-500"}`}
+                      />
+                    </div>
                     <p className="text-xs text-muted-foreground truncate">
                       by {book.author}
                     </p>
@@ -218,6 +238,14 @@ const ManageInventory = ({ books = [] }) => {
                 </div>
                 <hr className="border-border/60" />
                 <div className="flex items-center justify-end gap-2 pt-1">
+                  {/* details page */}
+                  <Link
+                    href={`/books/${book._id}`}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#fbeee1] bg-blue-500/10 rounded-xl font-medium"
+                  >
+                    <Eye size={14} /> View
+                  </Link>
+
                   <button
                     onClick={() => handleEditClick(book)}
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-primary bg-primary/10 rounded-xl font-medium cursor-pointer"
