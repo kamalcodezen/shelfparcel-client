@@ -38,7 +38,7 @@ export default function AllBooks({ initialBooks = [] }) {
     },
   };
 
-  // 👑 সিঁড়ির মতো স্ট্যাগার কন্টেইনার
+  // সিঁড়ির মতো স্ট্যাগার কন্টেইনার
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {

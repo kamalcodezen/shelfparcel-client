@@ -1,0 +1,287 @@
+"use client";
+
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  BookOpen,
+  Calendar,
+  Truck,
+  ChevronLeft,
+  User,
+  Hash,
+  Edit3,
+  Trash2,
+  EyeOff,
+  Star,
+  MessageSquare,
+} from "lucide-react";
+import { Button } from "@heroui/react";
+import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+
+// Reviews Mock Data
+const mockReviews = [
+  {
+    _id: "r1",
+    userName: "Rakib Ahmed",
+    rating: 5,
+    comment:
+      "Amazing financial perspective! Completely changed how I manage asset allocation.",
+    date: "June 18, 2026",
+  },
+  {
+    _id: "r2",
+    userName: "Subrina Khan",
+    rating: 4,
+    comment:
+      "A timeless masterpiece. The real-world explanations are incredibly smooth.",
+    date: "June 20, 2026",
+  },
+];
+
+export default function BookDetails({ books }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { data: session } = authClient.useSession();
+  const loggedInUser = session?.user;
+
+  // Date Format
+  const formattedDate = books?.createdAt
+    ? new Date(books.createdAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "Recent";
+
+  // status & librarian check & button disable
+  const isBookCheckedOut = books?.status === "Checked Out";
+  const isOwnerLibrarian =
+    loggedInUser && books && loggedInUser.id === books.librarianId;
+  const isButtonDisabled = isBookCheckedOut || isOwnerLibrarian;
+
+  const handleRequestDelivery = async () => {
+    setIsSubmitting(true);
+    try {
+      setTimeout(() => {
+        alert(
+          `Redirecting to Stripe Checkout to pay delivery fee: $${books?.fee || 0} 💳✨`,
+        );
+        setIsSubmitting(false);
+      }, 1200);
+    } catch (error) {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto p-4 md:p-6 font-urbanist text-foreground space-y-10">
+      {/* Back Button */}
+      <Link
+        href="/books"
+        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all mb-2 group"
+      >
+        <ChevronLeft
+          size={16}
+          className="transition-transform group-hover:-translate-x-1"
+        />
+        Return to Gallery
+      </Link>
+
+      {/* banner frame */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.99 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, cubicBezier: [0.16, 1, 0.3, 1] }}
+        className="relative grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[32px] overflow-hidden border border-border/50 bg-card/40 backdrop-blur-xl shadow-2xl"
+      >
+        {/* left side image */}
+        <div className="lg:col-span-5 relative min-h-[350px] md:min-h-[500px] flex items-center justify-center p-8 bg-card-soft/30 overflow-hidden border-b lg:border-b-0 lg:border-r border-border/40">
+          <div
+            className="absolute inset-0 bg-cover bg-center scale-110 blur-[40px] opacity-25 dark:opacity-15 pointer-events-none"
+            style={{ backgroundImage: `url(${books?.cover})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-card-soft/40 pointer-events-none" />
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 90 }}
+            className="w-full aspect-[3/4.2] max-w-[280px] rounded-2xl overflow-hidden bg-card border border-border/80 shadow-2xl z-10"
+          >
+            {books?.cover ? (
+              <img
+                src={books.cover}
+                alt={books.title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground/30">
+                <BookOpen size={48} />
+              </div>
+            )}
+          </motion.div>
+        </div>
+
+        {/* right side content */}
+        <div className="lg:col-span-7 p-6 md:p-12 flex flex-col justify-between bg-transparent relative z-10">
+          <div className="space-y-6">
+            <div className="flex justify-between items-center w-full">
+              <span className="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-extrabold uppercase tracking-widest border border-primary/20">
+                {books?.category || "General"}
+              </span>
+
+              <div className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground">
+                <Hash size={14} className="text-primary/70" />
+                <span>
+                  Popularity:{" "}
+                  <span className="text-foreground">
+                    {books?.requests || 0} requests
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h1 className="text-3xl md:text-5xl font-black font-poppins text-foreground tracking-tight leading-none">
+                {books?.title || "Untitled Asset"}
+              </h1>
+              <p className="text-sm md:text-base text-muted-foreground font-medium flex items-center gap-2 pt-1">
+                <User size={16} className="text-primary/70" />
+                <span>
+                  By{" "}
+                  <span className="text-foreground font-bold">
+                    {books?.author || "Unknown Author"}
+                  </span>
+                </span>
+              </p>
+            </div>
+
+            <div className="pt-6 border-t border-border/40 space-y-3">
+              <div className="flex items-center gap-2">
+                <div
+                  className={`w-2 h-2 rounded-full animate-pulse ${!isBookCheckedOut ? "bg-green-500" : "bg-red-500"}`}
+                />
+                <span className="text-xs font-black uppercase tracking-wider text-muted-foreground">
+                  Status:{" "}
+                  {!isBookCheckedOut ? "Available For Delivery" : "Checked Out"}
+                </span>
+              </div>
+              <p className="text-sm md:text-base text-foreground/80 leading-relaxed font-urbanist antialiased">
+                {books?.description ||
+                  "No index description is registered for this ledger asset."}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10 space-y-6">
+            {/* dynamic Fee & Date */}
+            <div className="grid grid-cols-2 gap-4 border-t border-border/40 pt-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-card border border-border/60 flex items-center justify-center text-primary shadow-sm">
+                  <Truck size={18} />
+                </div>
+                <div>
+                  <span className="text-[9px] text-muted-foreground uppercase tracking-widest block font-bold">
+                    Delivery Fee
+                  </span>
+                  <span className="text-base font-black font-poppins text-foreground">
+                    ${books?.fee ? books.fee.toFixed(2) : "0.00"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-card border border-border/60 flex items-center justify-center text-muted-foreground shadow-sm">
+                  <Calendar size={18} />
+                </div>
+                <div>
+                  <span className="text-[9px] text-muted-foreground uppercase tracking-widest block font-bold">
+                    Date Cataloged
+                  </span>
+                  <span className="text-xs font-bold text-foreground/90">
+                    {formattedDate}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* conditional buttons */}
+            {isOwnerLibrarian ? (
+              <div className="grid grid-cols-3 gap-3 pt-2 w-full">
+                <Button
+                  className="bg-blue-500/10 text-blue-500 border border-blue-500/20 h-12 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  startContent={<Edit3 size={14} />}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className="bg-amber-500/10 text-amber-500 border border-amber-500/20 h-12 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  startContent={<EyeOff size={14} />}
+                >
+                  Unpublish
+                </Button>
+                <Button
+                  className="bg-red-500/10 text-red-500 border border-red-500/20 h-12 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  startContent={<Trash2 size={14} />}
+                >
+                  Delete
+                </Button>
+              </div>
+            ) : (
+              <Button
+                onClick={handleRequestDelivery}
+                isLoading={isSubmitting}
+                disabled={isButtonDisabled}
+                className={`w-full h-14 text-xs font-black font-poppins uppercase tracking-widest cursor-pointer transition-all rounded-xl ${!isButtonDisabled ? "btn-primary active:scale-[0.98] shadow-lg" : "bg-border/40 text-muted-foreground/40 cursor-not-allowed border border-border/20 shadow-none"}`}
+                startContent={
+                  !isSubmitting && !isButtonDisabled && <Truck size={16} />
+                }
+              >
+                {isBookCheckedOut
+                  ? "Currently Checked Out"
+                  : isSubmitting
+                    ? "Opening Stripe Gateway..."
+                    : "Request Home Delivery Now"}
+              </Button>
+            )}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Reviews Section */}
+      <div className="dashboard-card p-6 md:p-8 rounded-[24px] border border-border/50 bg-card/20 backdrop-blur-md space-y-6">
+        <h3 className="text-lg font-black font-poppins text-foreground flex items-center gap-2 border-b border-border/40 pb-4">
+          <MessageSquare size={20} className="text-primary" />
+          Reader Reviews ({mockReviews.length})
+        </h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {mockReviews.map((review) => (
+            <div
+              key={review._id}
+              className="p-5 rounded-2xl border border-border/30 bg-card-soft/40 space-y-3 shadow-sm hover:border-border/60 transition-colors"
+            >
+              <div className="flex justify-between items-center">
+                <span className="font-bold text-sm text-foreground">
+                  {review.userName}
+                </span>
+                <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">
+                  {review.date}
+                </span>
+              </div>
+              <div className="flex items-center gap-0.5 text-amber-500">
+                {[...Array(review.rating)].map((_, i) => (
+                  <Star key={i} size={14} fill="currentColor" />
+                ))}
+              </div>
+              <p className="text-sm text-foreground/80 font-urbanist leading-relaxed">
+                {review.comment}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
