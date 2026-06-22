@@ -3,12 +3,13 @@
 import React, { useState } from "react";
 import { Avatar, Tooltip } from "@heroui/react";
 import { Edit3, Trash2, Eye, EyeOff, Lock, BookAIcon, BookHeartIcon, BookOpen } from "lucide-react";
-import { toggleBooksStatusById } from "@/lib/actions/books";
+
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import EditBookModal from "./EditBookModal";
 import DeleteBookModal from "./DeleteBookModal";
-import Link from "next/link"; // 🎯 লিংক রাউটিং এর জন্য ইম্পোর্ট করা হলো ভাই
+import Link from "next/link"; 
+import { toggleBooksStatusById } from "@/lib/actions/librarian";
 
 const ManageInventory = ({ books = [] }) => {
   const router = useRouter();

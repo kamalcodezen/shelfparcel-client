@@ -1,5 +1,6 @@
 import BookApproval from "@/components/modules/dashboard/admin/BookApproval";
-import { getAllPendingBooks } from "@/lib/api/books";
+import { getAllPendingBooks } from "@/lib/api/admin";
+
 
 const AdminBookApprovalPage = async () => {
   const books = await getAllPendingBooks();

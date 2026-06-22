@@ -1,6 +1,6 @@
 "use client";
 
-import { addBooksByLibrarian } from "@/lib/actions/addBooks";
+import { addBooksByLibrarian } from "@/lib/actions/librarian";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { FiPlusCircle, FiLoader, FiUploadCloud } from "react-icons/fi";

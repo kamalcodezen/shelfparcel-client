@@ -6,8 +6,9 @@ import { Button } from "@heroui/react";
 import { Check, Trash2, Clock, AlertCircle, User } from "lucide-react";
 import DeleteBookModal from "../librarian/DeleteBookModal";
 import { useRouter } from "next/navigation";
-import { adminUpdateApprovedStatusById } from "@/lib/actions/books";
+
 import { toast } from "react-toastify";
+import { adminUpdateApprovedStatusById } from "@/lib/actions/admin";
 
 const BookApproval = ({ books = [] }) => {
   const router = useRouter();

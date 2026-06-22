@@ -24,9 +24,10 @@ import EditBookModal from "../dashboard/librarian/EditBookModal";
 import { useRouter } from "next/navigation";
 import DeleteBookModal from "../dashboard/librarian/DeleteBookModal";
 import DeletedAssetScreen from "./DeletedAssetScreen";
-import { toggleBooksStatusById } from "@/lib/actions/books";
+
 import { toast } from "react-toastify";
 import Loader from "../shared/Loader";
+import { toggleBooksStatusById } from "@/lib/actions/librarian";
 
 // Reviews Mock Data
 const mockReviews = [
