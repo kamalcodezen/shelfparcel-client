@@ -2,7 +2,7 @@
 
 export default function Loader() {
   return (
-    <div className="flex flex-col items-center justify-center p-8 w-full min-h-[250px] ">
+    <div className="flex flex-col items-center justify-center p-8 w-full min-h-[250px] pt-40">
       {/* Container holding the custom animated elements */}
       <div className="relative w-72 h-32 flex items-end justify-center overflow-hidden">
         {/* হাইওয়ে রোড বা রাস্তার স্পিড লাইন ইফেক্ট (গাড়ি যে জোরে চলছে তা বোঝানোর জন্য) */}

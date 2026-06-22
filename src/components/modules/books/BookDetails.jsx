@@ -26,6 +26,7 @@ import DeleteBookModal from "../dashboard/librarian/DeleteBookModal";
 import DeletedAssetScreen from "./DeletedAssetScreen";
 import { toggleBooksStatusById } from "@/lib/actions/books";
 import { toast } from "react-toastify";
+import Loader from "../shared/Loader";
 
 // Reviews Mock Data
 const mockReviews = [
@@ -58,7 +59,7 @@ export default function BookDetails({ books }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
 
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
   const loggedInUser = session?.user;
 
   // Date Format
@@ -112,7 +113,7 @@ export default function BookDetails({ books }) {
     setIsDeleteOpen(true);
   };
 
-  // status change
+  // status change publish/unpublish
   const handleToggleStatus = async (bookId, currentStatus) => {
     try {
       const res = await toggleBooksStatusById({ bookId, currentStatus });
@@ -127,6 +128,12 @@ export default function BookDetails({ books }) {
     }
   };
 
+  // page load
+  if (isPending) {
+    return <Loader />;
+  }
+
+  // book none exist
   if (!books) {
     return <DeletedAssetScreen />;
   }
