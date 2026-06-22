@@ -2,6 +2,12 @@
 
 import { serverFetch } from "../core/server"
 
+// admin get all pending books
+export const getAllPendingBooks = async () => {
+    return await serverFetch("/api/books/pendingBooks")
+}
+
+
 // all books data get korchi jegulo status published ache
 export const getAllPublishedBooks = async () => {
     return await serverFetch("/api/books/publishedBooks")

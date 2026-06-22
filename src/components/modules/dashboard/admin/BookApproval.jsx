@@ -1,0 +1,215 @@
+"use client";
+
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion"; // এনিমেশনের জন্য যোগ করা হয়েছে
+import { Button } from "@heroui/react";
+import { Check, Trash2, Clock, AlertCircle, User } from "lucide-react";
+
+const BookApproval = ({ books = [] }) => {
+  const handleApprove = async (bookId, title) => {};
+
+  const handleDelete = async (bookId, title) => {};
+
+  //  AnimatePresence motion
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  };
+  // motion
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="space-y-6 font-urbanist p-4 md:p-6 text-foreground"
+    >
+      {/* Header section */}
+      <motion.div
+        variants={itemVariants}
+        className="flex justify-between items-center border-b border-border/40 pb-4"
+      >
+        <div>
+          <h2 className="text-2xl font-bold font-poppins flex items-center gap-2">
+            Book Approval Queue <Clock size={22} className="text-amber-500" />
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Review and authorize incoming librarian listings before public
+            distribution.
+          </p>
+        </div>
+      </motion.div>
+
+      {books.length === 0 ? (
+        <motion.div
+          variants={itemVariants}
+          className="border border-border bg-card/40 rounded-3xl p-10 text-center text-muted-foreground flex flex-col items-center justify-center gap-2 shadow-sm"
+        >
+          <AlertCircle size={32} className="text-muted-foreground/60" />
+          <p className="font-bold">Queue is Completely Clear!</p>
+          <p className="text-xs">
+            No books are currently awaiting administrative authorization.
+          </p>
+        </motion.div>
+      ) : (
+        <>
+          {/* Desktop View */}
+          <motion.div
+            variants={itemVariants}
+            className="hidden md:block border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto"
+          >
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-muted/40 text-muted-foreground text-xs font-semibold uppercase tracking-wider border-b border-border">
+                  <th className="p-4">Book Details</th>
+                  <th className="p-4">Librarian</th>
+                  <th className="p-4">Category</th>
+                  <th className="p-4">Fee</th>
+                  <th className="p-4 text-center">Authorization Actions</th>
+                </tr>
+              </thead>
+              <motion.tbody className="divide-y divide-border/60 text-sm font-medium">
+                <AnimatePresence>
+                  {books.map((book) => (
+                    <motion.tr
+                      layout
+                      key={book._id}
+                      variants={itemVariants}
+                      whileHover={{
+                        backgroundColor: "rgba(var(--muted), 0.1)",
+                      }}
+                      className="transition-all"
+                    >
+                      <td className="p-4 flex items-center gap-3">
+                        <img
+                          src={book.cover}
+                          alt={book.title}
+                          className="w-15 h-15 rounded-full flex-shrink-0 object-cover border border-border"
+                        />
+                        <div className="overflow-hidden">
+                          <h4 className="font-bold text-foreground text-sm font-poppins truncate max-w-[220px]">
+                            {book.title}
+                          </h4>
+                          <p className="text-xs text-muted-foreground truncate max-w-[220px]">
+                            by {book.author}
+                          </p>
+                        </div>
+                      </td>
+                      <td className="p-4 text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                          <User size={14} className="text-primary/70" />
+                          {book.librarianName || "Librarian"}
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/20 text-xs font-bold font-poppins uppercase tracking-wider">
+                          {book.category}
+                        </span>
+                      </td>
+                      <td className="p-4 font-poppins font-bold">
+                        ${book.fee?.toFixed(2) || "0.00"}
+                      </td>
+                      <td className="p-4">
+                        <div className="flex items-center justify-center gap-2">
+                          <Button
+                            size="sm"
+                            onClick={() => handleApprove(book._id, book.title)}
+                            className="bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-9 cursor-pointer"
+                            startContent={<Check size={14} strokeWidth={3} />}
+                          >
+                            Approve
+                          </Button>
+                          <motion.button
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => handleDelete(book._id, book.title)}
+                            className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer"
+                          >
+                            <Trash2 size={15} />
+                          </motion.button>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </AnimatePresence>
+              </motion.tbody>
+            </table>
+          </motion.div>
+
+          {/* Mobile View */}
+          <div className="block md:hidden space-y-4">
+            <AnimatePresence>
+              {books.map((book) => (
+                <motion.div
+                  layout
+                  key={book._id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  variants={itemVariants}
+                  className="border border-border bg-card/50 rounded-2xl p-4 shadow-sm space-y-4"
+                >
+                  <div className="flex gap-3">
+                    <img
+                      src={book.cover}
+                      alt={book.title}
+                      className="w-18 h-18 rounded-full object-cover flex-shrink-0 border border-border"
+                    />
+                    <div className="overflow-hidden flex-1 space-y-1">
+                      <h4 className="font-bold text-foreground text-sm font-poppins truncate">
+                        {book.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground truncate">
+                        by {book.author}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5 items-center pt-1">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded">
+                          {book.category}
+                        </span>
+                        <span className="text-xs font-bold text-foreground font-poppins ml-auto">
+                          ${book.fee?.toFixed(2) || "0.00"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-border/40 pt-3 flex items-center justify-between text-xs text-muted-foreground font-semibold">
+                    <span className="flex items-center gap-1">
+                      <User size={13} /> {book.librarianName || "Librarian"}
+                    </span>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      onClick={() => handleApprove(book._id, book.title)}
+                      className="flex-1 bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-10"
+                      startContent={<Check size={14} strokeWidth={3} />}
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => handleDelete(book._id, book.title)}
+                      className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-10 px-4"
+                    >
+                      <Trash2 size={14} />
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </>
+      )}
+    </motion.div>
+  );
+};
+
+export default BookApproval;

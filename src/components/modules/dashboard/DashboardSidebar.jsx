@@ -30,7 +30,7 @@ const DashboardSidebar = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { theme} = useTheme();
+  const { theme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -113,7 +113,7 @@ const DashboardSidebar = () => {
     },
     {
       title: "Book Approval Queue",
-      href: "/dashboard/admin?tab=approval",
+      href: "/dashboard/admin/bookApproval",
       icon: BriefcaseBusiness,
     },
     { title: "Manage Users", href: "/dashboard/admin?tab=users", icon: Users },
