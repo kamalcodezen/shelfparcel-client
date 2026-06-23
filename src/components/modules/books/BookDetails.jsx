@@ -365,7 +365,7 @@ export default function BookDetails({ books }) {
           setIsDeleteOpen(false);
           setBookToDelete(null);
         }}
-        bookToDelete={bookToDelete}
+        userToDelete={bookToDelete}
         onDeleteSuccess={() => router.refresh()}
       />
     </div>

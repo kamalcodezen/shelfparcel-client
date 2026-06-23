@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion"; 
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/react";
 import { Check, Trash2, Clock, AlertCircle, User } from "lucide-react";
 import DeleteBookModal from "../librarian/DeleteBookModal";
@@ -245,7 +245,7 @@ const BookApproval = ({ books = [] }) => {
           setIsDeleteOpen(false);
           setBookToDelete(null);
         }}
-        bookToDelete={bookToDelete}
+        userToDelete={bookToDelete}
         onDeleteSuccess={() => router.refresh()}
       />
     </motion.div>

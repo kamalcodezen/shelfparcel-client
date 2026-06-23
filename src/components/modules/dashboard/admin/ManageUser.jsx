@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/react";
 import { Trash2, Mail, User, Shield, CheckCircle2, X } from "lucide-react";
@@ -9,61 +9,89 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { updateUserRole } from "@/lib/actions/users";
 import { getUserSession } from "@/lib/core/session";
+import DeleteUserModal from "./DeleteUserModal"; // 🎯 FIXED: Purono delete book modal fley, fresh user modal import kora holo
 
 const ManageUser = ({ users = [] }) => {
   const router = useRouter();
 
-  // Dialog open close state
+  //  User delete modal control korar state
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
+
+  // Dialog open close state role change korar jonno
   const [isOpen, setIsOpen] = useState(false);
   const [targetUser, setTargetUser] = useState(null);
   const [selectedRole, setSelectedRole] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // বাটনে ক্লিক করলে modal ওপেন hobe
+  //  Admin chada baki der jonno button lock korar state
+  const [currentUserRole, setCurrentUserRole] = useState("user");
+
+  //  Component load hoilei log-in thaka admin er role set hobe ekhan theke
+  useEffect(() => {
+    const fetchCurrentSession = async () => {
+      try {
+        const session = await getUserSession();
+        if (session && session.role) {
+          setCurrentUserRole(session.role);
+        }
+      } catch (err) {
+        console.error("Session load error in frontend table:", err);
+      }
+    };
+    fetchCurrentSession();
+  }, []);
+
+  //  Change Role button e click korle modal open hobe
   const handleOpenDialog = (user) => {
     setTargetUser(user);
     setSelectedRole(user.role || "user");
     setIsOpen(true);
   };
 
+  //  Final role assign confirm korar main function
   const handleRoleConfirm = async () => {
     if (!targetUser || !selectedRole) return;
 
     try {
       setLoading(true);
 
-      // admin change role
       const session = await getUserSession();
+      //  Gate keeper check: admin chada keu jno try e na korte pare
       if (!session || session.role !== "admin") {
-        throw new Error(
-          "Unauthorized access! Only admins can perform this action.",
-        );
+        throw new Error("Only admins can perform this action.");
       }
 
-      // admin nijer login role ke change korte parbe na
+      //  Admin jno bhul koreo nijer role nize change na kore ফেলে
       if (targetUser._id === session.id) {
-        toast.error("You cannot change your own role!");
-        return;
+        throw new Error("You cannot change your own role!");
       }
 
-      // update user role
       const res = await updateUserRole({
         userId: targetUser._id,
         userRole: selectedRole,
       });
-
       if (res?.success && res?.result?.modifiedCount > 0) {
         toast.success(`User role updated to ${selectedRole}! 🎉`);
+        setIsOpen(false);
+        router.refresh(); 
       } else {
-        toast.error("Failed to update user role");
+        toast.error("Failed to update user role. Database change failed.");
       }
-      setIsOpen(false);
-      router.refresh();
     } catch (error) {
-      toast.error("Failed to update user role");
+      console.error("Role update error:", error);
+      toast.error(
+        `Failed to update user role. ${error.message || "Please try again."}`,
+      );
     } finally {
       setLoading(false);
     }
+  };
+
+  // Trash bin e click korle delete modal active hobe
+  const handleDeleteClick = (user) => {
+    setUserToDelete(user);
+    setIsDeleteOpen(true);
   };
 
   const containerVariants = {
@@ -99,7 +127,7 @@ const ManageUser = ({ users = [] }) => {
         </motion.div>
       ) : (
         <>
-          {/* Desktop View */}
+          {/* Desktop Table View */}
           <motion.div
             variants={itemVariants}
             className="hidden md:block border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto"
@@ -155,14 +183,23 @@ const ManageUser = ({ users = [] }) => {
                           <Button
                             size="sm"
                             onClick={() => handleOpenDialog(account)}
+                            isDisabled={
+                              currentUserRole !== "admin" ||
+                              account.role === "admin"
+                            }
                             className="bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-xs uppercase font-poppins h-9 cursor-pointer"
                             startContent={<Shield size={14} />}
                           >
                             Change Role
                           </Button>
                           <motion.button
+                            onClick={() => handleDeleteClick(account)}
+                            disabled={
+                              currentUserRole !== "admin" ||
+                              account.role === "admin"
+                            }
                             whileTap={{ scale: 0.9 }}
-                            className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer"
+                            className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                           >
                             <Trash2 size={15} />
                           </motion.button>
@@ -175,7 +212,7 @@ const ManageUser = ({ users = [] }) => {
             </table>
           </motion.div>
 
-          {/* Mobile View */}
+          {/*  Mobile Responsive View */}
           <div className="block md:hidden space-y-4">
             <AnimatePresence>
               {users.map((account, ind) => (
@@ -215,12 +252,19 @@ const ManageUser = ({ users = [] }) => {
                     <Button
                       size="sm"
                       onClick={() => handleOpenDialog(account)}
+                      isDisabled={
+                        currentUserRole !== "admin" || account.role === "admin"
+                      }
                       className="flex-1 bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-xs uppercase font-poppins h-10"
                       startContent={<Shield size={14} />}
                     >
                       Change Role
                     </Button>
                     <Button
+                      onClick={() => handleDeleteClick(account)}
+                      isDisabled={
+                        currentUserRole !== "admin" || account.role === "admin"
+                      }
                       size="sm"
                       className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-xs h-10 px-4"
                     >
@@ -234,7 +278,7 @@ const ManageUser = ({ users = [] }) => {
         </>
       )}
 
-      {/* Custom Dialog Box Modal role change */}
+      {/*  Role Change Custom Dialog Overlay Modal */}
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -332,6 +376,17 @@ const ManageUser = ({ users = [] }) => {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Delete User Modal */}
+      <DeleteUserModal
+        isOpen={isDeleteOpen}
+        onClose={() => {
+          setIsDeleteOpen(false);
+          setUserToDelete(null);
+        }}
+        userToDelete={userToDelete} 
+        onDeleteSuccess={() => router.refresh()}
+      />
     </motion.div>
   );
 };

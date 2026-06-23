@@ -14,9 +14,11 @@ import { toggleBooksStatusById } from "@/lib/actions/librarian";
 const ManageInventory = ({ books = [] }) => {
   const router = useRouter();
 
+  // edit book modal state
   const [isEditing, setIsEditing] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
 
+  //  delete book modal state
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
 
