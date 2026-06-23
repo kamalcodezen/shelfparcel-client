@@ -124,7 +124,7 @@ const DashboardSidebar = () => {
     },
     {
       title: "View All Transactions",
-      href: "/dashboard/admin?tab=transactions",
+      href: "/dashboard/admin/viewTransactions",
       icon: CreditCard,
     },
   ];
