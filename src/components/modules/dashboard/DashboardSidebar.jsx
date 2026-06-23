@@ -55,7 +55,7 @@ const DashboardSidebar = () => {
   const userNavLinks = [
     {
       title: "Overview",
-      href: "/dashboard/user?tab=overview",
+      href: "/dashboard/user/userOverview",
       icon: LayoutDashboard,
     },
     {
