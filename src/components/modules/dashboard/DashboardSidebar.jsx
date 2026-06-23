@@ -60,7 +60,7 @@ const DashboardSidebar = () => {
     },
     {
       title: "Delivery History",
-      href: "/dashboard/user?tab=history",
+      href: "/dashboard/user/userDeliveryHistory",
       icon: FileText,
     },
     {

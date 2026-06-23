@@ -1,4 +1,4 @@
-import UserOverview from "@/components/modules/dashboard/users/UserOverview";
+import UserOverview from "@/components/modules/dashboard/user/UserOverview";
 
 const UserUserOverviewPage = () => {
   return (
