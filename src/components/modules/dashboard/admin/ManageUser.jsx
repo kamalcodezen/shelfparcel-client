@@ -26,6 +26,7 @@ const ManageUser = ({ users = [] }) => {
 
   //  Admin chada baki der jonno button lock korar state
   const [currentUserRole, setCurrentUserRole] = useState("user");
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   //  Component load hoilei log-in thaka admin er role set hobe ekhan theke
   useEffect(() => {
@@ -34,6 +35,7 @@ const ManageUser = ({ users = [] }) => {
         const session = await getUserSession();
         if (session && session.role) {
           setCurrentUserRole(session.role);
+          setCurrentUserId(session.id);
         }
       } catch (err) {
         console.error("Session load error in frontend table:", err);
@@ -74,7 +76,7 @@ const ManageUser = ({ users = [] }) => {
       if (res?.success && res?.result?.modifiedCount > 0) {
         toast.success(`User role updated to ${selectedRole}! 🎉`);
         setIsOpen(false);
-        router.refresh(); 
+        router.refresh();
       } else {
         toast.error("Failed to update user role. Database change failed.");
       }
@@ -185,24 +187,24 @@ const ManageUser = ({ users = [] }) => {
                             onClick={() => handleOpenDialog(account)}
                             isDisabled={
                               currentUserRole !== "admin" ||
-                              account.role === "admin"
+                              account._id === currentUserId
                             }
                             className="bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-xs uppercase font-poppins h-9 cursor-pointer"
                             startContent={<Shield size={14} />}
                           >
                             Change Role
                           </Button>
-                          <motion.button
+                          <Button
                             onClick={() => handleDeleteClick(account)}
-                            disabled={
+                            isDisabled={
                               currentUserRole !== "admin" ||
-                              account.role === "admin"
+                              account._id === currentUserId
                             }
                             whileTap={{ scale: 0.9 }}
                             className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                           >
                             <Trash2 size={15} />
-                          </motion.button>
+                          </Button>
                         </div>
                       </td>
                     </motion.tr>
@@ -253,7 +255,8 @@ const ManageUser = ({ users = [] }) => {
                       size="sm"
                       onClick={() => handleOpenDialog(account)}
                       isDisabled={
-                        currentUserRole !== "admin" || account.role === "admin"
+                        currentUserRole !== "admin" ||
+                        account._id === currentUserId
                       }
                       className="flex-1 bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-xs uppercase font-poppins h-10"
                       startContent={<Shield size={14} />}
@@ -263,7 +266,8 @@ const ManageUser = ({ users = [] }) => {
                     <Button
                       onClick={() => handleDeleteClick(account)}
                       isDisabled={
-                        currentUserRole !== "admin" || account.role === "admin"
+                        currentUserRole !== "admin" ||
+                        account._id === currentUserId
                       }
                       size="sm"
                       className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-xs h-10 px-4"
@@ -384,7 +388,7 @@ const ManageUser = ({ users = [] }) => {
           setIsDeleteOpen(false);
           setUserToDelete(null);
         }}
-        userToDelete={userToDelete} 
+        userToDelete={userToDelete}
         onDeleteSuccess={() => router.refresh()}
       />
     </motion.div>
