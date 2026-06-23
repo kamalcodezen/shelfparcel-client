@@ -5,20 +5,22 @@ import { Button } from "@heroui/react";
 import { Book, Check, X, Eye, EyeOff, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { adminUpdateStatusById } from "@/lib/actions/admin";
 
-import { updateBookStatus } from "@/lib/actions/books";
+
+
 
 const ManageBooks = ({ books = [] }) => {
   const router = useRouter();
 
   const [loadingId, setLoadingId] = useState(null);
 
-  // status change
+  // status change korchi 
   const handleStatusClick = async (bookId, targetStatus) => {
     try {
       setLoadingId(bookId);
 
-    //   const res = await updateBookStatus({ bookId, status: targetStatus });
+      const res = await adminUpdateStatusById({ bookId, status: targetStatus });
 
       if (res?.success) {
         toast.success(`Book status changed to ${targetStatus}!`);
@@ -27,16 +29,15 @@ const ManageBooks = ({ books = [] }) => {
         toast.error(res?.message || "Failed to update status");
       }
     } catch (error) {
-      console.error(error);
       toast.error("Something went wrong!");
     } finally {
       setLoadingId(null);
     }
   };
 
-//   const handleTemporaryDeleteClick = (bookTitle) => {
-   
-//   };
+  //   const handleTemporaryDeleteClick = (bookTitle) => {
+
+  //   };
 
   // status color
   const statusStyles = {
