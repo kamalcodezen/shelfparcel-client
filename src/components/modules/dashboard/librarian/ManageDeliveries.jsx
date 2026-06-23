@@ -190,7 +190,7 @@ const ManageDeliveries = () => {
                         )}
                         {delivery.status === "Delivered" && (
                           <span className="text-xs text-muted-foreground/60 italic font-normal">
-                            Completed ✅
+                           Returned ✅
                           </span>
                         )}
                       </div>
@@ -281,7 +281,7 @@ const ManageDeliveries = () => {
                   )}
                   {delivery.status === "Delivered" && (
                     <div className="w-full text-center py-1.5 bg-emerald-500/5 border border-emerald-500/10 rounded-xl text-xs text-emerald-600 font-bold">
-                      Completed Order ✅
+                      Returned ✅
                     </div>
                   )}
                 </div>

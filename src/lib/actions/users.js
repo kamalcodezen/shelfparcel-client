@@ -3,6 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { serverMutation } from "../core/server";
 
+
+export const addUserComment = async (reviewPayload) => {
+    return await serverMutation("/api/comments/add", reviewPayload, "POST")
+}
+
+
+
 // admin nije role change korbe 
 export const updateUserRole = async ({ userId, userRole }) => {
     const res = await serverMutation(`/api/users/updateRole/${userId}`, { userRole }, "PATCH"

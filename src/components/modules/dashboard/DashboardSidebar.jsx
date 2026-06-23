@@ -65,7 +65,7 @@ const DashboardSidebar = () => {
     },
     {
       title: "My Reading List",
-      href: "/dashboard/user?tab=reading-list",
+      href: "/dashboard/user/myReadingList",
       icon: Bookmark,
     },
     {
