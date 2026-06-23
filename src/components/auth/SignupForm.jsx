@@ -24,7 +24,7 @@ export default function SignupForm() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
 
-  // 👑 INDUSTRY STANDARD: অবজেক্ট স্টেট
+  //  INDUSTRY STANDARD: অবজেক্ট স্টেট
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -72,14 +72,14 @@ export default function SignupForm() {
     setLoading(true);
 
     try {
-      // 👑 FIXED: 'data: {}' অবজেক্ট থেকে বের করে 'role' সরাসরি মেইন প্রোপার্টিতে পাস করা হলো
+      // FIXED: 'data: {}' অবজেক্ট থেকে বের করে 'role' সরাসরি মেইন প্রোপার্টিতে পাস করা হলো
       await authClient.signUp.email({
         email: formData.email,
         password: formData.password,
         name: formData.name,
         image:
           formData.photoUrl || "https://api.dicebear.com/7.x/adventurer/svg",
-        role: formData.role, // 🎯 ম্যাজিক এখানে! সরাসরি মেইন বডিতে পাঠানো হলো যাতে MongoDB-র মেইন ডকুমেন্টে সেভ হয়
+        role: formData.role, 
         fetchOptions: {
           onSuccess: () => {
             toast.success(

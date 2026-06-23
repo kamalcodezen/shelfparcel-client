@@ -7,7 +7,8 @@ import { Trash2, Mail, User, Shield, CheckCircle2, X } from "lucide-react";
 
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-
+import { updateUserRole } from "@/lib/actions/users";
+import { getUserSession } from "@/lib/core/session";
 
 const ManageUser = ({ users = [] }) => {
   const router = useRouter();
@@ -31,18 +32,34 @@ const ManageUser = ({ users = [] }) => {
     try {
       setLoading(true);
 
-      // const res = await updateUserRole({
-      //   userId: targetUser._id,
-      //   role: selectedRole,
-      // });
+      // admin change role
+      const session = await getUserSession();
+      if (!session || session.role !== "admin") {
+        throw new Error(
+          "Unauthorized access! Only admins can perform this action.",
+        );
+      }
 
-      console.log("API RESPONSE:", res);
-      toast.success(`User role updated to ${selectedRole}! 🎉`);
+      // admin nijer login role ke change korte parbe na
+      if (targetUser._id === session.id) {
+        toast.error("You cannot change your own role!");
+        return;
+      }
 
+      // update user role
+      const res = await updateUserRole({
+        userId: targetUser._id,
+        userRole: selectedRole,
+      });
+
+      if (res?.success && res?.result?.modifiedCount > 0) {
+        toast.success(`User role updated to ${selectedRole}! 🎉`);
+      } else {
+        toast.error("Failed to update user role");
+      }
       setIsOpen(false);
       router.refresh();
     } catch (error) {
-      console.error("Role update error:", error);
       toast.error("Failed to update user role");
     } finally {
       setLoading(false);
@@ -106,12 +123,16 @@ const ManageUser = ({ users = [] }) => {
                       className="transition-all hover:bg-muted/10"
                     >
                       <td className="p-4 flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-xs uppercase">
-                          <img
-                            src={account.image}
-                            alt="Profile Picture"
-                            className="w-8 h-8 rounded-full"
-                          />
+                        <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-xs uppercase">
+                          {account.image ? (
+                            <img
+                              src={account.image}
+                              alt="Profile"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            account.name?.charAt(0)
+                          )}
                         </div>
                         <span className="font-bold font-poppins text-foreground">
                           {account.name}
@@ -134,14 +155,14 @@ const ManageUser = ({ users = [] }) => {
                           <Button
                             size="sm"
                             onClick={() => handleOpenDialog(account)}
-                            className="bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-xs uppercase font-poppins h-9"
+                            className="bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-xs uppercase font-poppins h-9 cursor-pointer"
                             startContent={<Shield size={14} />}
                           >
                             Change Role
                           </Button>
                           <motion.button
                             whileTap={{ scale: 0.9 }}
-                            className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all"
+                            className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer"
                           >
                             <Trash2 size={15} />
                           </motion.button>
@@ -154,7 +175,7 @@ const ManageUser = ({ users = [] }) => {
             </table>
           </motion.div>
 
-          {/* MObile View */}
+          {/* Mobile View */}
           <div className="block md:hidden space-y-4">
             <AnimatePresence>
               {users.map((account, ind) => (
@@ -166,12 +187,16 @@ const ManageUser = ({ users = [] }) => {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-xs">
-                        <img
-                          src={account.image}
-                          alt="Profile Picture"
-                          className="w-8 h-8 rounded-full"
-                        />
+                      <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-xs">
+                        {account.image ? (
+                          <img
+                            src={account.image}
+                            alt="Profile"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          account.name?.charAt(0)
+                        )}
                       </div>
                       <h4 className="font-bold text-sm font-poppins">
                         {account.name}
@@ -209,11 +234,10 @@ const ManageUser = ({ users = [] }) => {
         </>
       )}
 
-      {/* Custom Dialog Box Modal role change*/}
+      {/* Custom Dialog Box Modal role change */}
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop blur background*/}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -222,14 +246,12 @@ const ManageUser = ({ users = [] }) => {
               className="absolute inset-0 bg-black/50 backdrop-blur-md"
             />
 
-            {/* Dialog box */}
             <motion.div
               initial={{ scale: 0.95, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 15 }}
               className="relative w-full max-w-md bg-card border border-border rounded-[24px] shadow-2xl overflow-hidden p-6 z-10 text-foreground"
             >
-              {/* Header Part */}
               <div className="flex items-center justify-between pb-3 border-b border-border/40">
                 <h3 className="font-poppins font-bold text-lg">
                   Approve User Role
@@ -242,7 +264,6 @@ const ManageUser = ({ users = [] }) => {
                 </button>
               </div>
 
-              {/* Body Part */}
               <div className="py-4 space-y-4">
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   Assign a new permission level for{" "}
@@ -251,7 +272,6 @@ const ManageUser = ({ users = [] }) => {
                   </span>
                   :
                 </p>
-                {/* user name set */}
                 <div className="flex flex-col gap-2">
                   {[
                     {
@@ -289,7 +309,6 @@ const ManageUser = ({ users = [] }) => {
                 </div>
               </div>
 
-              {/* Footer Part */}
               <div className="flex justify-end gap-2 pt-3 border-t border-border/40">
                 <Button
                   size="sm"
