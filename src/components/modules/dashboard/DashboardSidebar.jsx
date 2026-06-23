@@ -116,7 +116,7 @@ const DashboardSidebar = () => {
       href: "/dashboard/admin/bookApproval",
       icon: BriefcaseBusiness,
     },
-    { title: "Manage Users", href: "/dashboard/admin?tab=users", icon: Users },
+    { title: "Manage Users", href: "/dashboard/admin/users", icon: Users },
     {
       title: "Manage All Books",
       href: "/dashboard/admin?tab=all-books",
