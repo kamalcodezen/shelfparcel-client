@@ -37,6 +37,7 @@ const ManageInventory = ({ books = [] }) => {
     }
   };
 
+  // edit book modal 
   const handleEditClick = (book) => {
     setSelectedBook(book);
     setIsEditing(true);

@@ -6,16 +6,18 @@ import { Book, Check, X, Eye, EyeOff, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { adminUpdateStatusById } from "@/lib/actions/admin";
-
-
-
+import DeleteBookModal from "../librarian/DeleteBookModal";
 
 const ManageBooks = ({ books = [] }) => {
   const router = useRouter();
 
+  //  delete book modal state
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState(null);
+
   const [loadingId, setLoadingId] = useState(null);
 
-  // status change korchi 
+  // status change korchi
   const handleStatusClick = async (bookId, targetStatus) => {
     try {
       setLoadingId(bookId);
@@ -35,9 +37,10 @@ const ManageBooks = ({ books = [] }) => {
     }
   };
 
-  //   const handleTemporaryDeleteClick = (bookTitle) => {
-
-  //   };
+  const handleDeleteClick = (book) => {
+    setBookToDelete(book);
+    setIsDeleteOpen(true);
+  };
 
   // status color
   const statusStyles = {
@@ -172,7 +175,7 @@ const ManageBooks = ({ books = [] }) => {
                       <Button
                         isIconOnly
                         size="sm"
-                        onClick={() => handleTemporaryDeleteClick(book.title)}
+                        onClick={() => handleDeleteClick(book)}
                         className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer h-9 min-w-0"
                       >
                         <Trash2 size={15} />
@@ -185,6 +188,15 @@ const ManageBooks = ({ books = [] }) => {
           </table>
         </div>
       )}
+      <DeleteBookModal
+        isOpen={isDeleteOpen}
+        onClose={() => {
+          setIsDeleteOpen(false);
+          setBookToDelete(null);
+        }}
+        bookToDelete={bookToDelete}
+        onDeleteSuccess={() => router.refresh()}
+      />
     </div>
   );
 };

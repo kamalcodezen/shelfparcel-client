@@ -379,7 +379,7 @@ const DashboardSidebar = () => {
                     className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all mt-0.5"
                   >
                     <Link
-                      href="/profile"
+                      href="/books"
                       className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground"
                     >
                       <BookOpen size={18} />
