@@ -99,7 +99,7 @@ const DashboardSidebar = () => {
     },
     {
       title: "Manage Deliveries",
-      href: "/dashboard/librarian?tab=deliveries",
+      href: "/dashboard/librarian/manageDeliveries",
       icon: Building2,
     },
   ];
