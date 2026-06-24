@@ -12,6 +12,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { toast } from "react-toastify";
+import { updateUserCommentById } from "@/lib/actions/users";
 
 const MyReviews = ({ comments = [] }) => {
   const [reviewList, setReviewList] = useState(comments);
@@ -19,7 +20,7 @@ const MyReviews = ({ comments = [] }) => {
   const [editText, setEditText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  //  Handles the PATCH request saving to the database
+  //  edit comment function
   const handleSaveEdit = async (id) => {
     if (!editText.trim()) {
       toast.warn("Comment field cannot be empty!");
@@ -28,16 +29,22 @@ const MyReviews = ({ comments = [] }) => {
     try {
       setIsSubmitting(true);
 
-      // await updateCommentById(id, { comment: editText });
+      const res = await updateUserCommentById(id, { comment: editText });
 
-      setReviewList(
-        reviewList.map((item) =>
-          item._id === id ? { ...item, comment: editText } : item,
-        ),
-      );
-      setEditingId(null);
-      toast.success("Review updated successfully!");
+      if (res?.success || res?.modifiedCount > 0) {
+        setReviewList(
+          reviewList.map((item) =>
+            item._id === id ? { ...item, comment: editText } : item,
+          ),
+        );
+
+        setEditingId(null);
+        toast.success("Review updated successfully!");
+      } else {
+        toast.error(res?.message || "No changes were made.");
+      }
     } catch (error) {
+      console.error("Edit review error:", error);
       toast.error("Failed to save changes.");
     } finally {
       setIsSubmitting(false);

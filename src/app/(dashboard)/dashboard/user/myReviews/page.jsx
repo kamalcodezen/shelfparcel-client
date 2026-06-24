@@ -5,10 +5,7 @@ import { getUserSession } from "@/lib/core/session";
 const UserMyReviewsPage = async () => {
   const data = await getUserSession();
   const userId = data?.id;
-
   const comments = await getUserCommentById(userId);
-
-  console.log(comments);
 
   return (
     <div className="min-h-screen">
