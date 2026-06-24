@@ -12,9 +12,6 @@ export const getUserAllComments = async (id) => {
   return await serverFetch(`/api/users/comments/${id}`)
 }
 
-
-
-
 // Get all users list
 export const getUserList = async () => {
   return await serverFetch("/api/users", {
@@ -22,3 +19,9 @@ export const getUserList = async () => {
     next: { revalidate: 0 }
   });
 }
+
+
+// user payments details get … by id
+export const getUserPaymentDetailsById = async (id) => {
+  return await serverFetch(`/api/payments/${id}`)
+} 

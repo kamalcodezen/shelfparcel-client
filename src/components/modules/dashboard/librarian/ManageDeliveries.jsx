@@ -247,7 +247,7 @@ const ManageDeliveries = () => {
 
                 {/* Card Footer: */}
                 <div className="flex items-center justify-end pt-1">
-                  {delivery.status === "Pending Approval" && (
+                  {delivery.status === "Pending" && (
                     <Button
                       fullWidth
                       size="sm"

@@ -14,91 +14,34 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-
-
-const UserOverview = () => {
-  const [deliveries, setDeliveries] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  // Mock Data deliveries
-  const mockDeliveries = [
-    {
-      _id: "1",
-      bookTitle: "React Pro Architecture",
-      status: "Delivered",
-      deliveryFee: 60,
-      month: "Jan",
-    },
-    {
-      _id: "2",
-      bookTitle: "Next.js Complete Guide",
-      status: "Pending Approval",
-      deliveryFee: 50,
-      month: "Feb",
-    },
-    {
-      _id: "3",
-      bookTitle: "Tailwind UI Mastery",
-      status: "Delivered",
-      deliveryFee: 40,
-      month: "Feb",
-    },
-    {
-      _id: "4",
-      bookTitle: "Node.js Backend Deep Dive",
-      status: "Dispatched",
-      deliveryFee: 70,
-      month: "Mar",
-    },
-    {
-      _id: "5",
-      bookTitle: "Prisma ORM Solutions",
-      status: "Delivered",
-      deliveryFee: 80,
-      month: "Mar",
-    },
-    {
-      _id: "6",
-      bookTitle: "TypeScript Essentials",
-      status: "Delivered",
-      deliveryFee: 50,
-      month: "Apr",
-    },
-  ];
-
-  useEffect(() => {
-    
-    setDeliveries(mockDeliveries);
-
-
-  }, []);
+const UserOverview = ({ userPayment = [] }) => {
 
 
   // =============================================================
 
-  // ১. Total Books Read: status  "Delivered" 
-  const totalBooksRead = deliveries.filter(
+  // ১. Total Books Read: status  "Delivered"
+  const totalBooksRead = userPayment.filter(
     (item) => item.status === "Delivered",
   ).length;
 
-  // ২. Pending Deliveries: "Pending Approval" / "Dispatched" 
-  const pendingDeliveries = deliveries.filter(
+  // ২. Pending Deliveries: "Pending Approval" / "Dispatched"
+  const pendingDeliveries = userPayment.filter(
     (item) =>
-      item.status === "Pending Approval" || item.status === "Dispatched",
+      item.status === "Pending" || item.status === "Dispatched",
   ).length;
 
-  // ৩. Total Spent on Fees: 
-  const totalSpent = deliveries.reduce(
-    (sum, item) => sum + item.deliveryFee,
+  // ৩. Total Spent on Fees:
+  const totalSpent = userPayment.reduce(
+    (sum, item) => sum + item.amount,
     0,
   );
 
   // =============================================================
   // Recharts Per Monthly Spent
   // =============================================================
-  const monthlyDataObj = deliveries.reduce((acc, item) => {
+  const monthlyDataObj = userPayment.reduce((acc, item) => {
     const month = item.month || "Unknown";
-    acc[month] = (acc[month] || 0) + item.deliveryFee;
+    acc[month] = (acc[month] || 0) + item.amount;
     return acc;
   }, {});
 
