@@ -3,9 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { serverMutation } from "../core/server";
 
-
+// users comment post korche 
 export const addUserComment = async (reviewPayload) => {
-    return await serverMutation("/api/comments/add", reviewPayload, "POST")
+    return await serverMutation("/api/users/comments", reviewPayload, "POST")
 }
 
 

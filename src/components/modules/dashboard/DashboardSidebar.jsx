@@ -70,7 +70,7 @@ const DashboardSidebar = () => {
     },
     {
       title: "My Reviews",
-      href: "/dashboard/user?tab=reviews",
+      href: "/dashboard/user/myReviews",
       icon: CreditCard,
     },
   ];

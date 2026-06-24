@@ -63,13 +63,14 @@ const MyReadingList = () => {
 
     const reviewPayload = {
       rating: rating,
-      comment: commentText,
+      comment: commentText.trim(),
       bookId: selectedBook?._id,
+      bookImage: selectedBook?.cover,
       userEmail: user?.email,
       userName: user?.name,
       userId: user?.id,
       userImage: user?.image,
-      userRole: user?.role,
+      role: user?.role,
     };
 
     try {
