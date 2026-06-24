@@ -1,13 +1,14 @@
 "use client";
 
+import React from "react";
 import { History, BookOpen, DollarSign, Calendar, Clock } from "lucide-react";
 
 const UserDeliveryHistory = ({ userPayment = [] }) => {
-
+  //  Date formatter to parse ISO timestamp (createdAt) safely
   const formatDate = (dateString) => {
     if (!dateString) return "Recent";
     const dateObj = new Date(dateString);
-    if (isNaN(dateObj.getTime())) return "Recent"; // Fallback for safety
+    if (isNaN(dateObj.getTime())) return "Recent"; // Fallback safety layer
 
     return dateObj.toLocaleDateString("en-US", {
       year: "numeric",
@@ -16,7 +17,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
     });
   };
 
-  // Status dynamic color object
+  //  Dynamic neon border and glow style object based on 3 distinct statuses
   const statusStyles = {
     Pending: "bg-amber-500/10 text-amber-500 border-amber-500/20",
     Dispatched: "bg-blue-500/10 text-blue-500 border-blue-500/20",
@@ -25,7 +26,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
 
   return (
     <div className="space-y-6 font-urbanist text-foreground pt-4 w-full">
-      {/* Header section */}
+      {/*  Section Header View */}
       <div className="flex items-center gap-3 border-b border-border/60 pb-4">
         <div className="p-2.5 bg-primary/10 border border-primary/20 text-primary rounded-xl">
           <History size={22} />
@@ -40,7 +41,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
         </div>
       </div>
 
-      {/* Data not found */}
+      {/*  Safety Guard: Conditional rendering for empty state dataset */}
       {userPayment.length === 0 ? (
         <div className="border border-border bg-card/40 rounded-3xl p-10 text-center text-muted-foreground flex flex-col items-center justify-center gap-2 shadow-sm">
           <History size={32} className="text-muted-foreground/60" />
@@ -48,7 +49,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
         </div>
       ) : (
         <>
-          {/* Desktop View */}
+          {/*  Desktop Table View Layout (Hidden on Mobile) */}
           <div className="hidden md:block border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -82,24 +83,24 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
                     key={item?._id || item?.transactionId}
                     className="transition-all hover:bg-muted/10"
                   >
-                    {/* Book Title */}
+                    {/* Book Title Column */}
                     <td className="p-4 font-bold font-poppins text-foreground">
                       {item?.bookTitle || "Untitled Book"}
                     </td>
 
-                    {/* Delivery Fee */}
+                    {/* Delivery Fee Column */}
                     <td className="p-4 text-muted-foreground">
                       <span className="px-2 py-0.5 rounded-md bg-muted/60 text-foreground font-poppins text-xs border border-border/40">
                         ${item?.amount || 0}
                       </span>
                     </td>
 
-                    {/* Requested Date (Switched from item.date to item.createdAt) */}
+                    {/* Request Date Column parsed via createdAt */}
                     <td className="p-4 text-muted-foreground text-xs">
                       {formatDate(item?.createdAt)}
                     </td>
 
-                    {/* Live Status */}
+                    {/* Live Pipeline Status Badge */}
                     <td className="p-4">
                       <span
                         className={`px-2.5 py-0.5 rounded-md text-xs font-bold uppercase border ${statusStyles[item?.status] || statusStyles["Pending"]}`}
@@ -113,14 +114,14 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
             </table>
           </div>
 
-          {/* Mobile View */}
+          {/*  Mobile Responsive Card Stack Layout (Hidden on Desktop) */}
           <div className="w-11/12 mx-auto block md:hidden space-y-4">
             {userPayment.map((item) => (
               <div
                 key={item?._id || item?.transactionId}
                 className="border border-border/80 bg-card/40 rounded-2xl p-4 shadow-sm space-y-3 transition-all active:scale-[0.99]"
               >
-                {/* Card Header: Book Title */}
+                {/* Mobile Card Header: Title & Dynamic Status Tag */}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
@@ -137,7 +138,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
                   </span>
                 </div>
 
-                {/* Card Body: Delivery Fee and Date */}
+                {/* Mobile Card Body: Pricing Grid and Structured Timestamp */}
                 <div className="grid grid-cols-2 gap-2 border-t border-border/40 pt-2.5 text-xs font-medium">
                   <div>
                     <p className="text-muted-foreground text-[11px] mb-0.5">

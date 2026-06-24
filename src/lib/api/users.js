@@ -21,7 +21,3 @@ export const getUserList = async () => {
 }
 
 
-// user payments details get … by id
-export const getUserPaymentDetailsById = async (id) => {
-  return await serverFetch(`/api/payments/${id}`)
-} 

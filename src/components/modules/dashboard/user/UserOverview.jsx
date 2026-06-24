@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Card } from "@heroui/react";
 import { BookOpen, Truck, DollarSign, BarChart3 } from "lucide-react";
 
@@ -15,37 +15,36 @@ import {
 } from "recharts";
 
 const UserOverview = ({ userPayment = [] }) => {
-
-
+  // =============================================================
+  //  REAL STATS CALCULATIONS (Synced with MongoDB schema)
   // =============================================================
 
-  // ১. Total Books Read: status  "Delivered"
+  // 1. Total Books Read: status strictly equals "Delivered"
   const totalBooksRead = userPayment.filter(
     (item) => item.status === "Delivered",
   ).length;
 
-  // ২. Pending Deliveries: "Pending Approval" / "Dispatched"
+  // 2. Pending Deliveries: tracks "Pending" and "Dispatched" requests
   const pendingDeliveries = userPayment.filter(
-    (item) =>
-      item.status === "Pending" || item.status === "Dispatched",
+    (item) => item.status === "Pending" || item.status === "Dispatched",
   ).length;
 
-  // ৩. Total Spent on Fees:
+  // 3. Total Spent on Fees: safely handles reducing float and int amounts
   const totalSpent = userPayment.reduce(
-    (sum, item) => sum + item.amount,
+    (sum, item) => sum + (item.amount || 0),
     0,
   );
 
   // =============================================================
-  // Recharts Per Monthly Spent
+  //  MONTHLY INLINE DATA REDUCER (Reads direct "month" field)
   // =============================================================
   const monthlyDataObj = userPayment.reduce((acc, item) => {
     const month = item.month || "Unknown";
-    acc[month] = (acc[month] || 0) + item.amount;
+    acc[month] = (acc[month] || 0) + (item.amount || 0);
     return acc;
   }, {});
 
-  // Recharts-
+  // Formatting compiled dataset array for Recharts distribution
   const chartData = Object.keys(monthlyDataObj).map((month) => ({
     name: month,
     Spent: monthlyDataObj[month],
@@ -53,7 +52,7 @@ const UserOverview = ({ userPayment = [] }) => {
 
   return (
     <div className="space-y-8 font-urbanist text-foreground pt-4 w-full">
-      {/* heading */}
+      {/* Overview Metric Heading Section */}
       <div className="flex items-center gap-3 border-b border-border/60 pb-4">
         <div className="p-2.5 bg-primary/10 border border-primary/20 text-primary rounded-xl">
           <BarChart3 size={22} />
@@ -68,9 +67,9 @@ const UserOverview = ({ userPayment = [] }) => {
         </div>
       </div>
 
-      {/* All Cards */}
+      {/* Analytics Counter Dashboard Matrix */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        {/* All Reading Card */}
+        {/* Total Books Read Card */}
         <Card className="p-5 border border-border/60 bg-card/40 rounded-3xl shadow-sm flex flex-row items-center gap-4">
           <div className="p-3 bg-emerald-500/10 text-emerald-500 rounded-2xl border border-emerald-500/20">
             <BookOpen size={24} />
@@ -116,7 +115,7 @@ const UserOverview = ({ userPayment = [] }) => {
         </Card>
       </div>
 
-      {/* Recharts Per Monthly Spent */}
+      {/* Recharts Area Container Bound To Core Variable Tokens */}
       <div className="border border-border bg-card/20 rounded-3xl p-5 shadow-sm space-y-4">
         <div>
           <h4 className="font-poppins font-bold text-sm text-foreground">
@@ -134,16 +133,16 @@ const UserOverview = ({ userPayment = [] }) => {
               margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
             >
               <defs>
-                {/* Gradient Defs */}
+                {/* 🎨 Seamlessly bound to your custom @theme primary variable tokens */}
                 <linearGradient id="colorSpent" x1="0" y1="0" x2="0" y2="1">
                   <stop
                     offset="5%"
-                    stopColor="hsl(var(--heroui-primary))"
+                    stopColor="rgb(var(--primary))"
                     stopOpacity={0.2}
                   />
                   <stop
                     offset="95%"
-                    stopColor="hsl(var(--heroui-primary))"
+                    stopColor="rgb(var(--primary))"
                     stopOpacity={0}
                   />
                 </linearGradient>
@@ -181,7 +180,7 @@ const UserOverview = ({ userPayment = [] }) => {
               <Area
                 type="monotone"
                 dataKey="Spent"
-                stroke="hsl(var(--heroui-primary))"
+                stroke="rgb(var(--primary))"
                 strokeWidth={2.5}
                 fillOpacity={1}
                 fill="url(#colorSpent)"
