@@ -64,12 +64,12 @@ const BookCard = ({ book }) => {
 
             <span
               className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                book?.isAvailable
+                book?.status === "Published"
                   ? "bg-green-500/10 text-green-500"
                   : "bg-red-500/10 text-red-500"
               }`}
             >
-              {book?.isAvailable ? "Available" : "Checked Out"}
+              {book?.status === "Published" ? "Available" : "Checked Out"}
             </span>
           </div>
 

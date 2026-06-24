@@ -272,7 +272,18 @@ export default function BookDetails({ books, userComments }) {
                 </Button>
               </div>
             ) : (
-              <form action={`/api/payment`} method="POST">
+              <form
+                action={`/api/payment`}
+                method="POST"
+                onSubmit={(e) => {
+                  // যদি বই Checked Out থাকে বা অলরেডি সাবমিটিং মোডে থাকে, তবে ফর্মের action-এ যেতে দেবে না
+                  if (isButtonDisabled || isSubmitting) {
+                    e.preventDefault();
+                    return false;
+                  }
+                  setIsSubmitting(true);
+                }}
+              >
                 <input type="hidden" name="bookId" value={books?._id} />
                 <input type="hidden" name="title" value={books?.title} />
                 <input type="hidden" name="cover" value={books?.cover} />
@@ -297,12 +308,17 @@ export default function BookDetails({ books, userComments }) {
                 <Button
                   type="submit"
                   isLoading={isSubmitting}
-                  disabled={isButtonDisabled}
-                  className={`w-full h-14 text-xs font-black font-poppins uppercase tracking-widest cursor-pointer transition-all rounded-xl ${!isButtonDisabled ? "btn-primary active:scale-[0.98] shadow-lg" : "bg-border/40 text-muted-foreground/40 cursor-not-allowed border border-border/20 shadow-none"}`}
+                  disabled={isButtonDisabled || isSubmitting}
+                  className={`w-full h-14 text-xs font-black font-poppins uppercase tracking-widest transition-all rounded-xl ${
+                    !(isButtonDisabled || isSubmitting)
+                      ? "btn-primary active:scale-[0.98] shadow-lg cursor-pointer"
+                      : "bg-border/60 text-muted-foreground cursor-not-allowed border border-border/20 shadow-none opacity-60"
+                  }`}
                   startContent={
                     !isSubmitting && !isButtonDisabled && <Truck size={16} />
                   }
                 >
+                  {/* dynamic button text */}
                   {isBookCheckedOut
                     ? "Currently Checked Out"
                     : isSubmitting
