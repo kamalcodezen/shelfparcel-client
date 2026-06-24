@@ -311,7 +311,7 @@ export default function BookDetails({ books, userComments }) {
           Reader Reviews ({userComments.length})
         </h3>
 
-        {/* comment not found */}
+        {/* comment/review section */}
         {userComments.length === 0 ? (
           <div className="text-center py-10 border border-dashed border-border/60 rounded-2xl bg-card-soft/20 flex flex-col items-center justify-center gap-2 text-muted-foreground">
             <MessageSquare size={32} className="opacity-30" />
@@ -356,7 +356,7 @@ export default function BookDetails({ books, userComments }) {
           setIsDeleteOpen(false);
           setBookToDelete(null);
         }}
-        userToDelete={bookToDelete}
+        bookToDelete={bookToDelete}
         onDeleteSuccess={() => router.refresh()}
       />
     </div>
