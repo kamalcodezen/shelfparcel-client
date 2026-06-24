@@ -4,10 +4,8 @@ import { getUserPaymentDetailsById } from "@/lib/api/payment";
 import { getUserSession } from "@/lib/core/session";
 
 const UserDeliveryHistoryPage = async () => {
+  
   const session = await getUserSession();
-
-
-
   const userPayment = await getUserPaymentDetailsById(session?.email
 );
 

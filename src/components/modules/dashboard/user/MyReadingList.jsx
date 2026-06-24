@@ -2,19 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import { Card, Button } from "@heroui/react";
-import { BookCheck, MessageSquare, X, Star } from "lucide-react";
+import { BookCheck, MessageSquare, X, Star, BookOpen } from "lucide-react";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 import { addUserComment } from "@/lib/actions/users";
 
-const MyReadingList = () => {
+const MyReadingList = ({ userPayment = [] }) => {
   // Component States
   const [readingList, setReadingList] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [commentText, setCommentText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 🔐 Authenticated Session Data
+  // Authenticated Session Data
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
@@ -22,36 +22,12 @@ const MyReadingList = () => {
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
 
-  const mockDeliveries = [
-    {
-      _id: "1",
-      bookTitle: "React Pro Architecture",
-      author: "Dan Abramov",
-      status: "Delivered",
-      cover:
-        "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&q=80",
-    },
-    {
-      _id: "3",
-      bookTitle: "Tailwind UI Mastery",
-      author: "Adam Wathan",
-      status: "Delivered",
-      cover:
-        "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&q=80",
-    },
-    {
-      _id: "5",
-      bookTitle: "Prisma ORM Solutions",
-      author: "Prisma Team",
-      status: "Delivered",
-      cover:
-        "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&q=80",
-    },
-  ];
-
   useEffect(() => {
-    setReadingList(mockDeliveries);
-  }, []);
+    const deliveredBooks = userPayment.filter(
+      (item) => item?.status === "Delivered",
+    );
+    setReadingList(deliveredBooks);
+  }, [userPayment]);
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
@@ -64,8 +40,8 @@ const MyReadingList = () => {
     const reviewPayload = {
       rating: rating,
       comment: commentText.trim(),
-      bookId: selectedBook?._id,
-      bookImage: selectedBook?.cover,
+      bookId: selectedBook?.bookId,
+      bookImage: selectedBook?.bookCover,
       userEmail: user?.email,
       userName: user?.name,
       userId: user?.id,
@@ -76,7 +52,7 @@ const MyReadingList = () => {
     try {
       setIsSubmitting(true);
 
-      // add comment to database
+      // Add comment to database pipeline
       const res = await addUserComment(reviewPayload);
       if (res?.success || res?.insertedId || res?.result?.insertedId) {
         toast.success(
@@ -113,45 +89,63 @@ const MyReadingList = () => {
         </div>
       </div>
 
-      {/* Books Gallery Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-        {readingList.map((book) => (
-          <Card
-            key={book._id}
-            className="border border-border/70 bg-card/40 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between p-4 space-y-4"
-          >
-            <div className="space-y-3">
-              <div className="aspect-[4/5] w-full h-[170px] bg-muted rounded-2xl overflow-hidden">
-                <img
-                  src={book.cover}
-                  alt={book.bookTitle}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm font-poppins line-clamp-1 text-foreground">
-                  {book.bookTitle}
-                </h4>
-                <p className="text-xs text-muted-foreground">
-                  By {book.author}
-                </p>
-              </div>
-            </div>
-
-            <Button
-              fullWidth
-              size="sm"
-              color="primary"
-              variant="flat"
-              className="font-bold text-xs rounded-xl"
-              onClick={() => setSelectedBook(book)}
-              endContent={<MessageSquare size={14} />}
+      {/*  Empty Guard Layer: Displays dynamically if no items have been marked "Delivered" yet */}
+      {readingList.length === 0 ? (
+        <div className="text-center py-12 border border-dashed border-border rounded-2xl bg-card/20 flex flex-col items-center justify-center gap-2 text-muted-foreground">
+          <BookOpen size={32} className="opacity-40 text-primary" />
+          <p className="text-xs font-bold">Your reading list is empty</p>
+          <p className="text-[11px] opacity-75">
+            Books will appear here once the Librarian marks them as "Delivered".
+          </p>
+        </div>
+      ) : (
+        /* Books Gallery Grid */
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          {readingList.map((book) => (
+            <Card
+              key={book?._id || book?.transactionId}
+              className="border border-border/70 bg-card/40 rounded-lg overflow-hidden shadow-sm flex flex-col justify-between p-4 space-y-4"
             >
-              Write a Review
-            </Button>
-          </Card>
-        ))}
-      </div>
+              <div className="space-y-3">
+                <div className="aspect-[4/5] w-full h-[140px] bg-muted rounded-lg overflow-hidden">
+                  {/* Switched from book.cover to book.bookCover to map your real MongoDB dataset */}
+                  <img
+                    src={
+                      book?.bookCover ||
+                      "https://images.unsplash.com/photo-1543002588-bfa74002ed7e"
+                    }
+                    alt={book?.bookTitle}
+                    className="w-full h-[140px] object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm font-poppins line-clamp-1 text-foreground">
+                    {book?.bookTitle || "Untitled Book"}
+                  </h4>
+                  <p className="text-xs text-muted-foreground">
+                    Order Status:{" "}
+                    <span className="text-emerald-500 font-semibold">
+                      {book?.status}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <Button
+                fullWidth
+                size="sm"
+                color="primary"
+                variant="flat"
+                className="font-bold text-xs rounded-xl"
+                onClick={() => setSelectedBook(book)}
+                endContent={<MessageSquare size={14} />}
+              >
+                Write a Review
+              </Button>
+            </Card>
+          ))}
+        </div>
+      )}
 
       {/* Review Dialog Popup Modal */}
       {selectedBook && (
