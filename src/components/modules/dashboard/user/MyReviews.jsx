@@ -10,9 +10,13 @@ import {
   Calendar,
   User,
   BookOpen,
+  AlertTriangle,
 } from "lucide-react";
 import { toast } from "react-toastify";
-import { updateUserCommentById } from "@/lib/actions/users";
+import {
+  deleteUserCommentById,
+  updateUserCommentById,
+} from "@/lib/actions/users";
 
 const MyReviews = ({ comments = [] }) => {
   const [reviewList, setReviewList] = useState(comments);
@@ -20,7 +24,11 @@ const MyReviews = ({ comments = [] }) => {
   const [editText, setEditText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  //  edit comment function
+  //  Custom lightweight state control for our custom modal popup
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDeleteId, setSelectedDeleteId] = useState(null);
+
+  // Edit review description logic
   const handleSaveEdit = async (id) => {
     if (!editText.trim()) {
       toast.warn("Comment field cannot be empty!");
@@ -39,36 +47,51 @@ const MyReviews = ({ comments = [] }) => {
         );
 
         setEditingId(null);
-        toast.success("Review updated successfully!");
+        toast.success("Comment updated successfully!");
       } else {
         toast.error(res?.message || "No changes were made.");
       }
     } catch (error) {
-      console.error("Edit review error:", error);
+      console.error("Edit comment error:", error);
       toast.error("Failed to save changes.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Handles the DELETE request erasing from the database
-  const handleDeleteReview = async (id) => {
-    if (confirm("Are you sure you want to permanently delete this review?")) {
-      try {
-        // await deleteCommentById(id);
+  // Triggers custom modal open sequence
+  const askDeleteConfirmation = (id) => {
+    setSelectedDeleteId(id);
+    setIsModalOpen(true);
+  };
 
-        setReviewList(reviewList.filter((item) => item._id !== id));
-        toast.success("Review deleted successfully!");
-      } catch (error) {
-        console.error(error);
-        toast.error("Failed to delete review.");
+  // Handles the DELETE request erasing from the database
+  const handleDeleteReview = async () => {
+    if (!selectedDeleteId) return;
+    try {
+      setIsSubmitting(true);
+
+      const res = await deleteUserCommentById(selectedDeleteId);
+
+      if (res?.success || res?.result?.deletedCount > 0) {
+        toast.success("Comment deleted successfully!");
+        setReviewList(
+          reviewList.filter((item) => item._id !== selectedDeleteId),
+        );
+        setIsModalOpen(false); // Closes custom modal view cleanly
+      } else {
+        toast.error(res?.message || "Failed to delete the comment.");
       }
+    } catch (error) {
+      toast.error("Failed to delete comment.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="space-y-6 font-urbanist text-foreground pt-4 w-full">
-      {/*  Header Component */}
+      {/* Header Component */}
       <div className="flex items-center gap-3 border-b border-border/60 pb-4">
         <div className="p-2.5 bg-primary/10 border border-primary/20 text-primary rounded-xl">
           <MessageSquare size={22} />
@@ -83,7 +106,7 @@ const MyReviews = ({ comments = [] }) => {
         </div>
       </div>
 
-      {/*  Empty Collection Check */}
+      {/* Empty Collection Check */}
       {reviewList.length === 0 ? (
         <div className="border border-dashed border-border bg-card/20 rounded-lg p-12 text-center text-muted-foreground flex flex-col items-center justify-center gap-2">
           <MessageSquare size={32} className="text-muted-foreground/40" />
@@ -93,14 +116,14 @@ const MyReviews = ({ comments = [] }) => {
           </p>
         </div>
       ) : (
-        /*  Premium Interactive Review Stream Card System */
+        /* Premium Interactive Review Stream Card System */
         <div className="space-y-4">
           {reviewList.map((review) => (
             <Card
               key={review._id}
               className="p-5 border border-border/60 bg-card/40 rounded-3xl space-y-4 shadow-sm flex flex-col group"
             >
-              {/*  Top Bar Layout: User Profile Info & Interactive Stars */}
+              {/* Top Bar Layout: User Profile Info & Interactive Stars */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/30 pb-3">
                 <div className="flex items-center gap-3">
                   {/* User Profile Avatar Avatar image container */}
@@ -134,7 +157,7 @@ const MyReviews = ({ comments = [] }) => {
                 </div>
               </div>
 
-              {/*  Mid Section Layout: Dynamic Textarea vs Comment Display Render */}
+              {/* Mid Section Layout: Dynamic Textarea vs Comment Display Render */}
               <div className="flex gap-4 items-start">
                 {/* Book Thumbnail Column */}
                 {review?.bookImage && (
@@ -193,13 +216,15 @@ const MyReviews = ({ comments = [] }) => {
                     </div>
                   ) : (
                     <p className="text-sm text-muted-foreground/90 italic font-medium leading-relaxed pt-0.5">
-                      {review.comment}
+                      {typeof review.comment === "object"
+                        ? review.comment.comment
+                        : review.comment}
                     </p>
                   )}
                 </div>
               </div>
 
-              {/*  Bottom Bar Layout: Management Controllers Action Buttons */}
+              {/* Bottom Bar Layout: Management Controllers Action Buttons */}
               {editingId !== review._id && (
                 <div className="flex items-center gap-2 justify-end pt-2 border-t border-border/10   transition-opacity duration-200">
                   <Button
@@ -220,7 +245,7 @@ const MyReviews = ({ comments = [] }) => {
                     variant="flat"
                     color="danger"
                     className="h-8 rounded-xl text-xs font-bold"
-                    onClick={() => handleDeleteReview(review._id)}
+                    onClick={() => askDeleteConfirmation(review._id)}
                     startContent={<Trash2 size={13} />}
                   >
                     Delete
@@ -229,6 +254,47 @@ const MyReviews = ({ comments = [] }) => {
               )}
             </Card>
           ))}
+        </div>
+      )}
+
+      {/*  Lightweight custom Tailwind backdrop modal overlay system */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="border border-border bg-background max-w-sm rounded-3xl p-5 w-full space-y-4 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+            {/* Modal Title Banner Section */}
+            <div className="flex items-center gap-2 font-poppins text-base font-bold text-danger">
+              <AlertTriangle size={20} />
+              Confirm Deletion
+            </div>
+
+            {/* Modal Warning Body Message */}
+            <p className="text-sm text-muted-foreground font-urbanist leading-relaxed">
+              Are you absolutely sure you want to permanently delete this
+              review? This action cannot be undone.
+            </p>
+
+            {/* Modal Interactive Actions Control Row */}
+            <div className="flex items-center gap-2 justify-end pt-1">
+              <Button
+                size="sm"
+                variant="light"
+                className="rounded-xl font-bold text-xs"
+                onClick={() => !isSubmitting && setIsModalOpen(false)}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                color="danger"
+                className="rounded-xl font-bold text-xs text-white"
+                isLoading={isSubmitting}
+                onClick={handleDeleteReview}
+              >
+                Delete Now
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

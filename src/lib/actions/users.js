@@ -1,5 +1,6 @@
 "use server";
 
+
 import { revalidatePath } from "next/cache";
 import { serverMutation } from "../core/server";
 
@@ -11,11 +12,18 @@ export const addUserComment = async (reviewPayload) => {
 
 // user comments edit by
 export const updateUserCommentById = async (id, comment) => {
-    const res = await serverMutation(`/api/users/comments/edit/${id}`,  comment , "PATCH");
+    const res = await serverMutation(`/api/users/comments/edit/${id}`, comment, "PATCH");
     revalidatePath("/dashboard/user/myReviews")
     return res;
 }
 
+
+// User delete comments by id 
+export const deleteUserCommentById = async (id) => {
+    const res = await serverMutation(`/api/users/comments/delete/${id}`, {}, "DELETE")
+    revalidatePath(`dashboard/user/myReviews`)
+    return res;
+}
 
 
 
