@@ -32,6 +32,8 @@ import { toggleBooksStatusById } from "@/lib/actions/librarian";
 export default function BookDetails({ books, userComments }) {
   const router = useRouter();
 
+  // console.log(books);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -57,20 +59,6 @@ export default function BookDetails({ books, userComments }) {
   const isOwnerLibrarian =
     loggedInUser && books && loggedInUser.id === books.librarianId;
   const isButtonDisabled = isBookCheckedOut || isOwnerLibrarian;
-
-  const handleRequestDelivery = async () => {
-    setIsSubmitting(true);
-    try {
-      setTimeout(() => {
-        alert(
-          `Redirecting to Stripe Checkout to pay delivery fee: $${books?.fee || 0} `,
-        );
-        setIsSubmitting(false);
-      }, 1200);
-    } catch (error) {
-      setIsSubmitting(false);
-    }
-  };
 
   // book edit modal function
   const handleEditClick = (book) => {
@@ -284,21 +272,44 @@ export default function BookDetails({ books, userComments }) {
                 </Button>
               </div>
             ) : (
-              <Button
-                onClick={handleRequestDelivery}
-                isLoading={isSubmitting}
-                disabled={isButtonDisabled}
-                className={`w-full h-14 text-xs font-black font-poppins uppercase tracking-widest cursor-pointer transition-all rounded-xl ${!isButtonDisabled ? "btn-primary active:scale-[0.98] shadow-lg" : "bg-border/40 text-muted-foreground/40 cursor-not-allowed border border-border/20 shadow-none"}`}
-                startContent={
-                  !isSubmitting && !isButtonDisabled && <Truck size={16} />
-                }
-              >
-                {isBookCheckedOut
-                  ? "Currently Checked Out"
-                  : isSubmitting
-                    ? "Opening Stripe Gateway..."
-                    : "Request Home Delivery Now"}
-              </Button>
+              <form action={`/api/payment`} method="POST">
+                <input type="hidden" name="bookId" value={books?._id} />
+                <input type="hidden" name="title" value={books?.title} />
+                <input type="hidden" name="cover" value={books?.cover} />
+                <input type="hidden" name="fee" value={books?.fee} />
+                <input
+                  type="hidden"
+                  name="librarianId"
+                  value={books?.librarianId}
+                />
+                <input
+                  type="hidden"
+                  name="librarianEmail"
+                  value={books?.librarianEmail}
+                />
+                <input type="hidden" name="userId" value={loggedInUser?.id} />
+                <input
+                  type="hidden"
+                  name="userEmail"
+                  value={loggedInUser?.email}
+                />
+
+                <Button
+                  type="submit"
+                  isLoading={isSubmitting}
+                  disabled={isButtonDisabled}
+                  className={`w-full h-14 text-xs font-black font-poppins uppercase tracking-widest cursor-pointer transition-all rounded-xl ${!isButtonDisabled ? "btn-primary active:scale-[0.98] shadow-lg" : "bg-border/40 text-muted-foreground/40 cursor-not-allowed border border-border/20 shadow-none"}`}
+                  startContent={
+                    !isSubmitting && !isButtonDisabled && <Truck size={16} />
+                  }
+                >
+                  {isBookCheckedOut
+                    ? "Currently Checked Out"
+                    : isSubmitting
+                      ? "Opening Stripe Gateway..."
+                      : "Request Home Delivery Now"}
+                </Button>
+              </form>
             )}
           </div>
         </div>

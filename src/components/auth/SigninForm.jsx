@@ -51,7 +51,6 @@ export default function SigninForm() {
   const handleSignin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       await authClient.signIn.email({
         email: loginData.email,

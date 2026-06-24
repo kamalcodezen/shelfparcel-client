@@ -18,7 +18,7 @@ export default function AllBooks({ initialBooks = [] }) {
   // Filter Logic
   const filteredBooks = useMemo(() => {
     return initialBooks.filter((book) => {
-      if (book.status !== "Published") return false;
+      
 
       const matchesSearch =
         book.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
