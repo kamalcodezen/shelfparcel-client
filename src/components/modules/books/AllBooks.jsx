@@ -2,12 +2,16 @@
 
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpenText } from "lucide-react";
+import { BookOpenText, ChevronLeft } from "lucide-react";
 
 import BookCard from "../shared/BookCard";
 import BooksFilter from "./BookFilter";
+import { Button } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 export default function AllBooks({ initialBooks = [] }) {
+  const router = useRouter();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -38,16 +42,16 @@ export default function AllBooks({ initialBooks = [] }) {
     },
   };
 
-  // সিঁড়ির মতো স্ট্যাগার কন্টেইনার
+  // stair step transition effect
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.04 }, // কার্ডগুলো সিঁড়ির মতো এক এক করে আসবে
+      transition: { staggerChildren: 0.04 },
     },
   };
 
-  // 👑 সোজা ও নিখুঁত কার্ড অ্যানিমেশন (কোনো এক্স-অক্ষ বা আঁকাবাঁকা মোশন নেই)
+  // card animation effects
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
     show: {
@@ -69,9 +73,18 @@ export default function AllBooks({ initialBooks = [] }) {
         />
       </motion.div>
 
-      <div className="mb-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2 pt-4">
-        Showing {filteredBooks.length} available repository item
-        {filteredBooks.length !== 1 && "s"}
+      <div className=" text-xs font-semibold text-muted-foreground uppercase tracking-wider  ">
+        {/* Back Button */}
+        <Button
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all group"
+        >
+          <ChevronLeft
+            size={16}
+            className="transition-transform group-hover:-translate-x-1"
+          />
+          Back
+        </Button>
       </div>
 
       <AnimatePresence mode="popLayout">
@@ -81,14 +94,14 @@ export default function AllBooks({ initialBooks = [] }) {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            // 🎯items-start যোগ করা হয়েছে যাতে হাইট শিফট না হয়
-            className="w-11/12 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-10 items-start"
+            // items-start
+            className="w-11/12 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10 mt-4 items-start"
           >
             {filteredBooks.map((bookItem) => (
               <motion.div
                 key={bookItem._id}
                 variants={cardVariants}
-                layout // ফিল্টার হলে বাকি কার্ডগুলো জায়গা না হারিয়ে স্মুথলি গ্লাইড করবে
+                layout
                 className="h-full"
               >
                 <BookCard book={bookItem} />
@@ -123,6 +136,11 @@ export default function AllBooks({ initialBooks = [] }) {
             </button>
           </motion.div>
         )}
+
+        <div className="mb-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2 pt-4">
+          Showing {filteredBooks.length} available repository item
+          {filteredBooks.length !== 1 && "s"}
+        </div>
       </AnimatePresence>
     </>
   );

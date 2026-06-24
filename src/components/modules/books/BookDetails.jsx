@@ -29,27 +29,7 @@ import { toast } from "react-toastify";
 import Loader from "../shared/Loader";
 import { toggleBooksStatusById } from "@/lib/actions/librarian";
 
-// Reviews Mock Data
-const mockReviews = [
-  {
-    _id: "r1",
-    userName: "Rakib Ahmed",
-    rating: 5,
-    comment:
-      "Amazing financial perspective! Completely changed how I manage asset allocation.",
-    date: "June 18, 2026",
-  },
-  {
-    _id: "r2",
-    userName: "Subrina Khan",
-    rating: 4,
-    comment:
-      "A timeless masterpiece. The real-world explanations are incredibly smooth.",
-    date: "June 20, 2026",
-  },
-];
-
-export default function BookDetails({ books }) {
+export default function BookDetails({ books, userComments }) {
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,7 +63,7 @@ export default function BookDetails({ books }) {
     try {
       setTimeout(() => {
         alert(
-          `Redirecting to Stripe Checkout to pay delivery fee: $${books?.fee || 0} 💳✨`,
+          `Redirecting to Stripe Checkout to pay delivery fee: $${books?.fee || 0} `,
         );
         setIsSubmitting(false);
       }, 1200);
@@ -114,7 +94,7 @@ export default function BookDetails({ books }) {
     setIsDeleteOpen(true);
   };
 
-  // status change publish/unpublish
+  // status change publish/unpublish librarian only
   const handleToggleStatus = async (bookId, currentStatus) => {
     try {
       const res = await toggleBooksStatusById({ bookId, currentStatus });
@@ -142,16 +122,16 @@ export default function BookDetails({ books }) {
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6 font-urbanist text-foreground space-y-10">
       {/* Back Button */}
-      <Link
-        href="/books"
+      <Button
+        onClick={() => router.back()}
         className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all mb-2 group"
       >
         <ChevronLeft
           size={16}
           className="transition-transform group-hover:-translate-x-1"
         />
-        Return to Gallery
-      </Link>
+        Back
+      </Button>
 
       {/* banner frame */}
       <motion.div
@@ -328,34 +308,45 @@ export default function BookDetails({ books }) {
       <div className="dashboard-card p-6 md:p-8 rounded-[24px] border border-border/50 bg-card/20 backdrop-blur-md space-y-6">
         <h3 className="text-lg font-black font-poppins text-foreground flex items-center gap-2 border-b border-border/40 pb-4">
           <MessageSquare size={20} className="text-primary" />
-          Reader Reviews ({mockReviews.length})
+          Reader Reviews ({userComments.length})
         </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {mockReviews.map((review) => (
-            <div
-              key={review._id}
-              className="p-5 rounded-2xl border border-border/30 bg-card-soft/40 space-y-3 shadow-sm hover:border-border/60 transition-colors"
-            >
-              <div className="flex justify-between items-center">
-                <span className="font-bold text-sm text-foreground">
-                  {review.userName}
-                </span>
-                <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">
-                  {review.date}
-                </span>
+        {/* comment not found */}
+        {userComments.length === 0 ? (
+          <div className="text-center py-10 border border-dashed border-border/60 rounded-2xl bg-card-soft/20 flex flex-col items-center justify-center gap-2 text-muted-foreground">
+            <MessageSquare size={32} className="opacity-30" />
+            <p className="text-sm font-bold">No reviews posted yet</p>
+            <p className="text-xs opacity-70">
+              Be the first reader to share your insights on this book!
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {userComments.map((review) => (
+              <div
+                key={review._id}
+                className="p-5 rounded-2xl border border-border/30 bg-card-soft/40 space-y-3 shadow-sm hover:border-border/60 transition-colors"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-sm text-foreground">
+                    {review.userName}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">
+                    {review.date}
+                  </span>
+                </div>
+                <div className="flex items-center gap-0.5 text-amber-500">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" />
+                  ))}
+                </div>
+                <p className="text-sm text-foreground/80 font-urbanist leading-relaxed">
+                  {review.comment}
+                </p>
               </div>
-              <div className="flex items-center gap-0.5 text-amber-500">
-                {[...Array(review.rating)].map((_, i) => (
-                  <Star key={i} size={14} fill="currentColor" />
-                ))}
-              </div>
-              <p className="text-sm text-foreground/80 font-urbanist leading-relaxed">
-                {review.comment}
-              </p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Delete Book Modal */}
