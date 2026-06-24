@@ -1,46 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import { History, BookOpen, DollarSign, Calendar, Clock } from "lucide-react";
 
+const UserDeliveryHistory = ({ userPayment = [] }) => {
 
-const UserDeliveryHistory = () => {
-  const [history, setHistory] = useState([]);
-
-  const mockHistory = [
-    {
-      _id: "DEL98765",
-      bookTitle: "Advanced Next.js Architecture",
-      deliveryFee: 60,
-      date: "2026-06-23T10:00:00.000Z",
-      status: "Pending Approval",
-    },
-    {
-      _id: "DEL11223",
-      bookTitle: "Mastering Tailwind CSS",
-      deliveryFee: 50,
-      date: "2026-06-22T11:30:00.000Z",
-      status: "Dispatched",
-    },
-    {
-      _id: "DEL55443",
-      bookTitle: "Node.js Complete Guide",
-      deliveryFee: 80,
-      date: "2026-06-20T15:45:00.000Z",
-      status: "Delivered", 
-    },
-  ];
-
-  useEffect(() => {
-   
-    setHistory(mockHistory);
-
-   
-  }, []);
-
-  // Date format
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    if (!dateString) return "Recent";
+    const dateObj = new Date(dateString);
+    if (isNaN(dateObj.getTime())) return "Recent"; // Fallback for safety
+
+    return dateObj.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -49,7 +18,7 @@ const UserDeliveryHistory = () => {
 
   // Status dynamic color object
   const statusStyles = {
-    "Pending Approval": "bg-amber-500/10 text-amber-500 border-amber-500/20",
+    Pending: "bg-amber-500/10 text-amber-500 border-amber-500/20",
     Dispatched: "bg-blue-500/10 text-blue-500 border-blue-500/20",
     Delivered: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
   };
@@ -72,14 +41,14 @@ const UserDeliveryHistory = () => {
       </div>
 
       {/* Data not found */}
-      {history.length === 0 ? (
+      {userPayment.length === 0 ? (
         <div className="border border-border bg-card/40 rounded-3xl p-10 text-center text-muted-foreground flex flex-col items-center justify-center gap-2 shadow-sm">
           <History size={32} className="text-muted-foreground/60" />
           <p className="font-bold">No Delivery Records Found</p>
         </div>
       ) : (
         <>
-          {/* desktop view */}
+          {/* Desktop View */}
           <div className="hidden md:block border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -108,34 +77,34 @@ const UserDeliveryHistory = () => {
               </thead>
 
               <tbody className="divide-y divide-border/60 text-sm font-medium">
-                {history.map((item) => (
+                {userPayment.map((item) => (
                   <tr
-                    key={item._id}
+                    key={item?._id || item?.transactionId}
                     className="transition-all hover:bg-muted/10"
                   >
                     {/* Book Title */}
                     <td className="p-4 font-bold font-poppins text-foreground">
-                      {item.bookTitle}
+                      {item?.bookTitle || "Untitled Book"}
                     </td>
 
                     {/* Delivery Fee */}
                     <td className="p-4 text-muted-foreground">
                       <span className="px-2 py-0.5 rounded-md bg-muted/60 text-foreground font-poppins text-xs border border-border/40">
-                        ${item.deliveryFee}
+                        ${item?.amount || 0}
                       </span>
                     </td>
 
-                    {/* requested Date */}
+                    {/* Requested Date (Switched from item.date to item.createdAt) */}
                     <td className="p-4 text-muted-foreground text-xs">
-                      {formatDate(item.date)}
+                      {formatDate(item?.createdAt)}
                     </td>
 
                     {/* Live Status */}
                     <td className="p-4">
                       <span
-                        className={`px-2.5 py-0.5 rounded-md text-xs font-bold uppercase border ${statusStyles[item.status] || statusStyles["Pending Approval"]}`}
+                        className={`px-2.5 py-0.5 rounded-md text-xs font-bold uppercase border ${statusStyles[item?.status] || statusStyles["Pending"]}`}
                       >
-                        {item.status || "Pending Approval"}
+                        {item?.status || "Pending"}
                       </span>
                     </td>
                   </tr>
@@ -146,9 +115,9 @@ const UserDeliveryHistory = () => {
 
           {/* Mobile View */}
           <div className="w-11/12 mx-auto block md:hidden space-y-4">
-            {history.map((item) => (
+            {userPayment.map((item) => (
               <div
-                key={item._id}
+                key={item?._id || item?.transactionId}
                 className="border border-border/80 bg-card/40 rounded-2xl p-4 shadow-sm space-y-3 transition-all active:scale-[0.99]"
               >
                 {/* Card Header: Book Title */}
@@ -158,13 +127,13 @@ const UserDeliveryHistory = () => {
                       Book Title
                     </p>
                     <h4 className="font-bold text-foreground text-sm font-poppins line-clamp-1">
-                      {item.bookTitle}
+                      {item?.bookTitle || "Untitled Book"}
                     </h4>
                   </div>
                   <span
-                    className={`px-2 py-0.5 rounded-md text-[9px] font-bold uppercase border flex-shrink-0 ${statusStyles[item.status] || statusStyles["Pending Approval"]}`}
+                    className={`px-2 py-0.5 rounded-md text-[9px] font-bold uppercase border flex-shrink-0 ${statusStyles[item?.status] || statusStyles["Pending"]}`}
                   >
-                    {item.status || "Pending Approval"}
+                    {item?.status || "Pending"}
                   </span>
                 </div>
 
@@ -175,7 +144,7 @@ const UserDeliveryHistory = () => {
                       Delivery Fee
                     </p>
                     <p className="text-foreground font-poppins font-bold">
-                      ${item.deliveryFee}
+                      ${item?.amount || 0}
                     </p>
                   </div>
                   <div>
@@ -183,7 +152,7 @@ const UserDeliveryHistory = () => {
                       Request Date
                     </p>
                     <p className="text-muted-foreground/90 font-medium">
-                      {formatDate(item.date)}
+                      {formatDate(item?.createdAt)}
                     </p>
                   </div>
                 </div>
