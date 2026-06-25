@@ -74,6 +74,7 @@ const MyReadingList = ({ userPayment = [] }) => {
       rating: rating,
       comment: commentText.trim(),
       bookId: selectedBook?.bookId,
+      bookTitle: selectedBook?.bookTitle,
       bookImage: selectedBook?.bookCover,
       userEmail: user?.email,
       userName: user?.name,

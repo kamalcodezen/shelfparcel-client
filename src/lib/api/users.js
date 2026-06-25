@@ -8,9 +8,10 @@ export const getUserCommentById = async (userId) => {
 }
 
 //  get users All comments by book Id
-export const getUserAllComments = async (id) => {
-  return await serverFetch(`/api/users/comments/${id}`)
+export const getUserAllComments = async (bookId) => {
+  return await serverFetch(`/api/books/comments?bookId=${bookId}`)
 }
+
 
 // Get all users list
 export const getUserList = async () => {

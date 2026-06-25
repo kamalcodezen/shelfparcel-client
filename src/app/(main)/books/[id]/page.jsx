@@ -1,5 +1,5 @@
 import BookDetails from "@/components/modules/books/BookDetails";
-import { getBooksDetailsById } from "@/lib/api/books";
+import { getAllPublishedBooks, getBooksDetailsById } from "@/lib/api/books";
 import { getUserAllComments } from "@/lib/api/users";
 
 const BooksDetailsPage = async ({ params }) => {
@@ -8,8 +8,6 @@ const BooksDetailsPage = async ({ params }) => {
   const books = await getBooksDetailsById(id);
 
   const userComments = await getUserAllComments(id);
-
-  console.log(userComments)
 
   return (
     <div className="w-11/12 mx-auto min-h-screen py-20">

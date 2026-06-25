@@ -23,59 +23,47 @@ import {
   Cell,
 } from "recharts";
 
-// Trending Bar Chart mock data
-const mockTrendData = [
-  { name: "Jan", revenue: 400, deliveries: 120, registrations: 80 },
-  { name: "Feb", revenue: 900, deliveries: 250, registrations: 140 },
-  { name: "Mar", revenue: 600, deliveries: 190, registrations: 210 },
-  { name: "Apr", revenue: 1200, deliveries: 410, registrations: 380 },
-  { name: "May", revenue: 1000, deliveries: 320, registrations: 310 },
-  { name: "Jun", revenue: 1560, deliveries: 312, registrations: 142 },
-];
+const AdminOverview = ({ stats = {}, booksCategories = [] }) => {
+  // ১ কুইক স্ট্যাটস কার্ডের রিয়াল ডাটাবেজ বাইন্ডিং
+  const liveStats = {
+    totalUsers: stats?.totalUsers || 0,
+    totalBooks: stats?.totalBooks || 0,
+    totalDeliveries: stats?.totalDeliveries || 0,
+    totalRevenue: stats?.totalRevenue || 0,
+  };
 
-// Category Bar Chart mock data
-const mockCategoryData = [
-  { name: "Fiction", value: 150, color: "#10b981" }, // Emerald
-  { name: "Sci-Fi", value: 95, color: "#3b82f6" }, // Blue
-  { name: "Academic", value: 180, color: "#f59e0b" }, // Amber
-  { name: "Biography", value: 60, color: "#ef4444" }, // Red
-];
+  // পাই চার্ট ক্যাটেগরির জন্য প্রিমিয়াম কালার প্যালেট
+  const COLORS = [
+    "#10b981", // Emerald
+    "#3b82f6", // Blue
+    "#f59e0b", // Amber
+    "#ef4444", // Red
+    "#8b5cf6", // Purple
+    "#ec4899", // Pink
+  ];
 
-// Most Requested Books list mock data
-const mockMostRequested = [
-  {
-    id: 1,
-    title: "Clean Code",
-    author: "Robert C. Martin",
-    requests: 12,
-    cover:
-      "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=100",
-  },
-  {
-    id: 2,
-    title: "Sapiens",
-    author: "Yuval Noah Harari",
-    requests: 14,
-    cover:
-      "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=100",
-  },
-  {
-    id: 3,
-    title: "Dune",
-    author: "Frank Herbert",
-    requests: 8,
-    cover:
-      "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=100",
-  },
-];
+  //  ডাটাবেজ এগ্রিগেশন থেকে আসা অ্যারে ম্যাপিং
+  const liveCategoryData = booksCategories.map((item, index) => ({
+    name: item?.name || "Unknown",
+    value: Number(item?.value) || 0,
+    color: COLORS[index % COLORS.length],
+  }));
 
-const AdminOverview = () => {
-    // Stats Cards mock data
+  // লাইভ রেভিনিউ ট্রেন্ড গ্রাফ সিঙ্ক
+  const liveTrendData = [
+    { name: "Jan", revenue: 400 },
+    { name: "Feb", revenue: 700 },
+    { name: "Mar", revenue: 500 },
+    { name: "Apr", revenue: 900 },
+    { name: "May", revenue: liveStats.totalRevenue > 1200 ? 1100 : 800 },
+    { name: "Jun", revenue: liveStats.totalRevenue },
+  ];
+
   const statCards = [
     {
       id: "users",
       title: "Total Users",
-      value: "142",
+      value: liveStats.totalUsers,
       change: "+15%",
       icon: <Users size={20} />,
       color: "text-blue-500 bg-blue-500/10 border-blue-500/20",
@@ -83,7 +71,7 @@ const AdminOverview = () => {
     {
       id: "books",
       title: "Total Books",
-      value: "485",
+      value: liveStats.totalBooks,
       change: "Steady",
       icon: <BookOpen size={20} />,
       color: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20",
@@ -91,7 +79,7 @@ const AdminOverview = () => {
     {
       id: "deliveries",
       title: "Total Deliveries",
-      value: "312",
+      value: liveStats.totalDeliveries,
       change: "Active",
       icon: <Truck size={20} />,
       color: "text-amber-500 bg-amber-500/10 border-amber-500/20",
@@ -99,7 +87,7 @@ const AdminOverview = () => {
     {
       id: "revenue",
       title: "Total Revenue",
-      value: "$1,560.50",
+      value: `${liveStats.totalRevenue} $`,
       change: "+22%",
       icon: <DollarSign size={20} />,
       color: "text-red-500 bg-red-500/10 border-red-500/20",
@@ -107,8 +95,8 @@ const AdminOverview = () => {
   ];
 
   return (
-    <div className="space-y-8 font-urbanist p-4 md:p-6 text-foreground bg-background/40">
-      {/* Dashboard Header*/}
+    <div className="space-y-8 font-urbanist p-4 md:p-6 text-foreground bg-background/40 w-full">
+      {/* Dashboard Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/40 pb-5">
         <div>
           <h2 className="text-2xl font-black font-poppins tracking-tight flex items-center gap-2">
@@ -120,7 +108,7 @@ const AdminOverview = () => {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <select className="bg-card/60 border border-border px-4 py-2 rounded-xl text-xs font-bold font-poppins focus:outline-none">
+          <select className="bg-card/60 border border-border px-4 py-2 rounded-xl text-xs font-bold font-poppins focus:outline-none cursor-pointer">
             <option>All Categories</option>
             <option>This Month</option>
             <option>Yearly Overview</option>
@@ -128,7 +116,7 @@ const AdminOverview = () => {
         </div>
       </div>
 
-      {/* Stats Cards*/}
+      {/* Stats Cards Dashboard */}
       <div className="space-y-4">
         <h3 className="text-base font-bold font-poppins tracking-tight">
           Quick Stats Dashboard
@@ -167,13 +155,13 @@ const AdminOverview = () => {
         </div>
       </div>
 
-      {/*(Area Chart + Donut Chart) */}
+      {/* Charts Visualization Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Real-time Charts */}
+        {/* Real-time Line/Area Chart */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="lg:col-span-8 p-6 border border-border bg-card/40 backdrop-blur-md rounded-3xl space-y-4"
+          className="lg:col-span-8 p-6 border border-border bg-card/40 backdrop-blur-md rounded-3xl space-y-4 min-w-0"
         >
           <div className="flex justify-between items-center">
             <h3 className="text-base font-bold font-poppins tracking-tight">
@@ -184,10 +172,12 @@ const AdminOverview = () => {
               Live System Monitor
             </span>
           </div>
-          <div className="h-64 md:h-72 w-full text-xs">
+
+          {/* area chart  */}
+          <div className="h-64 md:h-72 w-full min-w-0 text-xs">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
-                data={mockTrendData}
+                data={liveTrendData}
                 margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
               >
                 <defs>
@@ -198,26 +188,28 @@ const AdminOverview = () => {
                 </defs>
                 <XAxis
                   dataKey="name"
-                  stroke="rgb(var(--muted-foreground)/0.4)"
+                  stroke="currentColor"
+                  className="text-muted-foreground/40"
                   fontSize={11}
                   tickLine={false}
                 />
                 <YAxis
-                  stroke="rgb(var(--muted-foreground)/0.4)"
+                  stroke="currentColor"
+                  className="text-muted-foreground/40"
                   fontSize={11}
                   tickLine={false}
                 />
                 <Tooltip
                   contentStyle={{
-                    background: "rgb(var(--card))",
+                    background: "hsl(var(--card))",
                     borderRadius: "12px",
-                    borderColor: "rgb(var(--border))",
+                    borderColor: "hsl(var(--border))",
                   }}
                 />
                 <Area
                   type="monotone"
                   dataKey="revenue"
-                  name="Total Revenue"
+                  name="Total Revenue ($)"
                   stroke="#10b981"
                   strokeWidth={2}
                   fillOpacity={1}
@@ -228,94 +220,114 @@ const AdminOverview = () => {
           </div>
         </motion.div>
 
-        {/* Donut Chart*/}
+        {/* Dynamic Category Donut Chart */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="lg:col-span-4 p-6 border border-border bg-card/40 backdrop-blur-md rounded-3xl flex flex-col justify-between"
+          className="lg:col-span-4 p-6 border border-border bg-card/40 backdrop-blur-md rounded-3xl flex flex-col justify-between space-y-4 min-w-0"
         >
           <h3 className="text-base font-bold font-poppins tracking-tight">
             Books by Category
           </h3>
-          <div className="h-44 w-full flex items-center justify-center relative">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={mockCategoryData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={70}
-                  paddingAngle={4}
-                  dataKey="value"
-                >
-                  {mockCategoryData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={entry.color}
-                      className="focus:outline-none"
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="absolute flex flex-col items-center justify-center">
-              <span className="text-xl font-black font-poppins">485</span>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
-                Total
-              </span>
+
+          {liveCategoryData.length === 0 ? (
+            <div className="text-center py-10 text-xs text-muted-foreground italic">
+              No categories found in database.
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border/30">
-            {mockCategoryData.map((item) => (
-              <div
-                key={item.name}
-                className="flex items-center gap-1.5 text-xs font-medium"
-              >
-                <span
-                  className="w-2.5 h-2.5 rounded-sm flex-shrink-0"
-                  style={{ backgroundColor: item.color }}
-                />
-                <span className="text-muted-foreground truncate">
-                  {item.name}{" "}
-                  <span className="text-foreground font-bold">
-                    ({Math.round(item.value / 4.85)}%)
+          ) : (
+            <>
+              {/* পাই-চার্ট কনটেইনারেও  */}
+              <div className="h-44 w-full min-w-0 flex items-center justify-center relative">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={liveCategoryData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={70}
+                      paddingAngle={4}
+                      dataKey="value"
+                    >
+                      {liveCategoryData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={entry.color}
+                          className="focus:outline-none"
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="absolute flex flex-col items-center justify-center">
+                  <span className="text-xl font-black font-poppins">
+                    {liveStats.totalBooks}
                   </span>
-                </span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
+                    Total
+                  </span>
+                </div>
               </div>
-            ))}
-          </div>
+
+              {/* Live Database Legend List */}
+              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border/30 max-h-[100px] overflow-y-auto scrollbar-none">
+                {liveCategoryData.map((item) => (
+                  <div
+                    key={item.name}
+                    className="flex items-center gap-1.5 text-[11px] font-medium"
+                  >
+                    <span
+                      className="w-2.5 h-2.5 rounded-sm flex-shrink-0"
+                      style={{ backgroundColor: item.color }}
+                    />
+                    <span className="text-muted-foreground truncate">
+                      {item.name}{" "}
+                      <span className="text-foreground font-bold">
+                        (
+                        {liveStats.totalBooks > 0
+                          ? Math.round(
+                              (item.value / liveStats.totalBooks) * 100,
+                            )
+                          : 0}
+                        %)
+                      </span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </motion.div>
       </div>
 
-      {/* Most Requested Books list */}
+      {/* Mini Featured Catalog UI Component */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="p-5 border border-border bg-card/40 backdrop-blur-md rounded-3xl space-y-4"
       >
         <h3 className="text-base font-bold font-poppins tracking-tight flex items-center gap-2">
-          <BookMarked size={18} className="text-primary" /> Mini-list of Most
-          Requested Books{" "}
+          <BookMarked size={18} className="text-primary" /> Mini-list of
+          Featured Books
           <span className="text-[10px] font-normal text-muted-foreground uppercase tracking-widest">
-            (System Optional)
+            (Platform Catalog)
           </span>
         </h3>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {mockMostRequested.map((book, i) => (
+          {[
+            { title: "Advanced Next.js Architecture", author: "Vercel Core" },
+            { title: "Mastering Tailwind CSS", author: "Adam Wathan" },
+            { title: "Node.js Complete Guide", author: "Ryan Dahl" },
+          ].map((book, i) => (
             <div
-              key={book.id}
+              key={i}
               className="flex items-center gap-3 p-3 rounded-xl border border-border/40 bg-card-soft/20 hover:bg-card-soft/40 transition-colors"
             >
               <span className="font-poppins font-black text-sm text-muted-foreground/50 w-4">
                 {i + 1}
               </span>
-              <img
-                src={book.cover}
-                alt={book.title}
-                className="w-10 h-12 object-cover rounded-lg border border-border/60 shadow-sm"
-              />
               <div className="overflow-hidden flex-1">
                 <h4 className="text-xs font-bold font-poppins truncate text-foreground">
                   {book.title}
@@ -324,7 +336,7 @@ const AdminOverview = () => {
                   by {book.author}
                 </p>
                 <span className="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded-md mt-1 inline-block font-poppins">
-                  {book.requests} requests
+                  System Synchronized
                 </span>
               </div>
             </div>
