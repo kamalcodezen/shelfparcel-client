@@ -11,13 +11,12 @@ import DeleteBookModal from "../librarian/DeleteBookModal";
 const ManageBooks = ({ books = [] }) => {
   const router = useRouter();
 
-  //  delete book modal state
+  // Delete book modal state management
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
-
   const [loadingId, setLoadingId] = useState(null);
 
-  // status change korchi
+  // Status transition control handler
   const handleStatusClick = async (bookId, targetStatus) => {
     try {
       setLoadingId(bookId);
@@ -42,7 +41,7 @@ const ManageBooks = ({ books = [] }) => {
     setIsDeleteOpen(true);
   };
 
-  // status color
+  // Status configuration badge styles
   const statusStyles = {
     Published: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
     Unpublished: "bg-red-500/10 text-red-500 border-red-500/20",
@@ -51,16 +50,16 @@ const ManageBooks = ({ books = [] }) => {
 
   return (
     <div className="space-y-6 font-urbanist text-foreground pt-4 w-full">
-      {/* books not found */}
+      {/* Empty queue guard layer */}
       {books.length === 0 ? (
         <div className="border border-border bg-card/40 rounded-3xl p-10 text-center text-muted-foreground flex flex-col items-center justify-center gap-2 shadow-sm">
           <Book size={32} className="text-muted-foreground/60" />
           <p className="font-bold">No Books Found</p>
         </div>
       ) : (
-        /* main table */
+        /* Platform inventory main table layout */
         <div className="border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
               <tr className="bg-muted/40 text-muted-foreground text-xs font-semibold uppercase tracking-wider border-b border-border">
                 <th className="p-4">Book Title</th>
@@ -73,7 +72,7 @@ const ManageBooks = ({ books = [] }) => {
             <tbody className="divide-y divide-border/60 text-sm font-medium">
               {books.map((book) => (
                 <tr key={book._id} className="transition-all hover:bg-muted/10">
-                  {/* books cover image */}
+                  {/* Book cover image and localized title display */}
                   <td className="p-4 flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-xs uppercase flex-shrink-0">
                       {book.cover ? (
@@ -86,28 +85,31 @@ const ManageBooks = ({ books = [] }) => {
                         book.title?.charAt(0)
                       )}
                     </div>
-                    <span className="font-bold font-poppins text-foreground">
+                    <span className="font-bold font-poppins text-foreground truncate max-w-[180px]">
                       {book.title}
                     </span>
                   </td>
 
-                  <td className="p-4 text-muted-foreground">
+                  <td className="p-4 text-muted-foreground truncate max-w-[140px]">
                     {book.author || "Unknown Author"}
                   </td>
 
                   <td className="p-4">
+                    {/*Changed px-10 to px-3 to prevent layout breaking on small screens */}
                     <span
-                      className={`px-2.5 py-0.5 rounded-md text-xs font-bold uppercase border ${statusStyles[book.status] || statusStyles["Pending Approval"]}`}
+                      className={`px-3 py-1 rounded-md text-xs font-bold uppercase border whitespace-nowrap ${statusStyles[book.status] || statusStyles["Pending Approval"]}`}
                     >
                       {book.status || "Pending Approval"}
                     </span>
                   </td>
 
-                  <td className="p-4 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      {/* status change Pending--Approval/Published */}
-                      {(book.status === "Pending Approval" || !book.status) && (
-                        <>
+                  <td className="p-4">
+                    {/* Fixed 2-column uniform grid layout to completely lock button alignments */}
+                    <div className="grid grid-cols-2 gap-2 w-[190px] mx-auto items-center">
+                      {/* Operational workflow actions block */}
+                      <div className="flex justify-end w-full">
+                        {(book.status === "Pending Approval" ||
+                          !book.status) && (
                           <Button
                             size="sm"
                             color="success"
@@ -116,70 +118,59 @@ const ManageBooks = ({ books = [] }) => {
                             onClick={() =>
                               handleStatusClick(book._id, "Published")
                             }
-                            className="font-bold text-xs rounded-xl h-9"
+                            className="font-bold text-xs rounded-xl h-9 w-full"
                             startContent={<Check size={14} />}
                           >
                             Approve
                           </Button>
+                        )}
+
+                        {book.status === "Published" && (
                           <Button
                             size="sm"
-                            color="danger"
+                            color="warning"
                             variant="flat"
                             isLoading={loadingId === book._id}
                             onClick={() =>
                               handleStatusClick(book._id, "Unpublished")
                             }
-                            className="font-bold text-xs rounded-xl h-9"
-                            startContent={<X size={14} />}
+                            className="font-bold text-xs rounded-xl h-9 w-full"
+                            startContent={<EyeOff size={14} />}
                           >
-                            Reject
+                            Unpublish
                           </Button>
-                        </>
-                      )}
+                        )}
 
-                      {/* status change publish/unpublish */}
-                      {book.status === "Published" && (
+                        {book.status === "Unpublished" && (
+                          <Button
+                            size="sm"
+                            color="success"
+                            variant="flat"
+                            isLoading={loadingId === book._id}
+                            onClick={() =>
+                              handleStatusClick(book._id, "Published")
+                            }
+                            className="font-bold text-xs rounded-xl h-9 w-full"
+                            startContent={<Eye size={14} />}
+                          >
+                            Publish
+                          </Button>
+                        )}
+                      </div>
+
+                      {/* Explicit destructive removal actions block */}
+                      <div className="flex justify-start w-full">
                         <Button
                           size="sm"
-                          color="warning"
+                          color="danger"
                           variant="flat"
-                          isLoading={loadingId === book._id}
-                          onClick={() =>
-                            handleStatusClick(book._id, "Unpublished")
-                          }
-                          className="font-bold text-xs rounded-xl h-9"
-                          startContent={<EyeOff size={14} />}
+                          onClick={() => handleDeleteClick(book)}
+                          className="text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 font-bold text-xs h-9 w-full"
+                          startContent={<Trash2 size={14} />}
                         >
-                          Unpublish
+                          Delete
                         </Button>
-                      )}
-
-                      {/* status change publish/unpublish */}
-                      {book.status === "Unpublished" && (
-                        <Button
-                          size="sm"
-                          color="success"
-                          variant="flat"
-                          isLoading={loadingId === book._id}
-                          onClick={() =>
-                            handleStatusClick(book._id, "Published")
-                          }
-                          className="font-bold text-xs rounded-xl h-9"
-                          startContent={<Eye size={14} />}
-                        >
-                          Publish
-                        </Button>
-                      )}
-
-                      {/* Delete Book Button */}
-                      <Button
-                        isIconOnly
-                        size="sm"
-                        onClick={() => handleDeleteClick(book)}
-                        className="p-2.5 text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all cursor-pointer h-9 min-w-0"
-                      >
-                        <Trash2 size={15} />
-                      </Button>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -188,6 +179,8 @@ const ManageBooks = ({ books = [] }) => {
           </table>
         </div>
       )}
+
+      {/* Persistent inventory removal overlay modal dialog */}
       <DeleteBookModal
         isOpen={isDeleteOpen}
         onClose={() => {
