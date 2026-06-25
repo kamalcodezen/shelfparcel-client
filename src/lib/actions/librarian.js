@@ -3,6 +3,18 @@
 import { revalidatePath } from "next/cache";
 import { serverMutation } from "../core/server";
 
+
+
+// librarian id diye book status update
+export const librarianUpdateDeliveryStatus = async (deliveryId, currentStatus) => {
+    const res = await serverMutation(`/api/payments/updateStatus/${deliveryId}`, { currentStatus }, "PATCH");
+    revalidatePath("/dashboard/librarian/manageDeliveries")
+    return res;
+}
+
+
+
+
 // librarian books post korche
 export const addBooksByLibrarian = async (bookData) => {
     return await serverMutation("/api/books", bookData, "POST")

@@ -7,7 +7,9 @@ import { serverMutation } from "../core/server";
 
 // user payment delivery status update
 export const userBookReturnStatusUpdate = async (paymentId, currentStatus) => {
-    return await serverMutation(`/api/payments/return/${paymentId}`, { currentStatus }, "PATCH")
+    const res = await serverMutation(`/api/payments/return/${paymentId}`, { currentStatus }, "PATCH");
+    revalidatePath("/dashboard/user/myReadingList");
+    return res;
 }
 
 

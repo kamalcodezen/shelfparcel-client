@@ -9,59 +9,43 @@ import {
   Calendar,
   Check,
   ArrowRight,
+  ShieldAlert,
 } from "lucide-react";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
-const ManageDeliveries = () => {
+import { useRouter } from "next/navigation";
+import { librarianUpdateDeliveryStatus } from "@/lib/actions/librarian";
+
+const ManageDeliveries = ({ payments = [] }) => {
   const router = useRouter();
   const [deliveries, setDeliveries] = useState([]);
   const [loadingId, setLoadingId] = useState(null);
 
-  //  mock data
-  const mockDeliveries = [
-    {
-      _id: "DEL98765",
-      clientName: "Kamaluddin Ahmed",
-      bookTitle: "Advanced Next.js Architecture",
-      date: "2026-06-23T10:00:00.000Z",
-      status: "Pending Approval",
-    },
-    {
-      _id: "DEL11223",
-      clientName: "Rahul Sharma",
-      bookTitle: "Mastering Tailwind CSS",
-      date: "2026-06-22T11:30:00.000Z",
-      status: "Dispatched",
-    },
-    {
-      _id: "DEL55443",
-      clientName: "Fatema Tuz Zohra",
-      bookTitle: "Node.js Complete Guide",
-      date: "2026-06-20T15:45:00.000Z",
-      status: "Delivered",
-    },
-  ];
-
+  // 🎯 রিয়াল প্রপস ডাটা কালেকশনকে স্টেট-এ সিঙ্ক করা হলো ভাই
   useEffect(() => {
-    setDeliveries(mockDeliveries);
-  }, []);
+    if (payments && payments.length > 0) {
+      setDeliveries(payments);
+    }
+  }, [payments]);
 
-  //
-  const handleStatusClick = async (deliveryId, targetStatus) => {
+  //  বাটন ক্লিক করলে আইডি আর কারেন্ট স্ট্যাটাস নিয়ে সার্ভার অ্যাকশন হিট করার ফাংশন ভাই
+  const handleStatusClick = async (deliveryId, currentStatus) => {
     try {
       setLoadingId(deliveryId);
 
-      // =============================================================
-      // const res = await updateDeliveryStatus({ deliveryId, status: targetStatus });
-      // =============================================================
-
-      setDeliveries((prev) =>
-        prev.map((item) =>
-          item._id === deliveryId ? { ...item, status: targetStatus } : item,
-        ),
+      const data = await librarianUpdateDeliveryStatus(
+        deliveryId,
+        currentStatus,
       );
-      toast.success(`Delivery status changed to ${targetStatus}! 🚀`);
+
+      if (data?.success || data?.insertedId || data?.result?.insertedId) {
+        console.log(data);
+
+        toast.success(`Delivery status updated successfully! `);
+        router.refresh();
+      } else {
+        toast.error(data?.message || "Failed to update status.");
+      }
     } catch (error) {
       toast.error("Something went wrong!");
     } finally {
@@ -71,6 +55,7 @@ const ManageDeliveries = () => {
 
   // Date format
   const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -78,16 +63,18 @@ const ManageDeliveries = () => {
     });
   };
 
-  // Status dynamic color object
+  // Status Style
   const statusStyles = {
-    "Pending Approval": "bg-amber-500/10 text-amber-500 border-amber-500/20",
-    Dispatched: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    Pending: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    Dispatched: "bg-amber-500/10 text-amber-500 border-amber-500/20",
     Delivered: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+    "Return Requested": "bg-purple-500/10 text-purple-500 border-purple-500/20",
+    Returned: "bg-gray-500/10 text-gray-500 border-gray-500/20",
   };
 
   return (
     <div className="space-y-6 font-urbanist text-foreground pt-4 w-full">
-      {/* 🚚 হেডার সেকশন ভাই */}
+      {/* header section */}
       <div className="flex items-center gap-3 border-b border-border/60 pb-4">
         <div className="p-2.5 bg-primary/10 border border-primary/20 text-primary rounded-xl">
           <Truck size={22} />
@@ -109,14 +96,14 @@ const ManageDeliveries = () => {
         </div>
       ) : (
         <>
-          {/* desktop view */}
+          {/*  Desktop View  */}
           <div className="hidden md:block border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-muted/40 text-muted-foreground text-xs font-semibold uppercase tracking-wider border-b border-border">
                   <th className="p-4">
                     <span className="flex items-center gap-1.5">
-                      <User size={13} /> Client Name
+                      <User size={13} /> Client Email
                     </span>
                   </th>
                   <th className="p-4">
@@ -140,57 +127,78 @@ const ManageDeliveries = () => {
                     key={delivery._id}
                     className="transition-all hover:bg-muted/10"
                   >
-                    <td className="p-4 font-bold text-foreground">
-                      {delivery.clientName}
+                    <td className="p-4 font-bold text-foreground text-xs">
+                      {delivery.userEmail} {/* Real time date format */}
                     </td>
-                    <td className="p-4 text-muted-foreground font-poppins">
+                    <td className="p-4 text-muted-foreground font-poppins text-xs truncate max-w-[180px]">
                       {delivery.bookTitle}
                     </td>
                     <td className="p-4 text-muted-foreground text-xs">
-                      {formatDate(delivery.date)}
+                      {formatDate(delivery.createdAt || delivery.date)}
                     </td>
                     <td className="p-4">
                       <span
-                        className={`px-2.5 py-0.5 rounded-md text-xs font-bold uppercase border ${statusStyles[delivery.status] || statusStyles["Pending Approval"]}`}
+                        className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase border ${statusStyles[delivery.status] || statusStyles["Pending"]}`}
                       >
-                        {delivery.status || "Pending Approval"}
+                        {delivery.status}
                       </span>
                     </td>
                     <td className="p-4 text-center">
                       <div className="flex items-center justify-center gap-2">
-                        {delivery.status === "Pending Approval" && (
+                        {/* status control button */}
+                        {delivery.status === "Pending" && (
                           <Button
                             size="sm"
                             color="primary"
                             variant="flat"
                             isLoading={loadingId === delivery._id}
                             onClick={() =>
-                              handleStatusClick(delivery._id, "Dispatched")
+                              handleStatusClick(delivery._id, delivery.status)
                             }
                             className="font-bold text-xs rounded-xl h-9"
                             endContent={<ArrowRight size={14} />}
                           >
-                            Ship Order
+                            Ship Book
                           </Button>
                         )}
                         {delivery.status === "Dispatched" && (
                           <Button
                             size="sm"
-                            color="success"
+                            color="warning"
                             variant="flat"
                             isLoading={loadingId === delivery._id}
                             onClick={() =>
-                              handleStatusClick(delivery._id, "Delivered")
+                              handleStatusClick(delivery._id, delivery.status)
                             }
-                            className="font-bold text-xs rounded-xl h-9"
+                            className="font-bold text-xs rounded-xl h-9 text-amber-600"
                             endContent={<Check size={14} />}
                           >
-                            Mark Delivered
+                            Confirm Delivery ✅
                           </Button>
                         )}
                         {delivery.status === "Delivered" && (
-                          <span className="text-xs text-muted-foreground/60 italic font-normal">
-                           Returned ✅
+                          <span className="text-xs text-emerald-500/70 italic font-semibold">
+                            Client Reading
+                          </span>
+                        )}
+                        {delivery.status === "Return Requested" && (
+                          <Button
+                            size="sm"
+                            color="secondary"
+                            variant="flat"
+                            isLoading={loadingId === delivery._id}
+                            onClick={() =>
+                              handleStatusClick(delivery._id, delivery.status)
+                            }
+                            className="font-bold text-xs rounded-xl h-9 bg-purple-500/10 text-purple-500"
+                            endContent={<Check size={14} />}
+                          >
+                            Receive Returned Book
+                          </Button>
+                        )}
+                        {delivery.status === "Returned" && (
+                          <span className="text-xs text-gray-400 italic font-normal">
+                            Returned to Shelf ✅
                           </span>
                         )}
                       </div>
@@ -201,51 +209,48 @@ const ManageDeliveries = () => {
             </table>
           </div>
 
-          {/* Mobile View */}
+          {/*  Mobile View*/}
           <div className="block md:hidden space-y-4">
             {deliveries.map((delivery) => (
               <div
                 key={delivery._id}
                 className="border border-border/80 bg-card/40 rounded-2xl p-4 shadow-sm space-y-3 transition-all active:scale-[0.99]"
               >
-                {/* Card Header: */}
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="text-xs text-muted-foreground font-medium">
-                      Client Name
+                    <p className="text-[10px] text-muted-foreground font-medium">
+                      Client Email
                     </p>
-                    <h4 className="font-bold text-foreground text-sm">
-                      {delivery.clientName}
+                    <h4 className="font-bold text-foreground text-xs truncate max-w-[160px]">
+                      {delivery.userEmail}
                     </h4>
                   </div>
                   <span
-                    className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase border ${statusStyles[delivery.status] || statusStyles["Pending Approval"]}`}
+                    className={`px-2 py-0.5 rounded-md text-[9px] font-bold uppercase border ${statusStyles[delivery.status] || statusStyles["Pending"]}`}
                   >
-                    {delivery.status || "Pending Approval"}
+                    {delivery.status}
                   </span>
                 </div>
 
-                {/* Card Body: */}
                 <div className="grid grid-cols-2 gap-2 border-t border-b border-border/40 py-2.5 text-xs">
                   <div>
-                    <p className="text-muted-foreground font-medium mb-0.5">
+                    <p className="text-[10px] text-muted-foreground font-medium mb-0.5">
                       Book Title
                     </p>
-                    <p className="font-semibold text-foreground font-poppins truncate max-w-[140px]">
+                    <p className="font-semibold text-foreground font-poppins truncate max-w-[130px]">
                       {delivery.bookTitle}
                     </p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground font-medium mb-0.5">
+                    <p className="text-[10px] text-muted-foreground font-medium mb-0.5">
                       Order Date
                     </p>
-                    <p className="font-semibold text-foreground">
-                      {formatDate(delivery.date)}
+                    <p className="font-semibold text-foreground text-xs">
+                      {formatDate(delivery.createdAt || delivery.date)}
                     </p>
                   </div>
                 </div>
 
-                {/* Card Footer: */}
                 <div className="flex items-center justify-end pt-1">
                   {delivery.status === "Pending" && (
                     <Button
@@ -255,33 +260,54 @@ const ManageDeliveries = () => {
                       variant="flat"
                       isLoading={loadingId === delivery._id}
                       onClick={() =>
-                        handleStatusClick(delivery._id, "Dispatched")
+                        handleStatusClick(delivery._id, delivery.status)
                       }
                       className="font-bold text-xs rounded-xl h-9"
                       endContent={<ArrowRight size={14} />}
                     >
-                      Ship Order
+                      Ship Book
                     </Button>
                   )}
                   {delivery.status === "Dispatched" && (
                     <Button
                       fullWidth
                       size="sm"
-                      color="success"
+                      color="warning"
                       variant="flat"
                       isLoading={loadingId === delivery._id}
                       onClick={() =>
-                        handleStatusClick(delivery._id, "Delivered")
+                        handleStatusClick(delivery._id, delivery.status)
                       }
-                      className="font-bold text-xs rounded-xl h-9"
+                      className="font-bold text-xs rounded-xl h-9 text-amber-600"
                       endContent={<Check size={14} />}
                     >
-                      Mark Delivered
+                      Confirm Delivery
                     </Button>
                   )}
                   {delivery.status === "Delivered" && (
-                    <div className="w-full text-center py-1.5 bg-emerald-500/5 border border-emerald-500/10 rounded-xl text-xs text-emerald-600 font-bold">
-                      Returned ✅
+                    <div className="w-full text-center py-1.5 bg-emerald-500/5 border border-emerald-500/10 rounded-xl text-xs text-emerald-600 font-bold italic">
+                      Client Reading 📖
+                    </div>
+                  )}
+                  {delivery.status === "Return Requested" && (
+                    <Button
+                      fullWidth
+                      size="sm"
+                      color="secondary"
+                      variant="flat"
+                      isLoading={loadingId === delivery._id}
+                      onClick={() =>
+                        handleStatusClick(delivery._id, delivery.status)
+                      }
+                      className="font-bold text-xs rounded-xl h-9 bg-purple-500/10 text-purple-500"
+                      endContent={<Check size={14} />}
+                    >
+                      Receive Returned Book
+                    </Button>
+                  )}
+                  {delivery.status === "Returned" && (
+                    <div className="w-full text-center py-1.5 bg-gray-500/5 border border-gray-500/10 rounded-xl text-xs text-gray-500 font-medium italic">
+                      Returned to Shelf ✅
                     </div>
                   )}
                 </div>

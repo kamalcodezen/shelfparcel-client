@@ -13,7 +13,11 @@ import {
 import { BookOpen, DollarSign, Clock, TrendingUp } from "lucide-react";
 
 export default function LibrarianOverview({ books = [], payments = [] }) {
-  // 🎯 ১. কুইক স্ট্যাটসের আসল লাইভ ক্যালকুলেশন ভাই
+
+
+console.log(books,"books")
+
+  //  কুইক স্ট্যাটসের আসল লাইভ ক্যালকুলেশন ভাই
   const totalBooksCount = books.length;
   const totalEarnings = payments.reduce(
     (sum, item) => sum + (Number(item?.amount) || 0),
@@ -44,7 +48,7 @@ export default function LibrarianOverview({ books = [], payments = [] }) {
     },
   ];
 
-  // 🔒 ২. [FIXED OPTIMIZATION] আপনার নতুন আইডিয়া অনুযায়ী সরাসরি books ডাটাবেজ থেকে সর্টিং ভাই
+  //  আপনার নতুন আইডিয়া অনুযায়ী সরাসরি books ডাটাবেজ থেকে সর্টিং ভাই
   const mostRequestedBooks = [...books]
     .filter((book) => book?.requests !== undefined) // সেফটি চেক
     .sort((a, b) => (Number(b.requests) || 0) - (Number(a.requests) || 0)) // সর্বোচ্চ requests ওয়ালা বই উপরে যাবে
