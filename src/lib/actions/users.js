@@ -5,6 +5,14 @@ import { revalidatePath } from "next/cache";
 import { serverMutation } from "../core/server";
 
 
+// user payment delivery status update
+export const userBookReturnStatusUpdate = async (paymentId, currentStatus) => {
+    return await serverMutation(`/api/payments/return/${paymentId}`, { currentStatus }, "PATCH")
+}
+
+
+
+
 // users comment post korche 
 export const addUserComment = async (reviewPayload) => {
     return await serverMutation("/api/users/comments", reviewPayload, "POST")

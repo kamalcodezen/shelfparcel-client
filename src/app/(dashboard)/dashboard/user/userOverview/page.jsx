@@ -1,12 +1,12 @@
 import UserOverview from "@/components/modules/dashboard/user/UserOverview";
-import { getUserPaymentDetailsById } from "@/lib/api/payment";
+import { getUserPaymentDetailsByEmail } from "@/lib/api/payment";
 
 import { getUserSession } from "@/lib/core/session";
 
 const UserUserOverviewPage = async () => {
   const session = await getUserSession();
 
-  const userPayment = await getUserPaymentDetailsById(session?.email);
+  const userPayment = await getUserPaymentDetailsByEmail(session?.email);
 
   return (
     <div className="min-h-screen">

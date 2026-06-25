@@ -5,14 +5,21 @@ import { Card, Button } from "@heroui/react";
 import { BookCheck, MessageSquare, X, Star, BookOpen } from "lucide-react";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
-import { addUserComment } from "@/lib/actions/users";
+import {
+  addUserComment,
+  userBookReturnStatusUpdate,
+} from "@/lib/actions/users";
+import { useRouter } from "next/navigation";
 
 const MyReadingList = ({ userPayment = [] }) => {
+  const router = useRouter();
+
   // Component States
   const [readingList, setReadingList] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [commentText, setCommentText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loadingId, setLoadingId] = useState(null);
 
   // Authenticated Session Data
   const { data: session } = authClient.useSession();
@@ -23,12 +30,38 @@ const MyReadingList = ({ userPayment = [] }) => {
   const [hoverRating, setHoverRating] = useState(0);
 
   useEffect(() => {
-    const deliveredBooks = userPayment.filter(
-      (item) => item?.status === "Delivered",
+    const filteredBooks = userPayment.filter(
+      (item) =>
+        item?.status === "Delivered" ||
+        item?.status === "Return Requested" ||
+        item?.status === "Returned",
     );
-    setReadingList(deliveredBooks);
+    setReadingList(filteredBooks);
   }, [userPayment]);
 
+  // "Return This Book"
+  const handleReturnRequest = async (book) => {
+    try {
+      setLoadingId(book._id);
+
+      const data = await userBookReturnStatusUpdate(book?._id, book?.status);
+
+      if (data?.success || data?.insertedId || data?.result?.insertedId) {
+        toast.success(`Return request submitted for ${book?.bookTitle}!`);
+        router.refresh();
+      } else {
+        console.log(data);
+        toast.error(data?.message || "Failed to submit return request.");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong while sending the return request.");
+    } finally {
+      setLoadingId(null);
+    }
+  };
+
+  //  রিভিউ সাবমিট করার ফাংশন ভাই
   const handleSubmitComment = async (e) => {
     e.preventDefault();
 
@@ -51,8 +84,6 @@ const MyReadingList = ({ userPayment = [] }) => {
 
     try {
       setIsSubmitting(true);
-
-      // Add comment to database pipeline
       const res = await addUserComment(reviewPayload);
       if (res?.success || res?.insertedId || res?.result?.insertedId) {
         toast.success(
@@ -83,13 +114,13 @@ const MyReadingList = ({ userPayment = [] }) => {
             My Reading List
           </h2>
           <p className="text-xs text-muted-foreground">
-            Gallery view of delivered books. Click button to leave a full
-            review.
+            Gallery view of delivered books. Manage returns and leave your
+            reviews here.
           </p>
         </div>
       </div>
 
-      {/*  Empty Guard Layer: Displays dynamically if no items have been marked "Delivered" yet */}
+      {/* Empty Guard Layer */}
       {readingList.length === 0 ? (
         <div className="text-center py-12 border border-dashed border-border rounded-2xl bg-card/20 flex flex-col items-center justify-center gap-2 text-muted-foreground">
           <BookOpen size={32} className="opacity-40 text-primary" />
@@ -100,15 +131,14 @@ const MyReadingList = ({ userPayment = [] }) => {
         </div>
       ) : (
         /* Books Gallery Grid */
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {readingList.map((book) => (
             <Card
               key={book?._id || book?.transactionId}
-              className="border border-border/70 bg-card/40 rounded-lg overflow-hidden shadow-sm flex flex-col justify-between p-4 space-y-4"
+              className="border border-border/70 bg-card/40 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between p-4 space-y-4"
             >
               <div className="space-y-3">
                 <div className="aspect-[4/5] w-full h-[140px] bg-muted rounded-lg overflow-hidden">
-                  {/* Switched from book.cover to book.bookCover to map your real MongoDB dataset */}
                   <img
                     src={
                       book?.bookCover ||
@@ -122,32 +152,80 @@ const MyReadingList = ({ userPayment = [] }) => {
                   <h4 className="font-bold text-sm font-poppins line-clamp-1 text-foreground">
                     {book?.bookTitle || "Untitled Book"}
                   </h4>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground mt-1">
                     Order Status:{" "}
-                    <span className="text-emerald-500 font-semibold">
+                    <span
+                      className={`font-semibold ${
+                        book?.status === "Delivered"
+                          ? "text-emerald-500"
+                          : book?.status === "Return Requested"
+                            ? "text-purple-500"
+                            : "text-blue-500"
+                      }`}
+                    >
                       {book?.status}
                     </span>
                   </p>
                 </div>
               </div>
 
-              <Button
-                fullWidth
-                size="sm"
-                color="primary"
-                variant="flat"
-                className="font-bold text-xs rounded-xl"
-                onClick={() => setSelectedBook(book)}
-                endContent={<MessageSquare size={14} />}
-              >
-                Write a Review
-              </Button>
+              {/* status control button */}
+              <div className="space-y-2">
+                {book?.status === "Delivered" ? (
+                  <Button
+                    fullWidth
+                    size="sm"
+                    color="danger"
+                    variant="flat"
+                    className="font-bold text-xs rounded-md cursor-pointer"
+                    onClick={() => handleReturnRequest(book)}
+                    isLoading={loadingId === book._id}
+                  >
+                    {loadingId === book._id
+                      ? "Processing..."
+                      : "↩ Return This Book"}
+                  </Button>
+                ) : book?.status === "Return Requested" ? (
+                  <Button
+                    fullWidth
+                    size="sm"
+                    className="font-bold text-xs rounded-md bg-purple-500/10 text-purple-500 cursor-not-allowed"
+                    disabled
+                  >
+                    Return Requested
+                  </Button>
+                ) : (
+                  <Button
+                    fullWidth
+                    size="sm"
+                    className="font-bold text-xs rounded-md bg-emerald-500/10 text-emerald-500 cursor-not-allowed"
+                    disabled
+                  >
+                    ✅ Successfully Returned
+                  </Button>
+                )}
+
+                {/* review/comment button */}
+                <Button
+                  fullWidth
+                  size="sm"
+                  color="primary"
+                  variant="flat"
+                  className="font-bold text-xs rounded-xl cursor-pointer"
+                  onClick={() => setSelectedBook(book)}
+                  endContent={<MessageSquare size={14} />}
+                >
+                  Write a Review
+                </Button>
+              </div>
             </Card>
           ))}
         </div>
       )}
 
-      {/* Review Dialog Popup Modal */}
+      {/* =======================================================
+                            modal
+         ============================================================== */}
       {selectedBook && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <Card className="p-5 border border-border w-full max-w-sm bg-background rounded-3xl space-y-4 shadow-xl">

@@ -13,6 +13,9 @@ export default function FeaturedBooks() {
       try {
         setLoading(true);
         const data = await getAllPublishedBooks();
+
+        console.log(data,"books")
+
         setBooks(data);
       } catch (error) {
         // console.error("Error fetching books:", error);

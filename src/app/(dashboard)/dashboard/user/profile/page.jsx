@@ -1,10 +1,11 @@
 import UserProfile from "@/components/modules/dashboard/user/UserProfile";
-import { getUserPaymentDetailsById } from "@/lib/api/payment";
+import { getUserPaymentDetailsByEmail } from "@/lib/api/payment";
+
 import { getUserSession } from "@/lib/core/session";
 
 const UserProfilePage = async () => {
   const session = await getUserSession();
-  const userPayment = await getUserPaymentDetailsById(session?.email);
+  const userPayment = await getUserPaymentDetailsByEmail(session?.email);
 
   return (
     <div>
