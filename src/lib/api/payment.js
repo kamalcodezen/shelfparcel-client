@@ -4,10 +4,16 @@ import { serverFetch } from "../core/server"
 
 
 // user payments details get … by email
-export const getUserPaymentDetailsByEmail = async (email) => {  
+export const getUserPaymentDetailsByEmail = async (email) => {
     return await serverFetch(`/api/payments/user/${email}`)
 }
 
+
+
+// all payments details get
+export const getAllPaymentDetails = async () => {
+    return await serverFetch("/api/payments")
+}
 
 
 // user payments details get … by email total list get by id
