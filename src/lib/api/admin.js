@@ -1,6 +1,6 @@
 "use server"
 
-import { serverFetch } from "../core/server"
+import { protectedFetch, serverFetch } from "../core/server"
 
 // admin get all books
 export const getAllBooks = async () => {
@@ -9,7 +9,7 @@ export const getAllBooks = async () => {
 
 // admin get all pending books
 export const getAllPendingBooks = async () => {
-    return await serverFetch("/api/books/pendingBooks")
+    return await protectedFetch("/api/books/pendingBooks")
 }
 
 //  অ্যাডমিন ড্যাশবোর্ডের ৪টি কার্ডের কুইক স্ট্যাটাস কাউন্ট আনার অ্যাকশন 
