@@ -1,6 +1,6 @@
 "use server"
 
-import { serverFetch } from "../core/server"
+import { protectedFetch, serverFetch } from "../core/server"
 
 
 // user payments details get … by email
@@ -12,7 +12,7 @@ export const getUserPaymentDetailsByEmail = async (email) => {
 
 // all payments details get
 export const getAllPaymentDetails = async () => {
-    return await serverFetch("/api/payments")
+    return await protectedFetch("/api/payments")
 }
 
 
