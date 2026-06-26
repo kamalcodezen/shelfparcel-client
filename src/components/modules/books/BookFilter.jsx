@@ -61,6 +61,7 @@ export default function BooksFilter({
         {/* Search input (Desktop Only) */}
         <div className="lg:col-span-4 hidden md:block">
           <TextField
+          aria-label="Search Books"
             value={searchQuery}
             onChange={(value) => setSearchQuery(value)}
             className="w-full"
