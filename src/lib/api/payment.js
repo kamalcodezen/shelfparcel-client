@@ -5,7 +5,7 @@ import { protectedFetch, serverFetch } from "../core/server"
 
 // user payments details get … by email
 export const getUserPaymentDetailsByEmail = async (email) => {
-    return await serverFetch(`/api/payments/user/${email}`)
+    return await protectedFetch(`/api/payments/user/${email}`)
 }
 
 
