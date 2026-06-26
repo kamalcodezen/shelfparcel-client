@@ -91,6 +91,13 @@ export default function SigninForm() {
     }
   };
 
+  // Google login
+  const googleSignUp = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+
   if (!mounted) return null;
 
   return (
@@ -246,10 +253,16 @@ export default function SigninForm() {
             <div className="h-px flex-1 bg-border" />
           </div>
 
-          {/* 👑 ২. গুগল ওথ লগইন বাটন (স্পিনার সহ) */}
+         
           {/* 👑 ২. গুগল ওথ লগইন বাটন (প্রফেশনাল লোডিং টেক্সট ও স্পিনার সহ) */}
           <button
-            onClick={handleGoogleSignIn}
+            onPress={() => {
+              googleSignUp();
+              toast.info("Google signup coming soon! ", {
+                position: "top-right",
+                autoClose: 3000,
+              });
+            }}
             disabled={loading || googleLoading}
             type="button"
             className="w-full rounded-xl border border-border bg-card py-3 font-medium hover:opacity-90 transition cursor-pointer flex items-center justify-center gap-3 disabled:opacity-50"

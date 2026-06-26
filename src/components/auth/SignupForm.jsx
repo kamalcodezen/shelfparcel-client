@@ -79,7 +79,7 @@ export default function SignupForm() {
         name: formData.name,
         image:
           formData.photoUrl || "https://api.dicebear.com/7.x/adventurer/svg",
-        role: formData.role, 
+        role: formData.role,
         fetchOptions: {
           onSuccess: () => {
             toast.success(
@@ -103,17 +103,12 @@ export default function SignupForm() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setGoogleLoading(true);
-    try {
-      await authClient.signIn.social({
-        provider: "google",
-        callbackURL: "/",
-      });
-    } catch (error) {
-      toast.error("Google OAuth handshake interrupted! ❌");
-      setGoogleLoading(false);
-    }
+
+  // Google login
+  const googleSignUp = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   if (!mounted) return null;
@@ -358,7 +353,13 @@ export default function SignupForm() {
 
           {/* 👑 ২. গুগল ওথ বাটন (লোডিং স্পিনার সহ) */}
           <button
-            onClick={handleGoogleSignIn}
+            onPress={() => {
+              googleSignUp();
+              toast.info("Google signup coming soon! ", {
+                position: "top-right",
+                autoClose: 3000,
+              });
+            }}
             disabled={loading || googleLoading}
             type="button"
             className="w-full rounded-xl border border-border bg-card py-3 font-medium hover:opacity-90 transition cursor-pointer flex items-center justify-center gap-3 disabled:opacity-50"
