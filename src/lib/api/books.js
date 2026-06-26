@@ -1,6 +1,6 @@
 "use server"
 
-import { serverFetch } from "../core/server"
+import { protectedFetch, serverFetch } from "../core/server"
 
 
 
@@ -18,5 +18,5 @@ export const getBooksDetailsById = async (bookId) => {
 
 // librarian id diye books data get korchi
 export const getBooksByLibrarianId = async (librarianId) => {
-    return await serverFetch(`/api/books?librarianId=${librarianId}`)
+    return await protectedFetch(`/api/books?librarianId=${librarianId}`)
 }

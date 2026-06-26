@@ -26,9 +26,7 @@ export const addBooksByLibrarian = async (bookData) => {
 export const toggleBooksStatusById = async ({ bookId, currentStatus }) => {
     try {
         const resData = await serverMutation(`/api/books/${bookId}`, { currentStatus }, "PATCH");
-
         revalidatePath("/dashboard/librarian/manageInventory");
-
         return resData;
     } catch (error) {
         console.error("Action Error:", error);

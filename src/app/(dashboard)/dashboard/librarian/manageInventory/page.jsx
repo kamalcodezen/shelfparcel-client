@@ -7,6 +7,8 @@ const ManageInventoryPage = async () => {
 
   const books = await getBooksByLibrarianId(user?.id);
 
+
+  
   return (
     <div className="min-h-screen">
       <ManageInventory books={books} />
