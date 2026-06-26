@@ -9,7 +9,7 @@ const AllBooksPage = async () => {
 
   return (
     <div className="w-11/12 mx-auto min-h-screen py-20">
-      <AllBooks initialBooks={books} />
+      <AllBooks allBooks={books} />
     </div>
   );
 };

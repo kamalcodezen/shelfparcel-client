@@ -1,26 +1,74 @@
 "use client";
 
-import React from "react";
-import { TextField, InputGroup, Select, ListBox } from "@heroui/react";
+import React, { useState } from "react";
+import { TextField, Select, ListBox, Button } from "@heroui/react";
 import { Magnifier, ChevronDown } from "@gravity-ui/icons";
+import { slidersHorizontal } from "lucide-react"; 
 
 export default function BooksFilter({
   searchQuery,
   setSearchQuery,
   selectedCategory,
   setSelectedCategory,
+  minFee,
+  setMinFee,
+  maxFee,
+  setMaxFee,
+  availability,
+  setAvailability,
 }) {
+  // Mobile Filter Toggle dropdown
+  const [isOpenMobile, setIsOpenMobile] = useState(false);
+
   return (
     <div className="dashboard-card max-w-7xl mx-auto mb-7">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-end">
-        {/* . সার্চ ইনপুট ফিল্ড (স্প্যান ৭ কলাম) */}
-        <div className="md:col-span-7">
+      {/* 📱 ১. MOBILE VIEW HEADER: মোবাইলে শুধু সার্চ বার আর একটা ফিল্টার বাটন থাকবে ভাই */}
+      <div className="flex md:hidden items-center gap-3 w-full">
+        <div className="flex-1">
+          <div className="relative">
+            <span className="absolute inset-y-0 left-3 flex items-center text-muted-foreground z-10">
+              <Magnifier className="w-4 h-4" />
+            </span>
+            <input
+              type="text"
+              placeholder="Search title, author..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="input-field pl-9 w-full text-xs"
+            />
+          </div>
+        </div>
+
+        {/* filter toggle description */}
+        <Button
+          onClick={() => setIsOpenMobile(!isOpenMobile)}
+          className={`p-5 py-5.5 rounded-xl border transition-all text-xs font-bold flex items-center gap-2 ${
+            isOpenMobile
+              ? "bg-primary text-white dark:text-gray-900 border-primary"
+              : "bg-card border-border text-foreground"
+          }`}
+        >
+          <span className="w-4 h-9 flex items-center justify-center">
+            <ChevronDown className="w-4 h-4" />
+          </span>
+          <span>Filters</span>
+        </Button>
+      </div>
+
+      {/* md:grid 'isOpenMobile' true  CORE FILTER GRID PANEL */}
+      <div
+        className={`${isOpenMobile ? "grid mt-4 pt-4 border-t border-border/40" : "hidden"} md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 items-end`}
+      >
+        {/* Search input */}
+        <div className="lg:col-span-4 hidden md:block">
+          {" "}
+          {/* মোবাইলে অলরেডি ওপরে সার্চ আছে তাই এখানে হাইড */}
           <TextField
             value={searchQuery}
             onChange={(value) => setSearchQuery(value)}
             className="w-full"
           >
-            <span className="text-sm font-semibold font-poppins text-foreground block mb-2">
+            <span className="text-xs font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
               Search Books
             </span>
             <div className="relative">
@@ -29,61 +77,131 @@ export default function BooksFilter({
               </span>
               <input
                 type="text"
-                placeholder="Search by title, author, description..."
+                placeholder="Search title, author..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="input-field pl-10 w-full"
+                className="input-field pl-9 w-full text-xs"
               />
             </div>
           </TextField>
         </div>
 
-        {/*  ক্যাটাগরি ফিল্টার ড্রপডাউন  */}
-        <div className="md:col-span-5 ">
-          <span className="text-sm font-semibold font-poppins text-foreground block mb-2">
+        {/* category filter dropdown*/}
+        <div className="lg:col-span-3 sm:col-span-1">
+          <span className="text-xs font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
             Category
           </span>
           <Select
             selectedKey={selectedCategory}
             onSelectionChange={(key) => setSelectedCategory(key)}
           >
-            <Select.Trigger className="w-full flex items-center justify-between input-field px-4 text-sm font-medium transition-all">
+            <Select.Trigger className="w-full flex items-center justify-between input-field px-3 text-xs font-medium transition-all">
               <Select.Value>
                 {selectedCategory === "all"
                   ? "All Categories"
                   : selectedCategory}
               </Select.Value>
               <Select.Indicator>
-                <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                <ChevronDown className="w-3 h-3 text-muted-foreground" />
               </Select.Indicator>
             </Select.Trigger>
 
-            {/* গ্লোবাল কার্ডের ব্যাকগ্রাউন্ড */}
             <Select.Popover className="bg-card border border-border rounded-2xl shadow-xl mt-1 overflow-hidden z-50">
               <ListBox className="p-1 font-urbanist text-foreground">
                 <ListBox.Item
                   id="all"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white rounded-xl px-3 py-2.5 text-sm cursor-pointer capitalize"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
                 >
                   <span>All Categories</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Fiction"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white rounded-xl px-3 py-2.5 text-sm cursor-pointer capitalize"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
                 >
                   <span>Fiction</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Tech"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white rounded-xl px-3 py-2.5 text-sm cursor-pointer capitalize"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
                 >
                   <span>Tech</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="History"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white rounded-xl px-3 py-2.5 text-sm cursor-pointer capitalize"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
                 >
                   <span>History</span>
+                </ListBox.Item>
+              </ListBox>
+            </Select.Popover>
+          </Select>
+        </div>
+
+        {/* Delivery fee range filter*/}
+        <div className="lg:col-span-3 sm:col-span-1 grid grid-cols-2 gap-2">
+          <div>
+            <span className="text-xs font-bold font-poppins text-muted-foreground uppercase tracking-wider block mb-1.5 truncate">
+              Min ($)
+            </span>
+            <input
+              type="number"
+              placeholder="0"
+              value={minFee}
+              onChange={(e) => setMinFee(e.target.value)}
+              className="input-field w-full text-xs"
+            />
+          </div>
+          <div>
+            <span className="text-xs font-bold font-poppins text-muted-foreground uppercase tracking-wider block mb-1.5 truncate">
+              Max ($)
+            </span>
+            <input
+              type="number"
+              placeholder="500"
+              value={maxFee}
+              onChange={(e) => setMaxFee(e.target.value)}
+              className="input-field w-full text-xs"
+            />
+          </div>
+        </div>
+
+        {/* availability status filter dropdown*/}
+        <div className="lg:col-span-2 sm:col-span-2">
+          <span className="text-xs font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
+            Status
+          </span>
+          <Select
+            selectedKey={availability}
+            onSelectionChange={(key) => setAvailability(key)}
+          >
+            <Select.Trigger className="w-full flex items-center justify-between input-field px-3 text-xs font-medium transition-all">
+              <Select.Value>
+                {availability === "all" ? "All Status" : availability}
+              </Select.Value>
+              <Select.Indicator>
+                <ChevronDown className="w-3 h-3 text-muted-foreground" />
+              </Select.Indicator>
+            </Select.Trigger>
+
+            <Select.Popover className="bg-card border border-border rounded-2xl shadow-xl mt-1 overflow-hidden z-50">
+              <ListBox className="p-1 font-urbanist text-foreground">
+                <ListBox.Item
+                  id="all"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
+                >
+                  <span>All Status</span>
+                </ListBox.Item>
+                <ListBox.Item
+                  id="Available"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
+                >
+                  <span>Available</span>
+                </ListBox.Item>
+                <ListBox.Item
+                  id="Unavailable"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
+                >
+                  <span>Checked Out</span>
                 </ListBox.Item>
               </ListBox>
             </Select.Popover>

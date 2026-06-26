@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpenText, ChevronLeft } from "lucide-react";
 
@@ -9,29 +9,85 @@ import BooksFilter from "./BookFilter";
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
-export default function AllBooks({ initialBooks = [] }) {
+export default function AllBooks({ allBooks = [] }) {
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [minFee, setMinFee] = useState("");
+  const [maxFee, setMaxFee] = useState("");
+  const [availability, setAvailability] = useState("all");
+
+  useEffect(() => {
+    const sp = new URLSearchParams();
+
+    if (searchQuery) {
+      sp.set("search", searchQuery);
+    }
+
+    if (selectedCategory !== "all") {
+      sp.set("category", selectedCategory);
+    }
+
+    if (availability !== "all") {
+      sp.set("status", availability);
+    }
+
+    if (minFee && minFee.trim() !== "") {
+      sp.set("minFee", minFee);
+    }
+
+
+    if (maxFee && maxFee.trim() !== "") {
+      sp.set("maxFee", maxFee);
+    }
+
+  
+    const path = `?${sp.toString()}`;
+    router.push(path, { scroll: false }); // scroll false দিলে পেজ রিফ্রেশে স্ক্রিন লাফাবে না 
+  }, [selectedCategory, router, searchQuery, availability, minFee, maxFee]);
 
   // Filter Logic
-  const filteredBooks = useMemo(() => {
-    return initialBooks.filter((book) => {
-      
+  // const allBooks = useMemo(() => {
+  //   return allBooks.filter((book) => {
+  //     // search
+  //     const matchesSearch =
+  //       book.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       book.author?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       book.description?.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesSearch =
-        book.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.author?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.description?.toLowerCase().includes(searchQuery.toLowerCase());
+  //     //category
+  //     const matchesCategory =
+  //       selectedCategory === "all" ||
+  //       book.category?.toLowerCase() === selectedCategory.toLowerCase();
 
-      const matchesCategory =
-        selectedCategory === "all" ||
-        book.category?.toLowerCase() === selectedCategory.toLowerCase();
+  //     // delivery fee
+  //     const bookFee = Number(book.fee) || 0;
+  //     const matchesMinFee = minFee === "" || bookFee >= Number(minFee);
+  //     const matchesMaxFee = maxFee === "" || bookFee <= Number(maxFee);
 
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchQuery, selectedCategory, initialBooks]);
+  //     // (Published = Available, Checked Out = Unavailable)
+  //     const matchesAvailability =
+  //       availability === "all" ||
+  //       (availability === "Available" && book.status === "Published") ||
+  //       (availability === "Unavailable" && book.status === "Checked Out");
+
+  //     return (
+  //       matchesSearch &&
+  //       matchesCategory &&
+  //       matchesMinFee &&
+  //       matchesMaxFee &&
+  //       matchesAvailability
+  //     );
+  //   });
+  // }, [
+  //   searchQuery,
+  //   selectedCategory,
+  //   minFee,
+  //   maxFee,
+  //   availability,
+  //   allBooks,
+  // ]);
 
   const filterVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -70,10 +126,16 @@ export default function AllBooks({ initialBooks = [] }) {
           setSearchQuery={setSearchQuery}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          minFee={minFee}
+          setMinFee={setMinFee}
+          maxFee={maxFee}
+          setMaxFee={setMaxFee}
+          availability={availability}
+          setAvailability={setAvailability}
         />
       </motion.div>
 
-      <div className=" text-xs font-semibold text-muted-foreground uppercase tracking-wider  ">
+      <div className=" text-xs font-semibold text-muted-foreground uppercase tracking-wider   ">
         {/* Back Button */}
         <Button
           onClick={() => router.back()}
@@ -88,16 +150,15 @@ export default function AllBooks({ initialBooks = [] }) {
       </div>
 
       <AnimatePresence mode="popLayout">
-        {filteredBooks.length > 0 ? (
+        {allBooks.length > 0 ? (
           <motion.div
             key="grid"
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            // items-start
             className="w-11/12 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10 mt-4 items-start"
           >
-            {filteredBooks.map((bookItem) => (
+            {allBooks.map((bookItem) => (
               <motion.div
                 key={bookItem._id}
                 variants={cardVariants}
@@ -129,6 +190,9 @@ export default function AllBooks({ initialBooks = [] }) {
               onClick={() => {
                 setSearchQuery("");
                 setSelectedCategory("all");
+                setMinFee("");
+                setMaxFee("");
+                setAvailability("all");
               }}
               className="mt-8 text-xs font-semibold text-primary/80 cursor-pointer border-b border-primary/30 pb-0.5"
             >
@@ -138,8 +202,8 @@ export default function AllBooks({ initialBooks = [] }) {
         )}
 
         <div className="mb-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2 pt-4">
-          Showing {filteredBooks.length} available repository item
-          {filteredBooks.length !== 1 && "s"}
+          Showing {allBooks.length} available repository item
+          {allBooks.length !== 1 && "s"}
         </div>
       </AnimatePresence>
     </>
