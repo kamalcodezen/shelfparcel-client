@@ -7,6 +7,7 @@ const UserMyReviewsPage = async () => {
   const userId = data?.id;
   const comments = await getUserCommentById(userId);
 
+  console.log(comments, "MyReviews");
 
   return (
     <div className="min-h-screen">

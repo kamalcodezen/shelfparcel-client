@@ -4,7 +4,7 @@ import { serverFetch } from "../core/server"
 
 // user comment get … by id
 export const getUserCommentById = async (userId) => {
-  return await serverFetch(`/api/users/comments/${userId}`)
+  return await serverFetch(`/api/books/comments/${userId}`)
 }
 
 //  get users All comments by book Id
