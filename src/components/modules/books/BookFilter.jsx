@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { TextField, Select, ListBox, Button } from "@heroui/react";
 import { Magnifier, ChevronDown } from "@gravity-ui/icons";
-import { slidersHorizontal } from "lucide-react"; 
 
 export default function BooksFilter({
   searchQuery,
@@ -22,7 +21,7 @@ export default function BooksFilter({
 
   return (
     <div className="dashboard-card max-w-7xl mx-auto mb-7">
-      {/* 📱 ১. MOBILE VIEW HEADER: মোবাইলে শুধু সার্চ বার আর একটা ফিল্টার বাটন থাকবে ভাই */}
+      {/*  MOBILE VIEW HEADER:*/}
       <div className="flex md:hidden items-center gap-3 w-full">
         <div className="flex-1">
           <div className="relative">
@@ -55,14 +54,12 @@ export default function BooksFilter({
         </Button>
       </div>
 
-      {/* md:grid 'isOpenMobile' true  CORE FILTER GRID PANEL */}
+      {/* CORE FILTER GRID PANEL (Desktop 1-Row & Mobile Expanded Dropdown) */}
       <div
         className={`${isOpenMobile ? "grid mt-4 pt-4 border-t border-border/40" : "hidden"} md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 items-end`}
       >
-        {/* Search input */}
+        {/* Search input (Desktop Only) */}
         <div className="lg:col-span-4 hidden md:block">
-          {" "}
-          {/* মোবাইলে অলরেডি ওপরে সার্চ আছে তাই এখানে হাইড */}
           <TextField
             value={searchQuery}
             onChange={(value) => setSearchQuery(value)}
@@ -86,12 +83,14 @@ export default function BooksFilter({
           </TextField>
         </div>
 
-        {/* category filter dropdown*/}
+        {/* category filter dropdown */}
         <div className="lg:col-span-3 sm:col-span-1">
           <span className="text-xs font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
             Category
           </span>
+          {/*  aria-label added to Select component */}
           <Select
+            aria-label="Filter books by category"
             selectedKey={selectedCategory}
             onSelectionChange={(key) => setSelectedCategory(key)}
           >
@@ -107,27 +106,36 @@ export default function BooksFilter({
             </Select.Trigger>
 
             <Select.Popover className="bg-card border border-border rounded-2xl shadow-xl mt-1 overflow-hidden z-50">
-              <ListBox className="p-1 font-urbanist text-foreground">
+              {/* aria-label added to ListBox component */}
+              <ListBox
+                className="p-1 font-urbanist text-foreground"
+                aria-label="Category list options"
+              >
+                {/*  textValue added to ListBox.Item components */}
                 <ListBox.Item
                   id="all"
+                  textValue="All Categories"
                   className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
                 >
                   <span>All Categories</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Fiction"
+                  textValue="Fiction"
                   className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
                 >
                   <span>Fiction</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Tech"
+                  textValue="Tech"
                   className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
                 >
                   <span>Tech</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="History"
+                  textValue="History"
                   className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
                 >
                   <span>History</span>
@@ -137,7 +145,7 @@ export default function BooksFilter({
           </Select>
         </div>
 
-        {/* Delivery fee range filter*/}
+        {/* delivery fee min/ max filter */}
         <div className="lg:col-span-3 sm:col-span-1 grid grid-cols-2 gap-2">
           <div>
             <span className="text-xs font-bold font-poppins text-muted-foreground uppercase tracking-wider block mb-1.5 truncate">
@@ -165,12 +173,14 @@ export default function BooksFilter({
           </div>
         </div>
 
-        {/* availability status filter dropdown*/}
+        {/* status filter dropdown */}
         <div className="lg:col-span-2 sm:col-span-2">
           <span className="text-xs font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
             Status
           </span>
+          {/* aria-label added to Select component */}
           <Select
+            aria-label="Filter books by availability status"
             selectedKey={availability}
             onSelectionChange={(key) => setAvailability(key)}
           >
@@ -184,21 +194,29 @@ export default function BooksFilter({
             </Select.Trigger>
 
             <Select.Popover className="bg-card border border-border rounded-2xl shadow-xl mt-1 overflow-hidden z-50">
-              <ListBox className="p-1 font-urbanist text-foreground">
+              {/* aria-label added to ListBox component */}
+              <ListBox
+                className="p-1 font-urbanist text-foreground"
+                aria-label="Availability status options"
+              >
+                {/*  textValue added to ListBox.Item components */}
                 <ListBox.Item
                   id="all"
+                  textValue="All Status"
                   className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
                 >
                   <span>All Status</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Available"
+                  textValue="Available"
                   className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
                 >
-                  <span>Available</span>
+                  <span>Published</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Unavailable"
+                  textValue="Checked Out"
                   className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
                 >
                   <span>Checked Out</span>

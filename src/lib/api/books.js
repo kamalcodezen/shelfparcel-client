@@ -6,8 +6,8 @@ import { protectedFetch, serverFetch } from "../core/server"
 
 
 // all books data get korchi jegulo status published ache
-export const getAllPublishedBooks = async () => {
-    return await serverFetch("/api/books/publishedBooks")
+export const getAllPublishedBooks = async (searchString) => {
+    return await serverFetch(`/api/books/publishedBooks?${searchString}`)
 }
 
 // book details by id

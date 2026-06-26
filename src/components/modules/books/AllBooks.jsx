@@ -9,14 +9,16 @@ import BooksFilter from "./BookFilter";
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
-export default function AllBooks({ allBooks = [] }) {
+export default function AllBooks({ allBooks = [], filters }) {
   const router = useRouter();
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [minFee, setMinFee] = useState("");
-  const [maxFee, setMaxFee] = useState("");
-  const [availability, setAvailability] = useState("all");
+  const [searchQuery, setSearchQuery] = useState(filters?.search || "");
+  const [selectedCategory, setSelectedCategory] = useState(
+    filters?.category || "all",
+  );
+  const [minFee, setMinFee] = useState(filters?.minFee || "");
+  const [maxFee, setMaxFee] = useState(filters?.maxFee || "");
+  const [availability, setAvailability] = useState(filters?.status || "all");
 
   useEffect(() => {
     const sp = new URLSearchParams();
@@ -37,14 +39,12 @@ export default function AllBooks({ allBooks = [] }) {
       sp.set("minFee", minFee);
     }
 
-
     if (maxFee && maxFee.trim() !== "") {
       sp.set("maxFee", maxFee);
     }
 
-  
     const path = `?${sp.toString()}`;
-    router.push(path, { scroll: false }); // scroll false দিলে পেজ রিফ্রেশে স্ক্রিন লাফাবে না 
+    router.push(path, { scroll: false }); // scroll false দিলে পেজ রিফ্রেশে স্ক্রিন লাফাবে না
   }, [selectedCategory, router, searchQuery, availability, minFee, maxFee]);
 
   // Filter Logic
