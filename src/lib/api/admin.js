@@ -4,7 +4,7 @@ import { protectedFetch, serverFetch } from "../core/server"
 
 // admin get all books
 export const getAllBooks = async () => {
-    return await serverFetch("/api/books/allBooks")
+    return await protectedFetch("/api/books/allBooks")
 }
 
 // admin get all pending books

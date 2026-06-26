@@ -68,7 +68,7 @@ const ManageUser = ({ users = [] }) => {
       if (targetUser._id === session.id) {
         throw new Error("You cannot change your own role!");
       }
-
+      // update user role api
       const res = await updateUserRole({
         userId: targetUser._id,
         userRole: selectedRole,

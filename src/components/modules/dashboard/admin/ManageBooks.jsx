@@ -20,7 +20,8 @@ const ManageBooks = ({ books = [] }) => {
   const handleStatusClick = async (bookId, targetStatus) => {
     try {
       setLoadingId(bookId);
-
+      
+      // api
       const res = await adminUpdateStatusById({ bookId, status: targetStatus });
 
       if (res?.success) {
