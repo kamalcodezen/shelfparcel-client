@@ -15,7 +15,7 @@ export const getUserAllComments = async (bookId) => {
 
 // Get all users list
 export const getUserList = async () => {
-  return await serverFetch("/api/users", {
+  return await protectedFetch("/api/users", {
     cache: "no-store",
     next: { revalidate: 0 }
   });
