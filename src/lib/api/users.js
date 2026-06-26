@@ -1,10 +1,10 @@
 "use server"
 
-import { serverFetch } from "../core/server"
+import { protectedFetch, serverFetch } from "../core/server"
 
-// user comment get … by id
+// user nijer comment get … by id
 export const getUserCommentById = async (userId) => {
-  return await serverFetch(`/api/books/comments/${userId}`)
+  return await protectedFetch(`/api/books/comments/${userId}`)
 }
 
 //  get users All comments by book Id
