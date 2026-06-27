@@ -103,7 +103,7 @@ export default function SignupForm() {
     }
   };
 
-
+  // ===================
   // Google login
   const googleSignUp = async () => {
     const data = await authClient.signIn.social({
@@ -351,9 +351,9 @@ export default function SignupForm() {
             <div className="h-px flex-1 bg-border" />
           </div>
 
-          {/* 👑 ২. গুগল ওথ বাটন (লোডিং স্পিনার সহ) */}
+          {/*গুগল ওথ বাটন (লোডিং স্পিনার সহ) */}
           <button
-            onPress={() => {
+            onClick={() => {
               googleSignUp();
               toast.info("Google signup coming soon! ", {
                 position: "top-right",

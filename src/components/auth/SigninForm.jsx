@@ -235,7 +235,7 @@ export default function SigninForm() {
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
                   <span>Signing in...</span>{" "}
-                  {/* 🎯 একদম ক্লিন ও প্রিমিয়াম গ্লোবাল স্ট্যান্ডার্ড টেক্সট */}
+                 
                 </>
               ) : (
                 <>
@@ -254,9 +254,9 @@ export default function SigninForm() {
           </div>
 
          
-          {/* 👑 ২. গুগল ওথ লগইন বাটন (প্রফেশনাল লোডিং টেক্সট ও স্পিনার সহ) */}
+          {/*  গুগল ওথ লগইন বাটন (প্রফেশনাল লোডিং টেক্সট ও স্পিনার সহ) */}
           <button
-            onPress={() => {
+            onClick={() => {
               googleSignUp();
               toast.info("Google signup coming soon! ", {
                 position: "top-right",

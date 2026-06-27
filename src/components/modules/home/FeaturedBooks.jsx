@@ -27,7 +27,7 @@ export default function FeaturedBooks() {
     fetchLatestBooks();
   }, []);
 
-  // 🎯 FIXED: Safely extract the books array whether it is wrapped in an object or a direct array
+  //  FIXED: Safely extract the books array whether it is wrapped in an object or a direct array
   const finalBooksList = useMemo(() => {
     if (!booksData) return [];
     if (Array.isArray(booksData)) return booksData;
@@ -49,7 +49,7 @@ export default function FeaturedBooks() {
 
       {loading ? (
         <div className="w-11/12 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {[...Array(6)].map((_, i) => (
+          {[...Array(8)].map((_, i) => (
             <div
               key={`skeleton-token-${i}`}
               className="animate-pulse bg-card-soft border border-border rounded-3xl h-96 w-full"

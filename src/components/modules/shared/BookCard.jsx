@@ -14,7 +14,7 @@ const BookCard = ({ book }) => {
           {/* Book Cover */}
           <div className="h-30 w-full overflow-hidden rounded-lg border border-border/30">
             <img
-              src={book?.cover}
+              src={book?.cover || "https://ibb.co/xKfqCQm9"}
               alt={book?.title}
               className="h-full w-full object-cover"
             />
