@@ -3,7 +3,17 @@ import { getUserPaymentDetailsByEmail } from "@/lib/api/payment";
 
 import { getUserSession } from "@/lib/core/session";
 
-const UserUserOverviewPage = async () => {
+export const metadata = {
+  title: "Overview | Reader Dashboard | BiblioDrop",
+  description:
+    "View your reading activity, borrowing statistics, delivery updates, and account overview from your BiblioDrop reader dashboard.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+const UserOverviewPage = async () => {
   const session = await getUserSession();
 
   const userPayment = await getUserPaymentDetailsByEmail(session?.email);
@@ -15,4 +25,4 @@ const UserUserOverviewPage = async () => {
   );
 };
 
-export default UserUserOverviewPage;
+export default UserOverviewPage;
