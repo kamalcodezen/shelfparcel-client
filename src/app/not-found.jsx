@@ -2,6 +2,10 @@ import React from "react";
 import { HelpCircle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Page Not Found | BiblioDrop",
+};
+
 const NotFoundPage = () => {
   return (
     <div className="min-h-[85vh] w-full flex items-center justify-center p-4 font-urbanist text-foreground">
