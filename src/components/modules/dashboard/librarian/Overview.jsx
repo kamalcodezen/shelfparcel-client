@@ -12,10 +12,12 @@ import {
 } from "recharts";
 import { BookOpen, DollarSign, Clock, TrendingUp } from "lucide-react";
 
-export default function LibrarianOverview({ books = [], payments = [] }) {
-
-
-console.log(books,"books")
+export default function LibrarianOverview({
+  books = [],
+  payments = [],
+  librarian = {},
+}) {
+  console.log(books, "books");
 
   //  কুইক স্ট্যাটসের আসল লাইভ ক্যালকুলেশন ভাই
   const totalBooksCount = books.length;
@@ -63,7 +65,23 @@ console.log(books,"books")
     }));
 
   return (
-    <div className="space-y-8 pt-10 font-urbanist text-foreground ">
+    <div className="space-y-8 pt-4 font-urbanist text-foreground ">
+      <div>
+        <h2 className="text-xl md:text-2xl font-semibold font-serif tracking-tight flex flex-wrap items-center gap-2 capitalize text-foreground pl-3">
+          <span>Welcome,</span>
+          <span className="text-primary font-bold">
+            {librarian?.name || "Librarian"}
+          </span>
+          <span className="text-muted-foreground font-medium text-lg md:text-xl">
+            — Overview Diagnostics
+          </span>
+          <TrendingUp
+            size={22}
+            className="text-primary flex-shrink-0 animate-pulse"
+          />
+        </h2>
+      </div>
+
       {/* =========================================
             QUICK STATS CARDS SECTION
       ========================================= */}

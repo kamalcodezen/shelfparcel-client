@@ -23,7 +23,7 @@ const LibrarianOverviewPage = async () => {
 
   return (
     <div className="min-h-screen">
-      <LibrarianOverview books={books} payments={payments} />
+      <LibrarianOverview books={books} payments={payments} librarian={librarian} />
     </div>
   );
 };

@@ -147,7 +147,7 @@ const DashboardSidebar = () => {
 
   return (
     <>
-      {/* 📱 MOBILE TOPBAR */}
+      {/*  MOBILE TOPBAR */}
       <div className="lg:hidden h-16 border-b border-border bg-card px-4 flex items-center justify-between sticky top-0 z-40">
         <h2 className="text-xl font-bold tracking-tight text-foreground Poppins">
           <Link href="/">
@@ -171,7 +171,7 @@ const DashboardSidebar = () => {
         />
       )}
 
-      {/* 📱 MOBILE DRAWER */}
+      {/*  MOBILE DRAWER */}
       <div
         className={`lg:hidden fixed top-0 left-0 w-[280px] h-screen bg-card border-r border-border z-50 transition-transform duration-300 flex flex-col ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
@@ -194,11 +194,10 @@ const DashboardSidebar = () => {
             <X size={18} />
           </button>
         </div>
+
         <div className="p-4 space-y-1.5 flex-1 overflow-y-auto Urbanist">
           {menus?.map((item, ind) => {
             const Icon = item.icon;
-
-            // 🎯 উন্ডো বা প্যারামিটার ট্র্যাকিং ছাড়াই শুধু usePathname এবং ডাইরেক্ট লিঙ্ক দিয়ে একটিভ কন্ডিশন
             const isActive =
               pathname === item.href || item.href.includes(pathname + "?");
 
@@ -308,7 +307,7 @@ const DashboardSidebar = () => {
         </div>
       </div>
 
-      {/* 🖥️ DESKTOP SIDEBAR */}
+      {/*  DESKTOP SIDEBAR */}
       <aside className="hidden lg:flex flex-col w-[280px] h-screen sticky top-0 bg-card border-r border-border p-6 shadow-sm">
         <div>
           <h2 className="text-3xl font-black tracking-tight text-foreground Poppins">
@@ -322,6 +321,7 @@ const DashboardSidebar = () => {
             {user?.role || "user"} Dashboard
           </p>
         </div>
+
         <div className="mt-10 space-y-1.5 flex-1 overflow-y-auto Urbanist">
           {menus?.map((item, ind) => {
             const Icon = item.icon;
