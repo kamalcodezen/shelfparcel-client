@@ -82,7 +82,7 @@ export default function Navbar() {
               </span>
             </Link>
 
-            {/* নিচে ছোট বল (Dot) */}
+            {/* dot Bool icon */}
             <div className="hidden md:flex items-center gap-6 ml-8">
               {links.map((link) => {
                 const isActive = pathname === link.path;
@@ -166,24 +166,64 @@ export default function Navbar() {
                           </Avatar>
                         </div>
                       </div>
+
+                      {/*  Reader Dashboard Option */}
                       <Link
-                        href="/dashboard/user"
-                        onClick={() => setDropdownOpen(false)}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user?.role === "user" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
+                        href={user?.role === "user" ? "/dashboard/user" : "#"}
+                        onClick={(e) => {
+                          if (user?.role !== "user") {
+                            e.preventDefault(); 
+                            return;
+                          }
+                          setDropdownOpen(false);
+                        }}
+                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${
+                          user?.role === "user"
+                            ? "bg-primary/10 text-primary hover:bg-primary/20"
+                            : "cursor-not-allowed opacity-40 pointer-events-none select-none" 
+                        }`}
                       >
                         Reader Dashboard {user?.role === "user" && "•"}
                       </Link>
+
+                      {/*  Librarian Dashboard Option */}
                       <Link
-                        href="/dashboard/librarian"
-                        onClick={() => setDropdownOpen(false)}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user?.role === "librarian" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
+                        href={
+                          user?.role === "librarian"
+                            ? "/dashboard/librarian"
+                            : "#"
+                        }
+                        onClick={(e) => {
+                          if (user?.role !== "librarian") {
+                            e.preventDefault();
+                            return;
+                          }
+                          setDropdownOpen(false);
+                        }}
+                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${
+                          user?.role === "librarian"
+                            ? "bg-primary/10 text-primary hover:bg-primary/20"
+                            : "cursor-not-allowed opacity-40 pointer-events-none select-none"
+                        }`}
                       >
                         Librarian Dashboard {user?.role === "librarian" && "•"}
                       </Link>
+
+                      {/*  Admin Dashboard Option */}
                       <Link
-                        href="/dashboard/admin"
-                        onClick={() => setDropdownOpen(false)}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${user?.role === "admin" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
+                        href={user?.role === "admin" ? "/dashboard/admin" : "#"}
+                        onClick={(e) => {
+                          if (user?.role !== "admin") {
+                            e.preventDefault();
+                            return;
+                          }
+                          setDropdownOpen(false);
+                        }}
+                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${
+                          user?.role === "admin"
+                            ? "bg-primary/10 text-primary hover:bg-primary/20"
+                            : "cursor-not-allowed opacity-40 pointer-events-none select-none"
+                        }`}
                       >
                         Admin Dashboard {user?.role === "admin" && "•"}
                       </Link>
@@ -193,7 +233,7 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* রাইট সাইড অ্যাকশন প্যানেল */}
+            {/* right side actions */}
             <div className="hidden md:flex items-center gap-3">
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -209,7 +249,7 @@ export default function Navbar() {
               <div className="flex items-center justify-center">
                 {!isPending && user && (
                   <Dropdown>
-                    {/*  ড্রপডাউন ট্রিগার বাটন — আপনার কাস্টম বর্ডার ও প্রাইমারি রিং সহ */}
+                    {/*  Dropdown Trigger*/}
                     <Dropdown.Trigger className="rounded-full cursor-pointer focus:outline-none">
                       <Avatar className="ring-1 ring-primary/40 hover:ring-primary transition-all duration-300">
                         <Avatar.Image
@@ -228,7 +268,7 @@ export default function Navbar() {
                       className="bg-card border border-border rounded-3xl min-w-[240px] md:min-w-[280px] p-2"
                       style={{ boxShadow: "var(--shadow)" }}
                     >
-                      {/* ইউজারের একটিভ সেশন হেডার কার্ড */}
+                      {/* active session*/}
                       <div className="px-4 pt-3 pb-3 border-b border-border/60 mb-1.5">
                         <div className="flex items-center gap-3">
                           <Avatar size="sm">
@@ -254,7 +294,7 @@ export default function Navbar() {
                         </div>
                       </div>
 
-                      {/* 🎯 মেইন মেনু আইটেমসমূহ — আপনার প্রজেক্টের ফন্ট ও কালার সিঙ্কড */}
+                      {/* menu items login user*/}
                       <Dropdown.Menu className="text-foreground font-urbanist flex flex-col gap-0.5">
                         <Dropdown.Item
                           id="dashboard"
@@ -270,14 +310,14 @@ export default function Navbar() {
                           </Link>
                         </Dropdown.Item>
 
-                        {/* ২. মাই প্রোফাইল লিংক */}
+                        {/* my profile*/}
                         <Dropdown.Item
                           id="profile"
                           textValue="My Profile"
                           className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all mt-0.5"
                         >
                           <Link
-                            href="/profile"
+                            href="/"
                             className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground"
                           >
                             <span>👤</span>
@@ -285,7 +325,7 @@ export default function Navbar() {
                           </Link>
                         </Dropdown.Item>
 
-                        {/* ৩. কাস্টম ডিজাইনড রাজকীয় লগআউট বাটন */}
+                        {/* logout*/}
                         <Dropdown.Item
                           id="logout"
                           textValue="Logout"
