@@ -78,11 +78,12 @@ export default function SignupForm() {
     const imgBBFormData = new FormData();
     imgBBFormData.append("image", file);
 
-    const IMGBB_API_KEY = `5d110d0078bf4b9705ee35ce04c569ac`;
+
+    const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
     try {
       const response = await fetch(
-        `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+        `https://api.imgbb.com/1/upload?key=${apiKey}`,
         {
           method: "POST",
           body: imgBBFormData,

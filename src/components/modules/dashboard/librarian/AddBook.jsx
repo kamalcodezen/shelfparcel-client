@@ -50,8 +50,9 @@ const LibrarianAddBook = () => {
       const imgApiData = new FormData();
       imgApiData.append("image", imageFile);
 
-      const IMGBB_API_KEY = `5d110d0078bf4b9705ee35ce04c569ac`;
-      const imgbbUrl = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
+      const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+
+      const imgbbUrl = `https://api.imgbb.com/1/upload?key=${apiKey}`;
 
       const imgResponse = await fetch(imgbbUrl, {
         method: "POST",
