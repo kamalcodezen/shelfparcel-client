@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FiLayers } from "react-icons/fi";
 
 export default function PopularCategories() {
-  // ডক রিকোয়ারমেন্ট অনুযায়ী ক্যাটাগরি স্লাগ ম্যাপিং (যা অল বুকস পেজে ফিল্টার হ্যান্ডেল করবে)
+  //  categories
   const categories = [
     { name: "Fiction", count: "4,250 Books Available", slug: "Fiction" },
     { name: "Sci-Fi", count: "1,890 Books Available", slug: "Sci-Fi" },
@@ -14,18 +14,18 @@ export default function PopularCategories() {
 
   return (
     <section className=" py-16 bg-background text-foreground select-none">
-      {/* শিরোনাম জোন (আপনার Poppins ফন্ট সিঙ্কড) */}
+      {/* Header */}
       <div className="flex flex-col items-center text-center space-y-4 mb-16">
         <span className="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 Urbanist">
           Genre Gateway
         </span>
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground Poppins">
+        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight italic font-serif">
           Popular <span className="text-primary">Categories</span>
         </h2>
         <div className="w-12 h-0.5 bg-primary/60 my-1" />
       </div>
 
-      {/* 🌊 Framer Motion: স্ক্রোলের সাথে চমৎকার স্ট্যাগার এনিমেশন */}
+      {/*  Framer Motion: */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -37,7 +37,7 @@ export default function PopularCategories() {
         className="w-11/12 mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6"
       >
         {categories.map((cat, idx) => (
-          // 🎯 ক্লিক করলেই ডাইরেক্ট কুয়েরি প্যারামিটারসহ অল-বুকস রাউটে নিয়ে যাবে
+          
           <Link key={idx} href={`/books?category=${cat.slug}`}>
             <motion.div
               variants={{

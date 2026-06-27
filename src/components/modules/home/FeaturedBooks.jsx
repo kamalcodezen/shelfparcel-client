@@ -67,7 +67,7 @@ export default function FeaturedBooks() {
           }}
           className="w-11/12 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
-          {/* 🎯 FIXED: Safe mapping over slice configuration targeting finalBooksList */}
+          {/*  Safe mapping over slice configuration targeting finalBooksList */}
           {finalBooksList.slice(0, 12).map((book, index) => (
             <BookCard key={book._id || `featured-book-${index}`} book={book} />
           ))}

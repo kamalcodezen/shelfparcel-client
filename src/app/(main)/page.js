@@ -1,3 +1,4 @@
+import AboutSection from "@/components/modules/home/AboutSection";
 import Banner from "@/components/modules/home/Banner";
 import FeaturedBooks from "@/components/modules/home/FeaturedBooks";
 import HeroMarquee from "@/components/modules/home/HeroMarquee";
@@ -13,11 +14,12 @@ export default function HomePage() {
       <Banner />
       <HeroMarquee />
       <FeaturedBooks />
+      <AboutSection />
       <HowItWorks />
+      <PopularCategories />
       <TopLibrarians />
       <StatsSection />
-      <PopularCategories />
-
+      {/* <ContactSection /> */}
     </>
   );
 }
