@@ -112,6 +112,11 @@ const DashboardSidebar = () => {
   // Admin Tabs Links
   const adminNavLinks = [
     {
+      title: "Profile",
+      href: "/dashboard/admin/profile",
+      icon: UserPen,
+    },
+    {
       title: "Overview",
       href: "/dashboard/admin/overview",
       icon: LayoutDashboard,

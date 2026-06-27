@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { updateUserRole } from "@/lib/actions/users";
 import { getUserSession } from "@/lib/core/session";
-import DeleteUserModal from "./DeleteUserModal"; // 🎯 FIXED: Purono delete book modal fley, fresh user modal import kora holo
+import DeleteUserModal from "./DeleteUserModal";
 
 const ManageUser = ({ users = [] }) => {
   const router = useRouter();
