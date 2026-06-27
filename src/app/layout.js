@@ -19,7 +19,6 @@ const poppins = Poppins({
   display: "swap",
 });
 
-
 export const metadata = {
   title: "BiblioDrop - Knowledge Delivered to Your Doorstep",
   description: "A premium and secure peer-to-peer library network. Browse global inventories, manage lists, and request physical deliveries backed by secure encrypted gateways.",
@@ -32,11 +31,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${urbanist.variable} ${poppins.variable} antialiased h-full scroll-smooth`}>
-
-      <body className="min-h-full flex flex-col scroll-smooth">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${urbanist.variable} ${poppins.variable} antialiased h-full scroll-smooth`}
+    >
+      <body
+        className="min-h-full flex flex-col antialiased"
+        style={{
+          scrollBehavior: "smooth",
+          overflowX: "hidden",
+          width: "100%",
+          margin: 0,
+          padding: 0
+        }}
+      >
         <Providers>
-          <main className=" min-h-screen transition-colors duration-300">
+          <main className="min-h-screen transition-colors duration-300">
             {children}
           </main>
         </Providers>

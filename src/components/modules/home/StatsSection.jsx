@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-// 👑 CountUp লাইব্রেরি ইম্পোর্ট
+//  CountUp লাইব্রেরি ইম্পোর্ট
 import CountUp from "react-countup";
 
 export default function StatsSection() {
@@ -39,7 +39,7 @@ export default function StatsSection() {
       >
         {stats.map((stat, idx) => (
           <div key={idx} className="space-y-1 relative group">
-            {/* 👑 🎯 FIX: Render Props ব্যবহার করে টার্গেট নোড লক করা হলো যাতে Null এরর না আসে */}
+            {/*  Render Props ব্যবহার করে টার্গেট নোড লক করা হলো যাতে Null এরর না আসে */}
             <h3 className="text-4xl lg:text-5xl font-black text-primary tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent Poppins">
               <CountUp
                 start={stat.start}
