@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/react";
-import { Check, Trash2, Clock, AlertCircle, User } from "lucide-react";
+import { Check, Trash2, Clock, AlertCircle, User, Bookmark } from "lucide-react";
 import DeleteBookModal from "../librarian/DeleteBookModal";
 import { useRouter } from "next/navigation";
 
@@ -74,6 +74,10 @@ const BookApproval = ({ books = [] }) => {
             Review and authorize incoming librarian listings before public
             distribution.
           </p>
+        </div>
+
+        <div className="absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl flex items-end justify-center pb-2 text-primary">
+          <Bookmark size={14} className="fill-current" />
         </div>
       </motion.div>
 

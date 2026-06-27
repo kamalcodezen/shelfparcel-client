@@ -8,6 +8,7 @@ import {
   Hash,
   ShieldCheck,
   DollarSign,
+  Bookmark,
 } from "lucide-react";
 
 const ViewTransactions = ({ payments = [] }) => {
@@ -35,6 +36,10 @@ const ViewTransactions = ({ payments = [] }) => {
           <p className="text-xs text-muted-foreground">
             Platform-wide financial audit trail and logs.
           </p>
+        </div>
+
+        <div className="absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl flex items-end justify-center pb-2 text-primary">
+          <Bookmark size={14} className="fill-current" />
         </div>
       </div>
 
@@ -77,7 +82,6 @@ const ViewTransactions = ({ payments = [] }) => {
                 </th>
               </tr>
             </thead>
-
 
             <tbody className="divide-y divide-border/60 text-sm font-medium">
               {payments.map((txn) => (

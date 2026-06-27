@@ -10,6 +10,7 @@ import {
   TrendingUp,
   ArrowUpRight,
   BookMarked,
+  Bookmark,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -23,8 +24,8 @@ import {
   Cell,
 } from "recharts";
 
-const AdminOverview = ({ stats = {}, booksCategories = [] }) => {
-  // ১ কুইক স্ট্যাটস কার্ডের রিয়াল ডাটাবেজ বাইন্ডিং
+const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
+  //  কুইক স্ট্যাটস কার্ডের রিয়াল ডাটাবেজ বাইন্ডিং
   const liveStats = {
     totalUsers: stats?.totalUsers || 0,
     totalBooks: stats?.totalBooks || 0,
@@ -99,20 +100,27 @@ const AdminOverview = ({ stats = {}, booksCategories = [] }) => {
       {/* Dashboard Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/40 pb-5">
         <div>
-          <h2 className="text-2xl font-black font-poppins tracking-tight flex items-center gap-2">
-            Overview Diagnostics{" "}
-            <TrendingUp size={24} className="text-primary" />
+          <h2 className="text-xl md:text-2xl font-semibold font-serif tracking-tight flex flex-wrap items-center gap-2 capitalize text-foreground">
+            <span>Welcome,</span>
+            <span className="text-primary font-bold">
+              {admin?.name || "Admin"}
+            </span>
+            <span className="text-muted-foreground font-medium text-lg md:text-xl">
+              — Overview Diagnostics
+            </span>
+            <TrendingUp
+              size={22}
+              className="text-primary flex-shrink-0 animate-pulse"
+            />
           </h2>
           <p className="text-sm text-muted-foreground">
             Platform-wide insights and transactional analytics dashboard.
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <select className="bg-card/60 border border-border px-4 py-2 rounded-xl text-xs font-bold font-poppins focus:outline-none cursor-pointer">
-            <option>All Categories</option>
-            <option>This Month</option>
-            <option>Yearly Overview</option>
-          </select>
+
+        {/*  Top bookmark decoration banner */}
+        <div className="absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl flex items-end justify-center pb-2 text-primary">
+          <Bookmark size={14} className="fill-current" />
         </div>
       </div>
 

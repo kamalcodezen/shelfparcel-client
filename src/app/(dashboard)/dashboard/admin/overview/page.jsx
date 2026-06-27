@@ -1,5 +1,6 @@
 import AdminOverview from "@/components/modules/dashboard/admin/Overview";
 import { getAdminBookCategories, getAdminStats } from "@/lib/api/admin";
+import { getUserSession } from "@/lib/core/session";
 
 export const metadata = {
   title: "Overview | Admin Dashboard | BiblioDrop",
@@ -12,6 +13,9 @@ export const metadata = {
 };
 
 const AdminOverviewPage = async () => {
+
+  const admin = await getUserSession();
+
   const statsData = await getAdminStats();
   const booksData = await getAdminBookCategories();
 
@@ -20,7 +24,7 @@ const AdminOverviewPage = async () => {
 
   return (
     <div className="min-h-screen w-full">
-      <AdminOverview stats={stats} booksCategories={booksCategories} />
+      <AdminOverview stats={stats} booksCategories={booksCategories} admin={admin} />
     </div>
   );
 };
