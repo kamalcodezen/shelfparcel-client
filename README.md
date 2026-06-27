@@ -4,7 +4,7 @@ BiblioDrop is a comprehensive full-stack digital platform that seamlessly connec
 
 ---
 
-##  Problem Statement
+## Problem Statement
 
 Traditional library infrastructures and physical borrowing systems present operational and logistical challenges:
 
@@ -14,7 +14,7 @@ Traditional library infrastructures and physical borrowing systems present opera
 
 ---
 
-##  Solution & Impact
+## Solution & Impact
 
 BiblioDrop solves these frictions by unifying interactive frontend workflows with robust server actions and secure API routes backed by Next.js and MongoDB.
 
@@ -26,15 +26,15 @@ BiblioDrop solves these frictions by unifying interactive frontend workflows wit
 
 ---
 
-##  Project Links & Credentials
+## Project Links & Credentials
 
 Below are the deployment endpoints, source code repositories, and secure testing accounts allocated for evaluating the platform architecture.
 
-| Resource Component                        | Access Link / Location                                                           |
-| :---------------------------------------- | :------------------------------------------------------------------------------- |
-|  **Live Production Deployment**         | [👉 Visit BiblioDrop Live App](https://your-deployed-project.vercelapp)         |
-|  **Client-Side Source Code (Frontend)** | [📦 GitHub Client Repository](https://github.com/yourusername/bibliodrop-client) |
-|  **Server-Side API Code (Backend)**     | [🗄️ GitHub Server Repository](https://github.com/yourusername/bibliodrop-server) |
+| Resource Component                     | Access Link / Location                                                            |
+| :------------------------------------- | :-------------------------------------------------------------------------------- |
+| **Live Production Deployment**         | [👉 Visit BiblioDrop Live App](https://shelfparcel-client.vercel.app)             |
+| **Client-Side Source Code (Frontend)** | [📦 GitHub Client Repository](https://github.com/kamalcodezen/shelfparcel-client) |
+| **Server-Side API Code (Backend)**     | [🗄️ GitHub Server Repository](https://github.com/kamalcodezen/shelfparcel-server) |
 
 ### 🔑 Verified Administrator Credentials
 
@@ -45,9 +45,9 @@ For evaluating system management grids, role modifications, and book queues, use
 
 ---
 
-##  Key Architecture & Core Business Pipelines
+## Key Architecture & Core Business Pipelines
 
-###  1. Server-Side Pagination & Search Optimization
+### 1. Server-Side Pagination & Search Optimization
 
 - **Database Slicing Engine:** The "Browse Books" page operates on an optimized database-level pagination model rendering exactly `6 to 12 items` (Default: 8) per page using MongoDB `.skip()` and `.limit()` queries to maximize retrieval speeds and avoid client-side memory bloating.
 - **Advanced Query Channels:** Implements live case-insensitive regex searching across title/author fields coupled with strict compound filtering boundaries (Category classification, Price/Fee margins, and Availability status logs).
@@ -58,12 +58,12 @@ For evaluating system management grids, role modifications, and book queues, use
 - Implements resilient automated lifecycle triggers: upon successful payment verification, the target asset status transitions safely to `Pending Delivery` inside the database.
 - Features strict business logic guardrails blocking book owners/librarians from purchasing or requesting delivery on their own listings.
 
-###  3. Verified Review Validation Network
+### 3. Verified Review Validation Network
 
 - Implements a programmatic data guardrail where ratings, comments, and review submissions are strictly locked.
 - The system intercepts incoming requests and grants write permissions **only** if the user possesses a verified transaction record explicitly marked as `Delivered` for that specific `bookId`.
 
-###  4. Role-Based Access Control (RBAC Dashboard Ecosystem)
+### 4. Role-Based Access Control (RBAC Dashboard Ecosystem)
 
 - **User Dashboard:** Renders analytics charts (Total Books Read, Total Spent) alongside interactive data tables tracking delivery logs, historical reads gallery, and active review management tools.
 - **Librarian Dashboard:** Implements a direct multipart binary asset upload pipeline utilizing the **ImgBB API**. New books automatically enter a `Pending Approval` quarantine state. Librarians retain the authority to unpublish or delete approved listings.
@@ -71,7 +71,7 @@ For evaluating system management grids, role modifications, and book queues, use
 
 ---
 
-##  Tech Stack & System Components
+## Tech Stack & System Components
 
 ### Frontend Component Layer
 
