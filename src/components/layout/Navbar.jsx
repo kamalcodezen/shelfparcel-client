@@ -172,7 +172,7 @@ export default function Navbar() {
                         href={user?.role === "user" ? "/dashboard/user" : "#"}
                         onClick={(e) => {
                           if (user?.role !== "user") {
-                            e.preventDefault(); 
+                            e.preventDefault();
                             return;
                           }
                           setDropdownOpen(false);
@@ -180,7 +180,7 @@ export default function Navbar() {
                         className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${
                           user?.role === "user"
                             ? "bg-primary/10 text-primary hover:bg-primary/20"
-                            : "cursor-not-allowed opacity-40 pointer-events-none select-none" 
+                            : "cursor-not-allowed opacity-40 pointer-events-none select-none"
                         }`}
                       >
                         Reader Dashboard {user?.role === "user" && "•"}
@@ -265,7 +265,7 @@ export default function Navbar() {
 
                     {/* ড্রপডাউন পপওভার — আপনার নিজস্ব 'bg-card' এবং 'border' থিমে সাজানো */}
                     <Dropdown.Popover
-                      className="bg-card border border-border rounded-3xl min-w-[240px] md:min-w-[280px] p-2"
+                      className="bg-card border border-border rounded-lg min-w-[240px] md:min-w-[280px] p-2"
                       style={{ boxShadow: "var(--shadow)" }}
                     >
                       {/* active session*/}
@@ -317,7 +317,7 @@ export default function Navbar() {
                           className="p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all mt-0.5"
                         >
                           <Link
-                            href="/"
+                            href={`/dashboard/${user.role}/profile`}
                             className="flex items-center gap-3 px-4 py-2.5 w-full h-full text-foreground"
                           >
                             <span>👤</span>
