@@ -127,7 +127,7 @@ const MyReadingList = ({ userPayment = [] }) => {
           <BookOpen size={32} className="opacity-40 text-primary" />
           <p className="text-xs font-bold">Your reading list is empty</p>
           <p className="text-[11px] opacity-75">
-            Books will appear here once the Librarian marks them as "Delivered".
+            Books will appear here once the Librarian marks them as Delivered.
           </p>
         </div>
       ) : (
@@ -314,8 +314,9 @@ const MyReadingList = ({ userPayment = [] }) => {
                   size="sm"
                   color="primary"
                   type="submit"
+                  variant="light"
                   isLoading={isSubmitting}
-                  className="rounded-xl font-bold text-xs h-9"
+                  className="rounded-xl  font-bold text-xs h-9"
                 >
                   {isSubmitting ? "Submitting..." : "Submit Review"}
                 </Button>
