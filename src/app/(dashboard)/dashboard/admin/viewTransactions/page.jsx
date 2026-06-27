@@ -1,6 +1,16 @@
 import ViewTransactions from "@/components/modules/dashboard/admin/ViewTransactions";
 import { getAllPaymentDetails } from "@/lib/api/payment";
 
+export const metadata = {
+  title: "View Transactions | Admin Dashboard | BiblioDrop",
+  description:
+    "Review and monitor all payment transactions, order history, and financial activities from the BiblioDrop admin dashboard.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const AdminViewTransactionsPage = async () => {
   const payments = await getAllPaymentDetails();
 
