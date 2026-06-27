@@ -82,7 +82,7 @@ export default function Navbar() {
               </span>
             </Link>
 
-            {/* ডেসক্রিপশন অনুযায়ী ইউনিক নিচে ছোট বল (Dot) সহ ডেক্সটপ মেনু */}
+            {/* নিচে ছোট বল (Dot) */}
             <div className="hidden md:flex items-center gap-6 ml-8">
               {links.map((link) => {
                 const isActive = pathname === link.path;
@@ -90,6 +90,7 @@ export default function Navbar() {
                   <Link
                     key={link.path}
                     href={link.path}
+                    scroll
                     className="relative pb-2 pt-1 px-1 text-sm font-semibold transition-all duration-300 flex flex-col items-center group"
                   >
                     <span
@@ -255,7 +256,6 @@ export default function Navbar() {
 
                       {/* 🎯 মেইন মেনু আইটেমসমূহ — আপনার প্রজেক্টের ফন্ট ও কালার সিঙ্কড */}
                       <Dropdown.Menu className="text-foreground font-urbanist flex flex-col gap-0.5">
-                        
                         <Dropdown.Item
                           id="dashboard"
                           textValue="My Dashboard"
