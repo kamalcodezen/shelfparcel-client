@@ -82,11 +82,11 @@ const DashboardSidebar = () => {
 
   // Librarian Tabs Links
   const librarianNavLinks = [
-    // {
-    //   title: "Profile",
-    //   href: "/dashboard/librarian/profile",
-    //   icon: UserPen,
-    // },
+    {
+      title: "Profile",
+      href: "/dashboard/librarian/profile",
+      icon: UserPen,
+    },
     {
       title: "Overview",
       href: "/dashboard/librarian/overview",
