@@ -2,13 +2,21 @@ import ManageInventory from "@/components/modules/dashboard/librarian/ManageInve
 import { getBooksByLibrarianId } from "@/lib/api/books";
 import { getUserSession } from "@/lib/core/session";
 
+export const metadata = {
+  title: "Manage Inventory | Librarian Dashboard | BiblioDrop",
+  description:
+    "Manage your book inventory, update book information, monitor availability, and organize your library collection from the librarian dashboard.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const ManageInventoryPage = async () => {
   const user = await getUserSession();
 
   const books = await getBooksByLibrarianId(user?.id);
 
-
-  
   return (
     <div className="min-h-screen">
       <ManageInventory books={books} />
