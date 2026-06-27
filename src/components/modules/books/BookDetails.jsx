@@ -30,7 +30,6 @@ import Loader from "../shared/Loader";
 import { toggleBooksStatusById } from "@/lib/actions/librarian";
 
 export default function BookDetails({ books, userComments }) {
-
   const router = useRouter();
 
   // console.log(books);
@@ -108,6 +107,26 @@ export default function BookDetails({ books, userComments }) {
     return <DeletedAssetScreen />;
   }
 
+  // চেক করছি ইউজার লগইন আছে কি না
+  const checkAuthBeforeDelivery = (e) => {
+    if (!session || !session.user) {
+      e.preventDefault();
+      toast.warn("Please login to request a book delivery! 🔐", {
+        position: "top-right",
+      });
+      router.push("/signin");
+      return false;
+    }
+
+    if (isButtonDisabled || isSubmitting) {
+      e.preventDefault();
+      return false;
+    }
+
+    setIsSubmitting(true);
+    return true;
+  };
+
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6 font-urbanist text-foreground space-y-10">
       {/* Back Button */}
@@ -127,7 +146,7 @@ export default function BookDetails({ books, userComments }) {
         initial={{ opacity: 0, scale: 0.99 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, cubicBezier: [0.16, 1, 0.3, 1] }}
-        className="relative grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[32px] overflow-hidden border border-border/50 bg-card/40 backdrop-blur-xl shadow-2xl"
+        className="relative grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[32px] overflow-hidden border border-border/50 bg-card/40 backdrop-blur-xl"
       >
         {/* left side image */}
         <div className="lg:col-span-5 relative min-h-[350px] md:min-h-[500px] flex items-center justify-center p-8 bg-card-soft/30 overflow-hidden border-b lg:border-b-0 lg:border-r border-border/40">
@@ -276,14 +295,7 @@ export default function BookDetails({ books, userComments }) {
               <form
                 action={`/api/payment`}
                 method="POST"
-                onSubmit={(e) => {
-                  // যদি বই Checked Out থাকে বা অলরেডি সাবমিটিং মোডে থাকে, তবে ফর্মের action-এ যেতে দেবে না
-                  if (isButtonDisabled || isSubmitting) {
-                    e.preventDefault();
-                    return false;
-                  }
-                  setIsSubmitting(true);
-                }}
+                onSubmit={checkAuthBeforeDelivery} // 🎯 ওপরে তৈরি করা অথ কন্ডিশন এখানে ট্রিগার করে দেওয়া হলো ভাই
               >
                 <input type="hidden" name="bookId" value={books?._id} />
                 <input type="hidden" name="title" value={books?.title} />
@@ -309,14 +321,18 @@ export default function BookDetails({ books, userComments }) {
                 <Button
                   type="submit"
                   isLoading={isSubmitting}
-                  disabled={isButtonDisabled || isSubmitting}
+                  disabled={
+                    isBookCheckedOut || isOwnerLibrarian || isSubmitting
+                  } // লগইন না থাকলেও বাটন এনাবল থাকবে পাবলিক এক্সেসের জন্য
                   className={`w-full h-14 text-xs font-black font-poppins uppercase tracking-widest transition-all rounded-xl ${
-                    !(isButtonDisabled || isSubmitting)
+                    !(isBookCheckedOut || isOwnerLibrarian || isSubmitting)
                       ? "btn-primary active:scale-[0.98] shadow-lg cursor-pointer"
                       : "bg-border/60 text-muted-foreground cursor-not-allowed border border-border/20 shadow-none opacity-60"
                   }`}
                   startContent={
-                    !isSubmitting && !isButtonDisabled && <Truck size={16} />
+                    !isSubmitting &&
+                    !isBookCheckedOut &&
+                    !isOwnerLibrarian && <Truck size={16} />
                   }
                 >
                   {/* dynamic button text */}

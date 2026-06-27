@@ -30,5 +30,5 @@ export async function proxy(request) {
 }
 
 export const config = {
-    matcher: ["/books/:id"],
+    matcher: ["/api/payment"],
 }
