@@ -19,9 +19,15 @@ const poppins = Poppins({
   display: "swap",
 });
 
+
 export const metadata = {
-  title: "BiblioDrop - Knowledge Delivered to Your Door",
-  description: "Premium and secure web architecture for modern libraries.",
+  title: "BiblioDrop - Knowledge Delivered to Your Doorstep",
+  description: "A premium and secure peer-to-peer library network. Browse global inventories, manage lists, and request physical deliveries backed by secure encrypted gateways.",
+  keywords: ["BiblioDrop", "Online Library Management", "Book Delivery System", "Borrow Books Online", "Next.js Library App"],
+  authors: [{ name: "Kamaluddin" }],
+  icons: {
+    icon: "/fav.png",
+  },
 };
 
 export default function RootLayout({ children }) {
