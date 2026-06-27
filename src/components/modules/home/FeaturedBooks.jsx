@@ -15,8 +15,6 @@ export default function FeaturedBooks() {
         const data = await getAllPublishedBooks();
 
         console.log("Featured Books Buffer Logs:", data);
-
-        // 🎯 FIXED: Storing the entire response object safely
         setBooksData(data);
       } catch (error) {
         console.error("Error fetching books:", error);

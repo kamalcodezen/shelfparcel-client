@@ -1,28 +1,30 @@
-"use client";
-
 import React from "react";
-import { BookOpen, Bookmark, Compass, Stars } from "lucide-react";
+import { BookOpen, Bookmark, Compass, Stars, User, Mail } from "lucide-react";
+import { getUserSession } from "@/lib/core/session";
 
-const UserDashboardHomePage = () => {
+const UserDashboardHomePage = async () => {
+ 
+  const user = await getUserSession();
+
   return (
-    <div className="w-full min-h-[100vh] flex items-center justify-center p-4 font-urbanist">
-      <div className="max-w-xl w-full border border-border/50 bg-gradient-to-b from-card/60 to-card/20 rounded-[32px] p-8 md:p-12 shadow-xl text-center space-y-6 relative overflow-hidden">
-        {/* Top bookmark decoration banner */}
-        <div className="absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl flex items-end justify-center pb-2 text-primary">
+    <div className="w-full min-h-[100vh] flex items-center justify-center p-4 font-urbanist bg-background">
+      <div className="max-w-xl w-full border border-border/50 bg-gradient-to-b from-card/60 to-card/20 rounded-[32px] p-8 md:p-12 shadow-2xl text-center space-y-6 relative overflow-hidden backdrop-blur-md">
+        {/*  Top bookmark decoration banner */}
+        <div className="absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl flex items-end justify-center pb-2 text-primary animate-bounce duration-1000">
           <Bookmark size={14} className="fill-current" />
         </div>
 
-        {/* Minimal book icon layout */}
+        {/*  Minimal book icon layout */}
         <div className="flex justify-center pt-4">
-          <div className="w-16 h-16 bg-muted/60 rounded-2xl border border-border flex items-center justify-center text-primary shadow-sm">
+          <div className="w-16 h-16 bg-primary/10 rounded-2xl border border-primary/20 flex items-center justify-center text-primary shadow-inner">
             <BookOpen size={28} className="stroke-[1.5]" />
           </div>
         </div>
 
-        {/* Main greeting message headings */}
+        {/*  ডাইনামিক গ্রিটিংস এবং ইউজারের নাম */}
         <div className="space-y-3">
-          <h1 className="text-3xl md:text-4xl font-bold font-poppins text-foreground tracking-tight">
-            Hello, Reader
+          <h1 className="text-3xl md:text-4xl font-bold font-poppins text-foreground tracking-tight capitalize">
+            Hello, {user?.name || "Premium Reader"}
           </h1>
           <p className="text-xs text-primary font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-1">
             <Stars size={12} className="fill-current" /> Your Personal Library
@@ -30,19 +32,28 @@ const UserDashboardHomePage = () => {
           </p>
         </div>
 
-        {/* Static aesthetic quote badge */}
-        <div className="bg-muted/30 border border-border/40 rounded-2xl p-4 max-w-sm mx-auto">
+        {/*  ইউজারের ইমেইল ব্যাজ */}
+        <div className="inline-flex items-center gap-2 bg-muted/40 border border-border/60 rounded-full px-4 py-1.5 mx-auto max-w-full">
+          <Mail size={12} className="text-muted-foreground" />
+          <span className="text-xs text-muted-foreground font-medium truncate max-w-[220px]">
+            {user?.email || "email-missing@bibliodrop.com"}
+          </span>
+        </div>
+
+        {/*  Static aesthetic quote badge */}
+        <div className="bg-muted/30 border border-border/40 rounded-2xl p-4 max-w-sm mx-auto shadow-sm">
           <p className="text-xs md:text-sm italic text-muted-foreground/90 font-medium leading-relaxed">
             "A reader lives a thousand lives before he dies."
           </p>
         </div>
 
-        {/* System meta analytics information grid */}
+        {/*  সিস্টেম মেটা অ্যানালিটিক্স ইনফরমেশন গ্রিড */}
         <div className="pt-6 border-t border-border/40 grid grid-cols-2 gap-4 text-left max-w-xs mx-auto">
-          <div className="flex items-center gap-2.5 text-muted-foreground">
+          {/* স্ট্যাটাস কার্ড */}
+          <div className="flex items-center gap-2.5 text-muted-foreground bg-card-soft/30 p-2 rounded-xl border border-border/20">
             <Compass size={16} className="text-primary flex-shrink-0" />
             <div className="overflow-hidden">
-              <span className="block text-[10px] uppercase font-bold tracking-wider opacity-60">
+              <span className="block text-[9px] uppercase font-bold tracking-wider opacity-60">
                 Status
               </span>
               <span className="block text-xs font-bold text-foreground truncate">
@@ -51,14 +62,15 @@ const UserDashboardHomePage = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 text-muted-foreground">
-            <Bookmark size={16} className="text-primary flex-shrink-0" />
+          {/* রোল কার্ড (১০০% ডাইনামিক ভাই!) */}
+          <div className="flex items-center gap-2.5 text-muted-foreground bg-card-soft/30 p-2 rounded-xl border border-border/20">
+            <User size={16} className="text-primary flex-shrink-0" />
             <div className="overflow-hidden">
-              <span className="block text-[10px] uppercase font-bold tracking-wider opacity-60">
+              <span className="block text-[9px] uppercase font-bold tracking-wider opacity-60">
                 Role
               </span>
-              <span className="block text-xs font-bold text-foreground truncate">
-                Verified Reader
+              <span className="block text-xs font-bold text-primary truncate capitalize">
+                {user?.role || "Reader"}
               </span>
             </div>
           </div>
