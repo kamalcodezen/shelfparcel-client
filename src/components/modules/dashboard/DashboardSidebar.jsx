@@ -53,11 +53,11 @@ const DashboardSidebar = () => {
 
   // User Tabs Links
   const userNavLinks = [
-    // {
-    //   title: "Profile",
-    //   href: "/dashboard/user/profile",
-    //   icon: UserPen,
-    // },
+    {
+      title: "Profile",
+      href: "/dashboard/user/profile",
+      icon: UserPen,
+    },
     {
       title: "Overview",
       href: "/dashboard/user/userOverview",

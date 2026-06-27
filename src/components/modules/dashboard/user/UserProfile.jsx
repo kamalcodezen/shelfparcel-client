@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation"; // 🔄 রাউটার রিফ্রেশের জন্য ভাই
 import {
   XAxis,
   YAxis,
@@ -22,16 +23,32 @@ import {
   Calendar,
   User,
   Search,
+  Loader2, // ⚡ লোডিং স্পিনারের জন্য
+  Edit2, // 📝 নাম এডিটের আইকন
+  Check, // 🔍 কনফার্ম আইকন
+  X, // ❌ ক্যানসেল আইকন
 } from "lucide-react";
 import { Avatar } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const UserProfile = ({ userPayment = [] }) => {
+  console.log(userPayment);
+
+  const router = useRouter();
   const { theme } = useTheme();
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
-  //  ১. রিয়াল ডাটা এনালাইসিস এবং পাইপলাইন ক্যালকুলেশন
+  //  ইমেজ আপলোডিং ও সিঙ্ক্রোনাইজেশন ট্র্যাকিং স্টেট ভাই
+  const [isUpdatingAvatar, setIsUpdatingAvatar] = useState(false);
+
+  // নাম এডিটের নতুন স্টেট মেকানিজম ভাই
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [updatedName, setUpdatedName] = useState("");
+  const [isSavingName, setIsSavingName] = useState(false);
+
+  //  রিয়াল ডাটা এনালাইসিস এবং পাইপলাইন ক্যালকুলেশন
   const totalRead = userPayment.filter(
     (item) => item?.status === "Delivered",
   ).length;
@@ -43,7 +60,7 @@ const UserProfile = ({ userPayment = [] }) => {
     0,
   );
 
-  // 📊 ২. চার্টের জন্য ডাটাবেজের অবজেক্টের রিয়াল 'month' ফিল্ড সরাসরি রিড করা
+  // চার্টের জন্য ডাটাবেজের অবজেক্টের রিয়াল 'month' ফিল্ড সরাসরি রিড করা
   const monthlySpentObj = userPayment.reduce((acc, item) => {
     const monthName = item?.month;
     if (monthName) {
@@ -52,11 +69,129 @@ const UserProfile = ({ userPayment = [] }) => {
     return acc;
   }, {});
 
-  // রিয়াল ডাটার মাসের কি (Keys) দিয়ে চার্ট ডেটা অ্যারে ম্যাপিং (কোনো ফেক বা মক ফলব্যাক নাই)
+  // রিয়াল ডাটার মাসের কি (Keys) দিয়ে চার্ট ডেটা অ্যারে ম্যাপিং
   const analyticsData = Object.keys(monthlySpentObj).map((month) => ({
     name: month,
     spending: monthlySpentObj[month],
   }));
+
+  //  নাম এডিট মোড অন করার ফাংশন 
+  const startEditName = () => {
+    setUpdatedName(user?.name || "");
+    setIsEditingName(true);
+  };
+
+  //  নতুন নাম ডাটাবেজে সেভ করার কোর Better Auth ফাংশন ভাই
+  const handleSaveName = async () => {
+    if (!updatedName.trim()) {
+      return toast.error("Name cannot be empty! ");
+    }
+    if (updatedName === user?.name) {
+      setIsEditingName(false);
+      return;
+    }
+
+    setIsSavingName(true);
+    const toastId = toast.loading("Updating profile configurations... ");
+
+    try {
+      const result = await authClient.updateUser({
+        name: updatedName.trim(),
+        image: user?.image,
+      });
+
+      if (result?.data) {
+        toast.update(toastId, {
+          render: "Display name updated successfully! ",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });
+        setIsEditingName(false);
+        router.refresh();
+      }
+
+      if (result?.error) {
+        throw new Error(result.error.message);
+      }
+    } catch (error) {
+      toast.update(toastId, {
+        render: error.message || "Failed to update name! ❌",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    } finally {
+      setIsSavingName(false);
+    }
+  };
+
+  // profile image change handler
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      return toast.error("Please select a valid image file! ");
+    }
+
+    setIsUpdatingAvatar(true);
+    const toastId = toast.loading(
+      "Uploading new avatar profile matrix to imgBB... ",
+    );
+
+    const imgBBFormData = new FormData();
+    imgBBFormData.append("image", file);
+    const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+
+    try {
+      //  image upload to imgBB
+      const response = await fetch(
+        `https://api.imgbb.com/1/upload?key=${apiKey}`,
+        {
+          method: "POST",
+          body: imgBBFormData,
+        },
+      );
+      const data = await response.json();
+
+      if (data.success) {
+        const secureImageUrl = data.data.url;
+
+        //  Better Auth profile update
+        const result = await authClient.updateUser({
+          image: secureImageUrl,
+          name: user?.name,
+        });
+
+        if (result?.data) {
+          toast.update(toastId, {
+            render: "Profile avatar update successfully!",
+            type: "success",
+            isLoading: false,
+            autoClose: 2000,
+          });
+          router.refresh(); 
+        }
+
+        if (result?.error) {
+          throw new Error(result.error.message);
+        }
+      } else {
+        throw new Error("imgBB sync failure response");
+      }
+    } catch (error) {
+      console.error("Avatar sync exception error:", error);
+      toast.update(toastId, {
+        render: error.message || "Failed to update profile avatar! ❌",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    } finally {
+      setIsUpdatingAvatar(false);
+    }
+  };
 
   const stats = [
     {
@@ -96,7 +231,7 @@ const UserProfile = ({ userPayment = [] }) => {
 
         <div className="max-w-6xl mx-auto px-4 pb-6 relative flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20">
           <div className="relative z-10">
-            <Avatar className="w-32 h-32 md:w-40 md:h-40 rounded-full p-20 ring-4 ring-card bg-card shadow-xl text-3xl font-bold font-poppins">
+            <Avatar className="w-32 h-32 md:w-40 md:h-40 rounded-full p-20 ring-4 ring-card bg-card shadow-xl text-3xl font-bold font-poppins relative overflow-hidden group">
               <Avatar.Image
                 alt={user?.name || "Reader Name"}
                 src={
@@ -108,20 +243,79 @@ const UserProfile = ({ userPayment = [] }) => {
               <Avatar.Fallback>
                 {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
               </Avatar.Fallback>
+
+              {/* ছবি আপলোড হওয়ার সময় আবছায়া স্ক্রিন লোডার ইফেক্ট ভাই */}
+              {isUpdatingAvatar && (
+                <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-primary z-20">
+                  <Loader2 className="w-8 h-8 animate-spin" />
+                </div>
+              )}
             </Avatar>
-            <button className="absolute bottom-2 right-2 bg-primary text-background p-2 rounded-full shadow-lg hover:opacity-90 transition-all cursor-pointer border-2 border-card">
+
+            {/* 🎯 হিডেন ফাইল ইনপুট কন্ট্রোলার বাটন ম্যাট্রিক্স ভাই */}
+            <label className="absolute bottom-2 right-2 bg-primary text-background p-2 rounded-full shadow-lg hover:opacity-90 transition-all cursor-pointer border-2 border-card flex items-center justify-center select-none disabled:opacity-50">
               <Camera size={16} />
-            </button>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                disabled={isUpdatingAvatar}
+                className="hidden"
+              />
+            </label>
           </div>
 
           <div className="flex-1 text-center md:text-left md:pt-10 mt-12">
-            <h1 className="text-2xl md:text-3xl font-extrabold font-poppins text-foreground flex items-center justify-center md:justify-start gap-2">
-              {user?.name || "Reader Profile"}
-              <span className="text-xs bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                {user?.role || "User"}
-              </span>
-            </h1>
-            <p className="text-sm text-muted-foreground mt-1 font-medium">
+            {/* 📝 ডায়নামিক নাম এবং ইনপুট ফিল্ড সুইচিং কন্ডিশন ভাই */}
+            <div className="flex items-center justify-center md:justify-start gap-3 h-10">
+              {isEditingName ? (
+                <div className="flex items-center gap-2 bg-card border border-border px-2 py-1 rounded-xl shadow-sm max-w-xs w-full">
+                  <input
+                    type="text"
+                    value={updatedName}
+                    onChange={(e) => setUpdatedName(e.target.value)}
+                    disabled={isSavingName}
+                    className="bg-transparent text-sm font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
+                    placeholder="Enter full name"
+                    autoFocus
+                  />
+                  <button
+                    onClick={handleSaveName}
+                    disabled={isSavingName}
+                    className="p-1 hover:bg-emerald-500/10 rounded-md text-emerald-500 transition-colors cursor-pointer disabled:opacity-40"
+                  >
+                    {isSavingName ? (
+                      <Loader2 size={14} className="animate-spin" />
+                    ) : (
+                      <Check size={14} />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setIsEditingName(false)}
+                    disabled={isSavingName}
+                    className="p-1 hover:bg-red-500/10 rounded-md text-red-500 transition-colors cursor-pointer disabled:opacity-40"
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              ) : (
+                <h1 className="text-2xl md:text-3xl font-extrabold font-poppins text-foreground flex items-center gap-2 group">
+                  {user?.name || "Reader Profile"}
+                  <button
+                    onClick={startEditName}
+                    className="p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-primary opacity-60 group-hover:opacity-100 transition-all cursor-pointer flex items-center justify-center"
+                    title="Edit Name"
+                  >
+                    <Edit2 size={16} />
+                  </button>
+                  <span className="text-xs bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
+                    {user?.role || "User"}
+                  </span>
+                </h1>
+              )}
+            </div>
+
+            <p className="text-sm text-muted-foreground mt-2 font-medium">
               Avid Reader | Exploring worlds through pages.
             </p>
 

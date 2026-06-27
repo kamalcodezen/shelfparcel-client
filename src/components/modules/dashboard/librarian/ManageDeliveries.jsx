@@ -281,7 +281,7 @@ const ManageDeliveries = ({ payments = [] }) => {
                       className="font-bold text-xs rounded-xl h-9 text-amber-600"
                       endContent={<Check size={14} />}
                     >
-                      Confirm Delivery
+                      Mark as Delivered
                     </Button>
                   )}
                   {delivery.status === "Delivered" && (
