@@ -30,12 +30,13 @@ export default function SignupForm() {
     email: "",
     password: "",
     confirmPassword: "",
-    photoUrl: "",
+    photoUrl: "", // 🚀 imgBB থেকে পাওয়া লিঙ্কটি এখানেই সেভ হবে ভাই
     role: "user", // ডক অনুযায়ী strictly "user" ( যা UI তে Reader)
   });
 
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -44,6 +45,7 @@ export default function SignupForm() {
     setMounted(true);
   }, []);
 
+  // input field change handler
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -52,11 +54,68 @@ export default function SignupForm() {
     }));
   };
 
+  // role change handler
   const handleRoleChange = (selectedRole) => {
     setFormData((prev) => ({
       ...prev,
       role: selectedRole,
     }));
+  };
+
+  // imgBB image upload handler
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    //  সেফটি গার্ড: ফাইল ফরম্যাট এবং সাইজ চেক
+    if (!file.type.startsWith("image/")) {
+      return toast.error("Please upload a valid image file! ");
+    }
+
+    setUploadingImage(true);
+    const toastId = toast.loading("Uploading profile avatar to imgBB... ");
+
+    const imgBBFormData = new FormData();
+    imgBBFormData.append("image", file);
+
+    const IMGBB_API_KEY = `5d110d0078bf4b9705ee35ce04c569ac`;
+
+    try {
+      const response = await fetch(
+        `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+        {
+          method: "POST",
+          body: imgBBFormData,
+        },
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        // আপলোড হলে ডাইরেক্ট লিঙ্কটি স্টেটে পুশ করে দিচ্ছি
+        setFormData((prev) => ({
+          ...prev,
+          photoUrl: data.data.url,
+        }));
+        toast.update(toastId, {
+          render: "Avatar uploaded successfully! ",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });
+      } else {
+        throw new Error("imgBB response error");
+      }
+    } catch (error) {
+      toast.update(toastId, {
+        render: "Image upload failed! Please try again. ❌",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   // ফর্ম সাবমিট হ্যান্ডলার (ইমেইল সাইন-আপ)
@@ -69,21 +128,24 @@ export default function SignupForm() {
       });
     }
 
+    // ছবি আপলোড সম্পূর্ণ হওয়ার জন্য অপেক্ষা করতে বলব ভাই
+    if (uploadingImage) {
+      return toast.warn("Please wait until the image upload finishes! ⏳");
+    }
+
     setLoading(true);
 
     try {
-      // FIXED: 'data: {}' অবজেক্ট থেকে বের করে 'role' সরাসরি মেইন প্রোপার্টিতে পাস করা হলো
       await authClient.signUp.email({
         email: formData.email,
         password: formData.password,
         name: formData.name,
-        image:
-          formData.photoUrl || "https://api.dicebear.com/7.x/adventurer/svg",
+        image: formData.photoUrl || "https://ibb.co/pTrv3HT",
         role: formData.role,
         fetchOptions: {
           onSuccess: () => {
             toast.success(
-              `Welcome 🎉 Registered successfully as ${formData.role === "librarian" ? "Librarian" : "Reader"}!`,
+              `Welcome  Registered successfully as ${formData.role === "librarian" ? "Librarian" : "Reader"}!`,
               { position: "top-right", autoClose: 2000 },
             );
             router.push("/");
@@ -97,14 +159,13 @@ export default function SignupForm() {
         },
       });
     } catch (error) {
-      toast.error(error?.message || "Internal network synchronizer error! 🛠️");
+      toast.error(error?.message || "Internal network synchronizer error! ");
     } finally {
       setLoading(false);
     }
   };
 
-  // ===================
-  // Google login
+  // google login
   const googleSignUp = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
@@ -132,7 +193,6 @@ export default function SignupForm() {
               <h2 className="text-6xl font-semibold leading-tight">
                 Your Local Library, Delivered.
               </h2>
-
               <p className="mt-6 text-lg text-white/80">
                 Discover thousands of books, connect with local libraries, and
                 get knowledge delivered straight to your door.
@@ -146,12 +206,10 @@ export default function SignupForm() {
               <h3 className="text-3xl font-bold">12K+</h3>
               <p className="text-sm text-white/70">Books</p>
             </div>
-
             <div className="rounded-lg border border-white/20 bg-white/10 backdrop-blur-xl p-5">
               <h3 className="text-3xl font-bold">500+</h3>
               <p className="text-sm text-white/70">Readers</p>
             </div>
-
             <div className="rounded-lg border border-white/20 bg-white/10 backdrop-blur-xl p-5">
               <h3 className="text-3xl font-bold">120+</h3>
               <p className="text-sm text-white/70">Libraries</p>
@@ -164,36 +222,24 @@ export default function SignupForm() {
       <div className="relative flex items-center justify-center px-5 py-10 bg-background">
         <div className="absolute inset-0 hero-gradient" />
 
-        <div
-          className="
-          relative
-          w-full
-          max-w-xl
-          rounded-lg
-          border
-          border-white/20
-          bg-white/10
-          dark:bg-black/20
-          backdrop-blur-3xl
-          shadow-2xl
-          p-8
-          md:p-10
-        "
-        >
-          {/* MOBILE LOGO */}
-          <div className="flex lg:hidden items-center justify-center gap-3 mb-8">
-            <div className="h-12 w-12 rounded-xl btn-primary flex items-center justify-center">
-              <BookOpen size={22} />
-            </div>
-
+        <div className="relative w-full max-w-xl rounded-lg border border-white/20 bg-white/10 dark:bg-black/20 backdrop-blur-3xl shadow-2xl p-8 md:p-10">
+          {/*  LOGO */}
+          <div className="flex  items-center justify-center gap-3 mb-3">
+            <svg
+              viewBox="0 0 24 24"
+              className="w-9 h-9 text-primary transition-transform duration-300 group-hover:scale-105"
+              fill="currentColor"
+            >
+              <path d="M2 7h5v2H2zm-1 4h7v2H1zm2 4h5v2H3z" />
+              <path d="M20 8h-3V4H9v13h2c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM14 17c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm0-4V7h2v6h-2zm4 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" />
+            </svg>
             <h2 className="text-2xl font-bold">BiblioDrop</h2>
           </div>
 
           {/* HEADING */}
           <div className="text-center">
-            <h2 className="text-4xl font-bold">Create Account</h2>
-
-            <p className="mt-2 text-muted-foreground">
+            <h2 className="text-3xl sm:text-4xl font-bold">Create Account</h2>
+            <p className="mt-1 text-muted-foreground">
               Join BiblioDrop and start exploring thousands of books.
             </p>
           </div>
@@ -232,20 +278,27 @@ export default function SignupForm() {
               />
             </div>
 
+            {/* Real time image upload input */}
             <div className="relative">
               <Upload
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
               <input
-                type="url"
-                name="photoUrl"
-                placeholder="Profile Photo URL (paste imgBB link)"
-                value={formData.photoUrl}
-                onChange={handleInputChange}
-                className="input-field pl-11"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploadingImage}
+                className="input-field pl-11 pt-2.5 file:mr-4 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer text-muted-foreground"
               />
             </div>
+
+            {/* image upload success message */}
+            {formData.photoUrl && (
+              <p className="text-[11px] text-emerald-500 font-medium pl-2">
+                ✓ Live Avatar Sync Complete! URL secure inside state matrix.
+              </p>
+            )}
 
             <div className="relative">
               <Lock
@@ -296,12 +349,11 @@ export default function SignupForm() {
             {/* ROLE BUTTONS SECTION */}
             <div>
               <h3 className="font-semibold mb-3">Choose Your Role</h3>
-
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
                   onClick={() => handleRoleChange("user")}
-                  className={`rounded-2xl border p-4 transition-all cursor-pointer ${
+                  className={`rounded-xl border p-4 transition-all cursor-pointer ${
                     formData.role === "user"
                       ? "btn-primary"
                       : "bg-card border-border text-muted-foreground"
@@ -309,7 +361,6 @@ export default function SignupForm() {
                 >
                   Reader
                 </button>
-
                 <button
                   type="button"
                   onClick={() => handleRoleChange("librarian")}
@@ -324,10 +375,10 @@ export default function SignupForm() {
               </div>
             </div>
 
-            {/* 👑 ১. ইমেইল সাবমিট বাটন (লোডিং স্পিনার সহ) */}
+            {/* Submit button */}
             <button
               type="submit"
-              disabled={loading || googleLoading}
+              disabled={loading || googleLoading || uploadingImage}
               className="btn-primary w-full h-12 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
             >
               {loading ? (
@@ -351,7 +402,7 @@ export default function SignupForm() {
             <div className="h-px flex-1 bg-border" />
           </div>
 
-          {/*গুগল ওথ বাটন (লোডিং স্পিনার সহ) */}
+          {/* Google login button */}
           <button
             onClick={() => {
               googleSignUp();
@@ -360,14 +411,14 @@ export default function SignupForm() {
                 autoClose: 3000,
               });
             }}
-            disabled={loading || googleLoading}
+            disabled={loading || googleLoading || uploadingImage}
             type="button"
             className="w-full rounded-xl border border-border bg-card py-3 font-medium hover:opacity-90 transition cursor-pointer flex items-center justify-center gap-3 disabled:opacity-50"
           >
             {googleLoading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                <span>Signup with Google...</span>{" "}
+                <span>Signup with Google...</span>
               </>
             ) : (
               <>
