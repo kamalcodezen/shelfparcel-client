@@ -256,7 +256,7 @@ const BookApproval = ({ books = [] }) => {
           setIsDeleteOpen(false);
           setBookToDelete(null);
         }}
-        userToDelete={bookToDelete}
+        bookToDelete={bookToDelete}
         onDeleteSuccess={() => router.refresh()}
       />
     </motion.div>
