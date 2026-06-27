@@ -1,6 +1,16 @@
 import AdminOverview from "@/components/modules/dashboard/admin/Overview";
 import { getAdminBookCategories, getAdminStats } from "@/lib/api/admin";
 
+export const metadata = {
+  title: "Overview | Admin Dashboard | BiblioDrop",
+  description:
+    "View platform statistics, book category insights, and overall system performance from the BiblioDrop admin dashboard.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const AdminOverviewPage = async () => {
   const statsData = await getAdminStats();
   const booksData = await getAdminBookCategories();
