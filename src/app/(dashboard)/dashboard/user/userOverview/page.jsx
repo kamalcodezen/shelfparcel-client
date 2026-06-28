@@ -1,6 +1,5 @@
 import UserOverview from "@/components/modules/dashboard/user/UserOverview";
 import { getUserPaymentDetailsByEmail } from "@/lib/api/payment";
-
 import { getUserSession } from "@/lib/core/session";
 
 export const metadata = {
@@ -14,13 +13,13 @@ export const metadata = {
 };
 
 const UserOverviewPage = async () => {
-  const session = await getUserSession();
+  const user = await getUserSession();
 
-  const userPayment = await getUserPaymentDetailsByEmail(session?.email);
+  const userPayment = await getUserPaymentDetailsByEmail(user?.email);
 
   return (
     <div className="min-h-screen">
-      <UserOverview userPayment={userPayment} />
+      <UserOverview userPayment={userPayment} user={user} />
     </div>
   );
 };

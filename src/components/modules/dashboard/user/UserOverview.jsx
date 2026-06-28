@@ -2,7 +2,13 @@
 
 import React from "react";
 import { Card } from "@heroui/react";
-import { BookOpen, Truck, DollarSign, BarChart3 } from "lucide-react";
+import {
+  BookOpen,
+  Truck,
+  DollarSign,
+  BarChart3,
+  TrendingUp,
+} from "lucide-react";
 
 import {
   AreaChart,
@@ -14,7 +20,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const UserOverview = ({ userPayment = [] }) => {
+const UserOverview = ({ userPayment = [], user = {} }) => {
   // =============================================================
   //  REAL STATS CALCULATIONS (Synced with MongoDB schema)
   // =============================================================
@@ -53,18 +59,22 @@ const UserOverview = ({ userPayment = [] }) => {
   return (
     <div className="space-y-8 font-urbanist text-foreground pt-4 w-full">
       {/* Overview Metric Heading Section */}
-      <div className="flex items-center gap-3 border-b border-border/60 pb-4">
-        <div className="p-2.5 bg-primary/10 border border-primary/20 text-primary rounded-xl">
-          <BarChart3 size={22} />
-        </div>
-        <div>
-          <h2 className="font-poppins font-bold text-xl tracking-tight">
-            User Dashboard Overview
-          </h2>
-          <p className="text-xs text-muted-foreground">
-            Welcome back! Here is your real-time reading and payment summary.
-          </p>
-        </div>
+      <div className="pl-4">
+        <h2 className="text-xl md:text-2xl font-semibold font-serif tracking-tight flex flex-wrap items-center gap-2 capitalize text-foreground">
+          <span className="text-primary font-bold">
+            {user?.name || "Reader"}
+          </span>
+          <span className="text-muted-foreground font-medium text-lg md:text-xl">
+            — Overview Diagnostics
+          </span>
+          <TrendingUp
+            size={22}
+            className="text-primary flex-shrink-0 animate-pulse"
+          />
+        </h2>
+        <p className="text-xs text-muted-foreground">
+          Welcome back! Here is your real-time reading and payment summary.
+        </p>
       </div>
 
       {/* Analytics Counter Dashboard Matrix */}
