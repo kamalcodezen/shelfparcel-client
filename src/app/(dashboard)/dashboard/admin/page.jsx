@@ -41,9 +41,12 @@ const AdminHomePage = async () => {
 
         {/* admin greeting message headings */}
         <div className="space-y-2">
-          <h1 className="text-2xl md:text-3xl font-semibold font-serif text-foreground tracking-tight capitalize">
-            Welcome back, <br/> {admin?.name || "Admin"}
-          </h1>
+          <p className="text-3xl md:text-4xl font-semibold tracking-tight leading-none italic font-serif  mb-3">
+            Welcome back, <br />
+            <span className="text-primary italic font-serif">
+              {admin?.name || "Admin"}
+            </span>{" "}
+          </p>
 
           <p className="text-[10px] text-primary font-black uppercase tracking-[0.25em] flex items-center justify-center gap-1 font-poppins">
             Authorized Administrative Matrix

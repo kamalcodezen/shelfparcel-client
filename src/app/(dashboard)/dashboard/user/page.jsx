@@ -1,5 +1,13 @@
 import React from "react";
-import { BookOpen, Bookmark, Compass, Stars, User, Mail } from "lucide-react";
+import {
+  BookOpen,
+  Bookmark,
+  Compass,
+  Stars,
+  User,
+  Mail,
+  Book,
+} from "lucide-react";
 import { getUserSession } from "@/lib/core/session";
 
 const UserDashboardHomePage = async () => {
@@ -14,17 +22,35 @@ const UserDashboardHomePage = async () => {
         </div>
 
         {/*  Minimal book icon layout */}
+
         <div className="flex justify-center pt-4">
-          <div className="w-16 h-16 bg-primary/10 rounded-2xl border border-primary/20 flex items-center justify-center text-primary shadow-inner">
-            <BookOpen size={28} className="stroke-[1.5]" />
+          <div className="w-16 h-16 bg-primary/10 rounded-2xl border border-primary/20 flex items-center justify-center text-primary shadow-inner relative">
+            {user?.image ? (
+              <img
+                src={user.image}
+                alt="admin avatar"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+            ) : (
+              <BookOpen size={28} className="stroke-[1.5]" />
+            )}
+
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-background animate-pulse z-10" />
           </div>
         </div>
 
         {/*  ডাইনামিক গ্রিটিংস এবং ইউজারের নাম */}
         <div className="space-y-3">
-          <h1 className="text-3xl md:text-4xl font-bold font-poppins text-foreground tracking-tight capitalize">
-            Hello, {user?.name || "Premium Reader"}
-          </h1>
+          <p className="text-3xl md:text-4xl font-semibold tracking-tight leading-none italic font-serif  mb-3">
+            Welcome back, <br />
+            <span className="text-primary italic font-serif">
+              {user?.name || "Reader"}
+            </span>{" "}
+          </p>
+
+          {/* <h1 className="text-3xl md:text-4xl font-semibold font-poppins text-foreground tracking-tight capitalize">
+            Welcome back, <br /> {user?.name || "Premium Reader"}
+          </h1> */}
           <p className="text-xs text-primary font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-1">
             <Stars size={12} className="fill-current" /> Your Personal Library
             Hub

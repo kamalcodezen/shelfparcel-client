@@ -28,13 +28,30 @@ const LibrarianHomePage = async () => {
         <div className="space-y-5 flex-1 pt-4 md:pt-0">
           {/* Header Row: Floating Asset Icon + Main Identity Titles */}
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-primary/10 rounded-2xl border border-primary/20 flex items-center justify-center text-primary shadow-inner flex-shrink-0">
-              <BookOpen size={24} className="stroke-[1.5]" />
+            {/*  Minimal administrative shield icon layout */}
+            <div className="flex justify-center pt-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl border border-primary/20 flex items-center justify-center text-primary shadow-inner relative">
+                {librarian?.image ? (
+                  <img
+                    src={librarian.image}
+                    alt="librarian avatar"
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                ) : (
+                  <BookOpen size={28} className="stroke-[1.5]" />
+                )}
+
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-background animate-pulse z-10" />
+              </div>
             </div>
-            <div className="space-y-0.5">
-              <h1 className="text-2xl md:text-3xl font-bold font-poppins text-foreground tracking-tight capitalize">
-                Hello, {librarian?.name || "Premium Librarian"}
-              </h1>
+            {/* welcome back message */}
+            <div className="space-y-0.5 pl-3">
+              <p className="text-3xl md:text-4xl font-semibold tracking-tight leading-none italic font-serif  mb-1">
+                Welcome back, <br />
+                <span className="text-primary italic font-serif">
+                  {librarian?.name || "Librarian"}
+                </span>{" "}
+              </p>
               <p className="text-[10px] text-primary font-bold uppercase tracking-[0.2em] flex items-center gap-1 font-poppins">
                 <Stars size={10} className="fill-current" /> Inventory
                 Controller
