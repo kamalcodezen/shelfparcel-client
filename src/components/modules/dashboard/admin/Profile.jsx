@@ -221,7 +221,7 @@ const AdminProfile = ({
             alt="Admin Cover"
             className="w-full h-full object-cover opacity-80"
           />
-          <button className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-xs px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer">
+          <button className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer">
             <Camera size={14} /> Edit System Banner
           </button>
         </div>
@@ -273,7 +273,7 @@ const AdminProfile = ({
                     value={updatedName}
                     onChange={(e) => setUpdatedName(e.target.value)}
                     disabled={isSavingName}
-                    className="bg-transparent text-sm font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
+                    className="bg-transparent text-base font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
                     placeholder="Enter admin name"
                     autoFocus
                   />
@@ -306,19 +306,19 @@ const AdminProfile = ({
                   >
                     <Edit2 size={16} />
                   </button>
-                  <span className="text-xs bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
+                  <span className="text-sm bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
                     {activeUser?.role || "Admin"}
                   </span>
                 </h1>
               )}
             </div>
-            <p className="text-sm text-muted-foreground mt-2 font-medium">
+            <p className="text-base text-muted-foreground mt-2 font-medium">
               Ecosystem Director | Overseeing dynamic platform matrix core
               infrastructure.
             </p>
 
             {/* Operational framework descriptive meta tags */}
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-xs text-muted-foreground font-semibold">
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-sm text-muted-foreground font-semibold">
               <span className="flex items-center gap-1">
                 <ShieldAlert size={14} /> Mainframe Root
               </span>
@@ -343,8 +343,8 @@ const AdminProfile = ({
             <h3 className="text-lg font-bold font-poppins mb-3">
               System Framework
             </h3>
-            <div className="space-y-4 text-sm text-foreground/90 font-medium">
-              <p className="text-center text-muted-foreground text-xs italic border-b border-border/40 pb-3">
+            <div className="space-y-4 text-base text-foreground/90 font-medium">
+              <p className="text-center text-muted-foreground text-sm italic border-b border-border/40 pb-3">
                 "Data security is the core engine of clean web architecture."
               </p>
               <div className="flex items-center gap-3">
@@ -434,7 +434,7 @@ const AdminProfile = ({
               <h3 className="text-xl font-bold font-poppins text-foreground">
                 Performance Insights
               </h3>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <p className="text-sm text-muted-foreground mt-0.5">
                 Global operational platform revenue flow chart metrics feed
               </p>
             </div>
@@ -501,7 +501,7 @@ const AdminProfile = ({
               </ResponsiveContainer>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1 text-xs text-muted-foreground font-semibold">
+            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1 text-sm text-muted-foreground font-semibold">
               <TrendingUp size={14} className="text-primary" />
               <span>Ecosystem global financial synchronization active</span>
             </div>

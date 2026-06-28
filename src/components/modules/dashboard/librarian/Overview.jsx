@@ -79,7 +79,7 @@ export default function LibrarianOverview({
             className="text-primary flex-shrink-0 animate-pulse"
           />
         </h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-base text-muted-foreground">
           Monitor your inventory, delivery requests, and earnings in one place.
         </p>
       </div>
@@ -94,7 +94,7 @@ export default function LibrarianOverview({
             <div key={index} className="dashboard-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                  <p className="text-base font-semibold text-muted-foreground uppercase tracking-wider">
                     {stat.title}
                   </p>
                   <h3 className="text-3xl font-bold mt-2 font-poppins text-foreground">
@@ -105,7 +105,7 @@ export default function LibrarianOverview({
                   <Icon size={24} />
                 </div>
               </div>
-              <p className="text-xs text-muted-foreground mt-4 flex items-center gap-1">
+              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-1">
                 <TrendingUp size={14} className="text-primary" />
                 {stat.desc}
               </p>
@@ -124,7 +124,7 @@ export default function LibrarianOverview({
             <h3 className="text-xl font-bold font-poppins text-foreground">
               Earnings Analytics
             </h3>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-base text-muted-foreground mb-6">
               Monthly revenue generation overview
             </p>
           </div>
@@ -191,14 +191,14 @@ export default function LibrarianOverview({
             <h3 className="text-xl font-bold font-poppins text-foreground">
               Most Requested
             </h3>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-base text-muted-foreground mb-6">
               Your top performing book listings
             </p>
           </div>
 
           <div className="space-y-4 flex-1">
             {mostRequestedBooks.length === 0 ? (
-              <p className="text-xs text-muted-foreground italic text-center pt-8">
+              <p className="text-sm text-muted-foreground italic text-center pt-8">
                 No book orders requested yet.
               </p>
             ) : (
@@ -214,7 +214,7 @@ export default function LibrarianOverview({
                       className="w-11 h-11 flex-shrink-0 rounded-sm object-cover"
                     />
                     <div className="overflow-hidden">
-                      <h4 className="font-semibold text-foreground text-sm truncate font-poppins">
+                      <h4 className="font-semibold text-foreground text-base truncate font-poppins">
                         {book.title}
                       </h4>
                       <p className="text-[10px] text-muted-foreground uppercase tracking-tight font-bold">
@@ -224,7 +224,7 @@ export default function LibrarianOverview({
                   </div>
 
                   <div className="text-right flex-shrink-0 pl-2">
-                    <span className="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full">
+                    <span className="text-sm font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full">
                       {book.requests} reqs
                     </span>
                   </div>

@@ -114,7 +114,7 @@ const MyReadingList = ({ userPayment = [] }) => {
           <h2 className="font-poppins font-bold text-xl tracking-tight">
             My Reading List
           </h2>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Gallery view of delivered books. Manage returns and leave your
             reviews here.
           </p>
@@ -125,7 +125,7 @@ const MyReadingList = ({ userPayment = [] }) => {
       {readingList.length === 0 ? (
         <div className="text-center py-12 border border-dashed border-border rounded-2xl bg-card/20 flex flex-col items-center justify-center gap-2 text-muted-foreground">
           <BookOpen size={32} className="opacity-40 text-primary" />
-          <p className="text-xs font-bold">Your reading list is empty</p>
+          <p className="text-sm font-bold">Your reading list is empty</p>
           <p className="text-[11px] opacity-75">
             Books will appear here once the Librarian marks them as Delivered.
           </p>
@@ -150,10 +150,10 @@ const MyReadingList = ({ userPayment = [] }) => {
                   />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm font-poppins line-clamp-1 text-foreground">
+                  <h4 className="font-bold text-base font-poppins line-clamp-1 text-foreground">
                     {book?.bookTitle || "Untitled Book"}
                   </h4>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-sm text-muted-foreground mt-1">
                     Order Status:{" "}
                     <span
                       className={`font-semibold ${
@@ -178,7 +178,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                     size="sm"
                     color="danger"
                     variant="flat"
-                    className="font-bold text-xs rounded-md cursor-pointer"
+                    className="font-bold text-sm rounded-md cursor-pointer"
                     onClick={() => handleReturnRequest(book)}
                     isLoading={loadingId === book._id}
                   >
@@ -190,7 +190,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                   <Button
                     fullWidth
                     size="sm"
-                    className="font-bold text-xs rounded-md bg-purple-500/10 text-purple-500 cursor-not-allowed"
+                    className="font-bold text-sm rounded-md bg-purple-500/10 text-purple-500 cursor-not-allowed"
                     disabled
                   >
                     Return Requested
@@ -199,7 +199,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                   <Button
                     fullWidth
                     size="sm"
-                    className="font-bold text-xs rounded-md bg-emerald-500/10 text-emerald-500 cursor-not-allowed"
+                    className="font-bold text-sm rounded-md bg-emerald-500/10 text-emerald-500 cursor-not-allowed"
                     disabled
                   >
                     ✅ Successfully Returned
@@ -212,7 +212,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                   size="sm"
                   color="primary"
                   variant="flat"
-                  className="font-bold text-xs rounded-xl cursor-pointer"
+                  className="font-bold text-sm rounded-xl cursor-pointer"
                   onClick={() => setSelectedBook(book)}
                   endContent={<MessageSquare size={14} />}
                 >
@@ -232,7 +232,7 @@ const MyReadingList = ({ userPayment = [] }) => {
           <Card className="p-5 border border-border w-full max-w-sm bg-background rounded-3xl space-y-4 shadow-xl">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h3 className="font-poppins font-bold text-sm text-foreground">
+                <h3 className="font-poppins font-bold text-base text-foreground">
                   Review: {selectedBook?.bookTitle}
                 </h3>
                 <p className="text-[11px] text-muted-foreground">
@@ -252,7 +252,7 @@ const MyReadingList = ({ userPayment = [] }) => {
             <form onSubmit={handleSubmitComment} className="space-y-4">
               {/* Rating Component */}
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-muted-foreground font-medium">
+                <label className="text-sm text-muted-foreground font-medium">
                   Select Rating:
                 </label>
                 <div className="flex items-center gap-1.5 pt-0.5">
@@ -277,7 +277,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                       />
                     </button>
                   ))}
-                  <span className="text-xs font-bold font-poppins text-muted-foreground ml-1.5">
+                  <span className="text-sm font-bold font-poppins text-muted-foreground ml-1.5">
                     ({rating} / 5)
                   </span>
                 </div>
@@ -285,7 +285,7 @@ const MyReadingList = ({ userPayment = [] }) => {
 
               {/* Textarea Input */}
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-muted-foreground font-medium">
+                <label className="text-sm text-muted-foreground font-medium">
                   Your Comment:
                 </label>
                 <textarea
@@ -295,7 +295,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                   required
                   rows={4}
                   disabled={isSubmitting}
-                  className="w-full p-3 rounded-xl border border-border bg-muted/40 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all disabled:opacity-50"
+                  className="w-full p-3 rounded-xl border border-border bg-muted/40 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all disabled:opacity-50"
                 />
               </div>
 
@@ -304,7 +304,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                 <Button
                   size="sm"
                   variant="light"
-                  className="rounded-xl font-bold text-xs h-9"
+                  className="rounded-xl font-bold text-sm h-9"
                   onClick={() => setSelectedBook(null)}
                   disabled={isSubmitting}
                 >
@@ -316,7 +316,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                   type="submit"
                   variant="light"
                   isLoading={isSubmitting}
-                  className="rounded-xl  font-bold text-xs h-9"
+                  className="rounded-xl  font-bold text-sm h-9"
                 >
                   {isSubmitting ? "Submitting..." : "Submit Review"}
                 </Button>

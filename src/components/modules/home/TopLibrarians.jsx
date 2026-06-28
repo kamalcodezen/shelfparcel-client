@@ -27,12 +27,12 @@ export default function TopLibrarians() {
     <section className=" py-16 bg-background text-foreground">
       {/* শিরোনাম জোন (আপনার Poppins এবং সেরিফ থিম সিঙ্কড) */}
       <div className=" flex flex-col items-center text-center space-y-4 mb-16">
-        <span className="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+        <span className="text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
           Ecosystem Pillars
         </span>
         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight italic font-serif">
-          Top 
-           <span className="text-primary font-serif">
+          Top
+          <span className="text-primary font-serif">
             Librarians & Providers
           </span>
         </h2>

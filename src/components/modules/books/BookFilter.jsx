@@ -33,7 +33,7 @@ export default function BooksFilter({
               placeholder="Search title, author..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="input-field pl-9 w-full text-xs"
+              className="input-field pl-9 w-full text-sm"
             />
           </div>
         </div>
@@ -41,7 +41,7 @@ export default function BooksFilter({
         {/* filter toggle description */}
         <Button
           onClick={() => setIsOpenMobile(!isOpenMobile)}
-          className={`p-5 py-5.5 rounded-xl border transition-all text-xs font-bold flex items-center gap-2 ${
+          className={`p-5 py-5.5 rounded-xl border transition-all text-sm font-bold flex items-center gap-2 ${
             isOpenMobile
               ? "bg-primary text-white dark:text-gray-900 border-primary"
               : "bg-card border-border text-foreground"
@@ -61,12 +61,12 @@ export default function BooksFilter({
         {/* Search input (Desktop Only) */}
         <div className="lg:col-span-4 hidden md:block">
           <TextField
-          aria-label="Search Books"
+            aria-label="Search Books"
             value={searchQuery}
             onChange={(value) => setSearchQuery(value)}
             className="w-full"
           >
-            <span className="text-xs font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
+            <span className="text-sm font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
               Search Books
             </span>
             <div className="relative">
@@ -78,7 +78,7 @@ export default function BooksFilter({
                 placeholder="Search title, author..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="input-field pl-9 w-full text-xs"
+                className="input-field pl-9 w-full text-sm"
               />
             </div>
           </TextField>
@@ -86,7 +86,7 @@ export default function BooksFilter({
 
         {/* category filter dropdown */}
         <div className="lg:col-span-3 sm:col-span-1">
-          <span className="text-xs font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
+          <span className="text-sm font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
             Category
           </span>
           {/*  aria-label added to Select component */}
@@ -95,7 +95,7 @@ export default function BooksFilter({
             selectedKey={selectedCategory}
             onSelectionChange={(key) => setSelectedCategory(key)}
           >
-            <Select.Trigger className="w-full flex items-center justify-between input-field px-3 text-xs font-medium transition-all">
+            <Select.Trigger className="w-full flex items-center justify-between input-field px-3 text-sm font-medium transition-all">
               <Select.Value>
                 {selectedCategory === "all"
                   ? "All Categories"
@@ -116,28 +116,28 @@ export default function BooksFilter({
                 <ListBox.Item
                   id="all"
                   textValue="All Categories"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-sm cursor-pointer capitalize"
                 >
                   <span>All Categories</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Fiction"
                   textValue="Fiction"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-sm cursor-pointer capitalize"
                 >
                   <span>Fiction</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Tech"
                   textValue="Tech"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-sm cursor-pointer capitalize"
                 >
                   <span>Tech</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="History"
                   textValue="History"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer capitalize"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-sm cursor-pointer capitalize"
                 >
                   <span>History</span>
                 </ListBox.Item>
@@ -149,7 +149,7 @@ export default function BooksFilter({
         {/* delivery fee min/ max filter */}
         <div className="lg:col-span-3 sm:col-span-1 grid grid-cols-2 gap-2">
           <div>
-            <span className="text-xs font-bold font-poppins text-muted-foreground uppercase tracking-wider block mb-1.5 truncate">
+            <span className="text-sm font-bold font-poppins text-muted-foreground uppercase tracking-wider block mb-1.5 truncate">
               Min ($)
             </span>
             <input
@@ -157,11 +157,11 @@ export default function BooksFilter({
               placeholder="0"
               value={minFee}
               onChange={(e) => setMinFee(e.target.value)}
-              className="input-field w-full text-xs"
+              className="input-field w-full text-sm"
             />
           </div>
           <div>
-            <span className="text-xs font-bold font-poppins text-muted-foreground uppercase tracking-wider block mb-1.5 truncate">
+            <span className="text-sm font-bold font-poppins text-muted-foreground uppercase tracking-wider block mb-1.5 truncate">
               Max ($)
             </span>
             <input
@@ -169,14 +169,14 @@ export default function BooksFilter({
               placeholder="500"
               value={maxFee}
               onChange={(e) => setMaxFee(e.target.value)}
-              className="input-field w-full text-xs"
+              className="input-field w-full text-sm"
             />
           </div>
         </div>
 
         {/* status filter dropdown */}
         <div className="lg:col-span-2 sm:col-span-2">
-          <span className="text-xs font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
+          <span className="text-sm font-bold font-poppins text-foreground uppercase tracking-wider block mb-1.5">
             Status
           </span>
           {/* aria-label added to Select component */}
@@ -185,7 +185,7 @@ export default function BooksFilter({
             selectedKey={availability}
             onSelectionChange={(key) => setAvailability(key)}
           >
-            <Select.Trigger className="w-full flex items-center justify-between input-field px-3 text-xs font-medium transition-all">
+            <Select.Trigger className="w-full flex items-center justify-between input-field px-3 text-sm font-medium transition-all">
               <Select.Value>
                 {availability === "all" ? "All Status" : availability}
               </Select.Value>
@@ -204,21 +204,21 @@ export default function BooksFilter({
                 <ListBox.Item
                   id="all"
                   textValue="All Status"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-sm cursor-pointer"
                 >
                   <span>All Status</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Available"
                   textValue="Available"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-sm cursor-pointer"
                 >
                   <span>Published</span>
                 </ListBox.Item>
                 <ListBox.Item
                   id="Unavailable"
                   textValue="Checked Out"
-                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-xs cursor-pointer"
+                  className="flex items-center justify-between text-foreground hover:bg-primary hover:text-white dark:hover:text-gray-900 rounded-xl px-3 py-2 text-sm cursor-pointer"
                 >
                   <span>Checked Out</span>
                 </ListBox.Item>

@@ -33,7 +33,7 @@ const UnauthorizedPage = () => {
           <h1 className="font-poppins font-black text-2xl md:text-3xl tracking-tight text-foreground uppercase">
             401 Access Denied
           </h1>
-          <p className="text-xs text-muted-foreground/80 max-w-xs mx-auto leading-relaxed">
+          <p className="text-sm text-muted-foreground/80 max-w-xs mx-auto leading-relaxed">
             Your current account credentials do not hold the mandatory clearance
             tokens required to initialize this dashboard node.
           </p>
@@ -47,7 +47,7 @@ const UnauthorizedPage = () => {
           {/* Action 1: Safely Return Home */}
           <Link
             href="/"
-            className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 border border-border bg-card/40 hover:bg-muted/40 text-foreground font-poppins font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm cursor-pointer"
+            className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 border border-border bg-card/40 hover:bg-muted/40 text-foreground font-poppins font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-sm cursor-pointer"
           >
             <Home size={14} />
             <span>Go Home</span>
@@ -56,7 +56,7 @@ const UnauthorizedPage = () => {
           {/* Action 2: Authenticate Identity */}
           <Link
             href="/signin"
-            className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-foreground text-background font-poppins font-bold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-lg group cursor-pointer"
+            className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-foreground text-background font-poppins font-bold text-sm uppercase tracking-wider rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-lg group cursor-pointer"
           >
             <Key size={14} />
             <span>Sign In</span>

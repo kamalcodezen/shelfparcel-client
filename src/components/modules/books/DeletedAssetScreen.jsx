@@ -3,7 +3,6 @@ import { ArrowLeft, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-
 const DeletedAssetScreen = () => {
   return (
     <div className="min-h-screen">
@@ -21,7 +20,7 @@ const DeletedAssetScreen = () => {
           <h3 className="text-2xl font-black font-poppins text-foreground">
             Asset Deregistered Successfully
           </h3>
-          <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+          <p className="text-base text-muted-foreground max-w-sm mx-auto">
             This book record has been completely purged from the library ledger
             database and is no longer available.
           </p>
@@ -30,8 +29,8 @@ const DeletedAssetScreen = () => {
         {/*  গ্যালারিতে ফিরে যাওয়ার ডেডিকেটেড বাটন */}
         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Link href="/books">
-            <Button 
-              className="btn-primary h-12 px-6 text-xs font-bold font-poppins uppercase tracking-widest rounded-xl shadow-lg flex items-center gap-2"
+            <Button
+              className="btn-primary h-12 px-6 text-sm font-bold font-poppins uppercase tracking-widest rounded-xl shadow-lg flex items-center gap-2"
               startContent={<ArrowLeft size={16} />}
             >
               Return to Books Gallery

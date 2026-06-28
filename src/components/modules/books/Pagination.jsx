@@ -56,7 +56,7 @@ export default function Pagination({
           return (
             <span
               key={`ellipsis-node-${i}`}
-              className="flex items-center justify-center text-muted-foreground/50 text-sm tracking-widest w-9 h-9"
+              className="flex items-center justify-center text-muted-foreground/50 text-base tracking-widest w-9 h-9"
             >
               ...
             </span>
@@ -70,7 +70,7 @@ export default function Pagination({
             key={`page-btn-${p}-${i}`}
             type="button"
             onClick={() => onChange(p)}
-            className={`text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer active:scale-95 ${
+            className={`text-sm font-semibold rounded-xl transition-all duration-200 cursor-pointer active:scale-95 ${
               isCompact ? "w-9 h-9" : "w-11 h-11"
             } ${
               isActive

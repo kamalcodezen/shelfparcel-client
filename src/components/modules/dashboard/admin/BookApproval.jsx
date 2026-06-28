@@ -77,7 +77,7 @@ const BookApproval = ({ books = [] }) => {
           <h2 className="text-2xl font-bold font-poppins flex items-center gap-2">
             Book Approval Queue <Clock size={22} className="text-amber-500" />
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-base text-muted-foreground">
             Review and authorize incoming librarian listings before public
             distribution.
           </p>
@@ -95,7 +95,7 @@ const BookApproval = ({ books = [] }) => {
         >
           <AlertCircle size={32} className="text-muted-foreground/60" />
           <p className="font-bold">Queue is Completely Clear!</p>
-          <p className="text-xs">
+          <p className="text-sm">
             No books are currently awaiting administrative authorization.
           </p>
         </motion.div>
@@ -108,7 +108,7 @@ const BookApproval = ({ books = [] }) => {
           >
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-muted/40 text-muted-foreground text-xs font-semibold uppercase tracking-wider border-b border-border">
+                <tr className="bg-muted/40 text-muted-foreground text-sm font-semibold uppercase tracking-wider border-b border-border">
                   <th className="p-4">Book Details</th>
                   <th className="p-4">Librarian</th>
                   <th className="p-4">Category</th>
@@ -116,7 +116,7 @@ const BookApproval = ({ books = [] }) => {
                   <th className="p-4 text-center">Authorization Actions</th>
                 </tr>
               </thead>
-              <motion.tbody className="divide-y divide-border/60 text-sm font-medium">
+              <motion.tbody className="divide-y divide-border/60 text-base font-medium">
                 <AnimatePresence>
                   {books.map((book) => (
                     <motion.tr
@@ -135,10 +135,10 @@ const BookApproval = ({ books = [] }) => {
                           className="w-15 h-15 rounded-full flex-shrink-0 object-cover border border-border"
                         />
                         <div className="overflow-hidden">
-                          <h4 className="font-bold text-foreground text-sm font-poppins truncate max-w-[220px]">
+                          <h4 className="font-bold text-foreground text-base font-poppins truncate max-w-[220px]">
                             {book.title}
                           </h4>
-                          <p className="text-xs text-muted-foreground truncate max-w-[220px]">
+                          <p className="text-sm text-muted-foreground truncate max-w-[220px]">
                             by {book.author}
                           </p>
                         </div>
@@ -150,7 +150,7 @@ const BookApproval = ({ books = [] }) => {
                         </div>
                       </td>
                       <td className="p-4">
-                        <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/20 text-xs font-bold font-poppins uppercase tracking-wider">
+                        <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/20 text-sm font-bold font-poppins uppercase tracking-wider">
                           {book.category}
                         </span>
                       </td>
@@ -162,7 +162,7 @@ const BookApproval = ({ books = [] }) => {
                           <Button
                             size="sm"
                             onClick={() => handleApprove(book._id, book.status)}
-                            className="bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-9 cursor-pointer"
+                            className="bg-emerald-500 text-white font-bold rounded-xl text-sm uppercase font-poppins tracking-wider h-9 cursor-pointer"
                             startContent={<Check size={14} strokeWidth={3} />}
                           >
                             Approve
@@ -203,24 +203,24 @@ const BookApproval = ({ books = [] }) => {
                       className="w-18 h-18 rounded-full object-cover flex-shrink-0 border border-border"
                     />
                     <div className="overflow-hidden flex-1 space-y-1">
-                      <h4 className="font-bold text-foreground text-sm font-poppins truncate">
+                      <h4 className="font-bold text-foreground text-base font-poppins truncate">
                         {book.title}
                       </h4>
-                      <p className="text-xs text-muted-foreground truncate">
+                      <p className="text-sm text-muted-foreground truncate">
                         by {book.author}
                       </p>
                       <div className="flex flex-wrap gap-1.5 items-center pt-1">
                         <span className="text-[10px] font-black uppercase tracking-wider text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded">
                           {book.category}
                         </span>
-                        <span className="text-xs font-bold text-foreground font-poppins ml-auto">
+                        <span className="text-sm font-bold text-foreground font-poppins ml-auto">
                           ${book.fee?.toFixed(2) || "0.00"}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="border-t border-border/40 pt-3 flex items-center justify-between text-xs text-muted-foreground font-semibold">
+                  <div className="border-t border-border/40 pt-3 flex items-center justify-between text-sm text-muted-foreground font-semibold">
                     <span className="flex items-center gap-1">
                       <User size={13} /> {book.librarianName || "Librarian"}
                     </span>
@@ -230,7 +230,7 @@ const BookApproval = ({ books = [] }) => {
                     <Button
                       size="sm"
                       onClick={() => handleApprove(book._id, book.status)}
-                      className="flex-1 bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-10"
+                      className="flex-1 bg-emerald-500 text-white font-bold rounded-xl text-sm uppercase font-poppins tracking-wider h-10"
                       startContent={<Check size={14} strokeWidth={3} />}
                     >
                       Approve
@@ -238,7 +238,7 @@ const BookApproval = ({ books = [] }) => {
                     <Button
                       size="sm"
                       onClick={() => handleDeleteClick(book)}
-                      className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-xs uppercase font-poppins tracking-wider h-10 px-4"
+                      className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-sm uppercase font-poppins tracking-wider h-10 px-4"
                     >
                       <Trash2 size={14} />
                     </Button>

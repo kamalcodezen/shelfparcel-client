@@ -51,7 +51,7 @@ const UserDashboardHomePage = async () => {
           {/* <h1 className="text-3xl md:text-4xl font-semibold font-poppins text-foreground tracking-tight capitalize">
             Welcome back, <br /> {user?.name || "Premium Reader"}
           </h1> */}
-          <p className="text-xs text-primary font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-1">
+          <p className="text-sm text-primary font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-1">
             <Stars size={12} className="fill-current" /> Your Personal Library
             Hub
           </p>
@@ -60,14 +60,14 @@ const UserDashboardHomePage = async () => {
         {/*  ইউজারের ইমেইল ব্যাজ */}
         <div className="inline-flex items-center gap-2 bg-muted/40 border border-border/60 rounded-full px-4 py-1.5 mx-auto max-w-full">
           <Mail size={12} className="text-muted-foreground" />
-          <span className="text-xs text-muted-foreground font-medium truncate max-w-[220px]">
+          <span className="text-sm text-muted-foreground font-medium truncate max-w-[220px]">
             {user?.email || "email-missing@bibliodrop.com"}
           </span>
         </div>
 
         {/*  Static aesthetic quote badge */}
         <div className="bg-muted/30 border border-border/40 rounded-2xl p-4 max-w-sm mx-auto shadow-sm">
-          <p className="text-xs md:text-sm italic text-muted-foreground/90 font-medium leading-relaxed">
+          <p className="text-base italic text-muted-foreground/90 font-medium leading-relaxed">
             "A reader lives a thousand lives before he dies."
           </p>
         </div>
@@ -81,7 +81,7 @@ const UserDashboardHomePage = async () => {
               <span className="block text-[9px] uppercase font-bold tracking-wider opacity-60">
                 Status
               </span>
-              <span className="block text-xs font-bold text-foreground truncate">
+              <span className="block text-sm font-bold text-foreground truncate">
                 Live & Secure
               </span>
             </div>
@@ -94,7 +94,7 @@ const UserDashboardHomePage = async () => {
               <span className="block text-[9px] uppercase font-bold tracking-wider opacity-60">
                 Role
               </span>
-              <span className="block text-xs font-bold text-primary truncate capitalize">
+              <span className="block text-sm font-bold text-primary truncate capitalize">
                 {user?.role || "Reader"}
               </span>
             </div>

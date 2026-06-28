@@ -132,7 +132,7 @@ export default function BookDetails({ books, userComments }) {
       {/* Back Button */}
       <Button
         onClick={() => router.back()}
-        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all mb-2 group"
+        className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all mb-2 group"
       >
         <ChevronLeft
           size={16}
@@ -184,7 +184,7 @@ export default function BookDetails({ books, userComments }) {
                 {books?.category || "General"}
               </span>
 
-              <div className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground">
+              <div className="flex items-center gap-1.5 text-sm font-bold text-muted-foreground">
                 <Hash size={14} className="text-primary/70" />
                 <span>
                   Popularity:{" "}
@@ -199,7 +199,7 @@ export default function BookDetails({ books, userComments }) {
               <h1 className="text-3xl md:text-5xl font-semibold font-poppins text-foreground tracking-tight leading-none">
                 {books?.title || "Untitled Asset"}
               </h1>
-              <p className="text-sm md:text-base text-muted-foreground font-medium flex items-center gap-2 pt-1">
+              <p className="text-base md:text-base text-muted-foreground font-medium flex items-center gap-2 pt-1">
                 <User size={16} className="text-primary/70" />
                 <span>
                   By{" "}
@@ -215,12 +215,12 @@ export default function BookDetails({ books, userComments }) {
                 <div
                   className={`w-2 h-2 rounded-full animate-pulse ${!isBookCheckedOut ? "bg-green-500" : "bg-red-500"}`}
                 />
-                <span className="text-xs font-black uppercase tracking-wider text-muted-foreground">
+                <span className="text-sm font-black uppercase tracking-wider text-muted-foreground">
                   Status:{" "}
                   {!isBookCheckedOut ? "Available For Delivery" : "Checked Out"}
                 </span>
               </div>
-              <p className="text-sm md:text-base text-foreground/80 leading-relaxed font-urbanist antialiased">
+              <p className="text-base md:text-base text-foreground/80 leading-relaxed font-urbanist antialiased">
                 {books?.description ||
                   "No index description is registered for this ledger asset."}
               </p>
@@ -252,7 +252,7 @@ export default function BookDetails({ books, userComments }) {
                   <span className="text-[9px] text-muted-foreground uppercase tracking-widest block font-bold">
                     Date Cataloged
                   </span>
-                  <span className="text-xs font-bold text-foreground/90">
+                  <span className="text-sm font-bold text-foreground/90">
                     {formattedDate}
                   </span>
                 </div>
@@ -264,7 +264,7 @@ export default function BookDetails({ books, userComments }) {
               <div className="grid grid-cols-3 gap-3 pt-2 w-full">
                 <Button
                   onClick={() => handleEditClick(books)}
-                  className="bg-blue-500/10 px-8 text-blue-500 border border-blue-500/20 h-10 font-bold rounded-lg text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  className="bg-blue-500/10 px-8 text-blue-500 border border-blue-500/20 h-10 font-bold rounded-lg text-sm uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<Edit3 size={14} />}
                 >
                   Edit
@@ -272,7 +272,7 @@ export default function BookDetails({ books, userComments }) {
 
                 <Button
                   onClick={() => handleToggleStatus(books?._id, books?.status)}
-                  className={`h-10 px-3  font-poppins tracking-wider text-xs uppercase cursor-pointer transition-transform active:scale-95 border rounded-lg ${
+                  className={`h-10 px-3  font-poppins tracking-wider text-sm uppercase cursor-pointer transition-transform active:scale-95 border rounded-lg ${
                     books?.status === "Published"
                       ? "bg-amber-500/10 text-amber-500 border-amber-500/20 hover:bg-amber-500/20"
                       : books?.status === "Unpublished"
@@ -285,7 +285,7 @@ export default function BookDetails({ books, userComments }) {
 
                 <Button
                   onClick={() => handleDeleteClick(books)}
-                  className="px-5 bg-red-500/10 text-red-500 border border-red-500/20 h-10 font-bold rounded-lg text-xs uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  className="px-5 bg-red-500/10 text-red-500 border border-red-500/20 h-10 font-bold rounded-lg text-sm uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<Trash2 size={14} />}
                 >
                   Delete
@@ -324,7 +324,7 @@ export default function BookDetails({ books, userComments }) {
                   disabled={
                     isBookCheckedOut || isOwnerLibrarian || isSubmitting
                   } // লগইন না থাকলেও বাটন এনাবল থাকবে পাবলিক এক্সেসের জন্য
-                  className={`w-full h-14 text-xs font-black font-poppins uppercase tracking-widest transition-all rounded-xl ${
+                  className={`w-full h-14 text-sm font-black font-poppins uppercase tracking-widest transition-all rounded-xl ${
                     !(isBookCheckedOut || isOwnerLibrarian || isSubmitting)
                       ? "btn-primary active:scale-[0.98] shadow-lg cursor-pointer"
                       : "bg-border/60 text-muted-foreground cursor-not-allowed border border-border/20 shadow-none opacity-60"
@@ -359,8 +359,8 @@ export default function BookDetails({ books, userComments }) {
         {userComments.length === 0 ? (
           <div className="text-center py-10 border border-dashed border-border/60 rounded-2xl bg-card-soft/20 flex flex-col items-center justify-center gap-2 text-muted-foreground">
             <MessageSquare size={32} className="opacity-30" />
-            <p className="text-sm font-bold">No reviews posted yet</p>
-            <p className="text-xs opacity-70">
+            <p className="text-base font-bold">No reviews posted yet</p>
+            <p className="text-base opacity-70">
               Be the first reader to share your insights on this book!
             </p>
           </div>
@@ -372,7 +372,7 @@ export default function BookDetails({ books, userComments }) {
                 className="p-5 rounded-2xl border border-border/30 bg-card-soft/40 space-y-3 shadow-sm hover:border-border/60 transition-colors"
               >
                 <div className="flex justify-between items-center">
-                  <span className="font-bold text-sm text-foreground">
+                  <span className="font-bold text-base text-foreground">
                     {review.userName}
                   </span>
                   <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">
@@ -384,7 +384,7 @@ export default function BookDetails({ books, userComments }) {
                     <Star key={i} size={14} fill="currentColor" />
                   ))}
                 </div>
-                <p className="text-sm text-foreground/80 font-urbanist leading-relaxed">
+                <p className="text-base text-foreground/80 font-urbanist leading-relaxed">
                   {review.comment}
                 </p>
               </div>

@@ -20,7 +20,7 @@ const ManageBooks = ({ books = [] }) => {
   const handleStatusClick = async (bookId, targetStatus) => {
     try {
       setLoadingId(bookId);
-      
+
       // api
       const res = await adminUpdateStatusById({ bookId, status: targetStatus });
 
@@ -62,7 +62,7 @@ const ManageBooks = ({ books = [] }) => {
         <div className="border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
-              <tr className="bg-muted/40 text-muted-foreground text-xs font-semibold uppercase tracking-wider border-b border-border">
+              <tr className="bg-muted/40 text-muted-foreground text-sm font-semibold uppercase tracking-wider border-b border-border">
                 <th className="p-4">Book Title</th>
                 <th className="p-4">Author</th>
                 <th className="p-4">Current Status</th>
@@ -70,12 +70,12 @@ const ManageBooks = ({ books = [] }) => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-border/60 text-sm font-medium">
+            <tbody className="divide-y divide-border/60 text-base font-medium">
               {books.map((book) => (
                 <tr key={book._id} className="transition-all hover:bg-muted/10">
                   {/* Book cover image and localized title display */}
                   <td className="p-4 flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-xs uppercase flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-sm uppercase flex-shrink-0">
                       {book.cover ? (
                         <img
                           src={book?.cover}
@@ -98,7 +98,7 @@ const ManageBooks = ({ books = [] }) => {
                   <td className="p-4">
                     {/*Changed px-10 to px-3 to prevent layout breaking on small screens */}
                     <span
-                      className={`px-3 py-1 rounded-md text-xs font-bold uppercase border whitespace-nowrap ${statusStyles[book.status] || statusStyles["Pending Approval"]}`}
+                      className={`px-3 py-1 rounded-md text-sm font-bold uppercase border whitespace-nowrap ${statusStyles[book.status] || statusStyles["Pending Approval"]}`}
                     >
                       {book.status || "Pending Approval"}
                     </span>
@@ -119,7 +119,7 @@ const ManageBooks = ({ books = [] }) => {
                             onClick={() =>
                               handleStatusClick(book._id, "Published")
                             }
-                            className="font-bold text-xs rounded-xl h-9 w-full"
+                            className="font-bold text-sm rounded-xl h-9 w-full"
                             startContent={<Check size={14} />}
                           >
                             Approve
@@ -135,7 +135,7 @@ const ManageBooks = ({ books = [] }) => {
                             onClick={() =>
                               handleStatusClick(book._id, "Unpublished")
                             }
-                            className="font-bold text-xs rounded-xl h-9 w-full"
+                            className="font-bold text-sm rounded-xl h-9 w-full"
                             startContent={<EyeOff size={14} />}
                           >
                             Unpublish
@@ -151,7 +151,7 @@ const ManageBooks = ({ books = [] }) => {
                             onClick={() =>
                               handleStatusClick(book._id, "Published")
                             }
-                            className="font-bold text-xs rounded-xl h-9 w-full"
+                            className="font-bold text-sm rounded-xl h-9 w-full"
                             startContent={<Eye size={14} />}
                           >
                             Publish
@@ -166,7 +166,7 @@ const ManageBooks = ({ books = [] }) => {
                           color="danger"
                           variant="flat"
                           onClick={() => handleDeleteClick(book)}
-                          className="text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 font-bold text-xs h-9 w-full"
+                          className="text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 font-bold text-sm h-9 w-full"
                           startContent={<Trash2 size={14} />}
                         >
                           Delete

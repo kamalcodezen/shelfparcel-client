@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import {
   XAxis,
   YAxis,
@@ -24,14 +24,13 @@ import {
   Briefcase,
   Plus,
   Loader2, // ⚡ লোডিং স্পিনারের জন্য
-  Edit2, 
-  Check, 
+  Edit2,
+  Check,
   X,
 } from "lucide-react";
 import { Avatar } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
-
 
 const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
   const { theme } = useTheme();
@@ -69,7 +68,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
       return acc;
     }, {});
 
-    // অবজেক্ট কি (Keys) থেকে Recharts ফ্রেন্ডলি অ্যারে ফরম্যাট জেনারেট 
+    // অবজেক্ট কি (Keys) থেকে Recharts ফ্রেন্ডলি অ্যারে ফরম্যাট জেনারেট
     return Object.keys(groupedMonths).map((month) => ({
       name: month,
       earnings: groupedMonths[month],
@@ -82,7 +81,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
     setIsEditingName(true);
   };
 
-  //  নতুন নাম ডাটাবেজে সেভ করার কোর Better Auth ফাংশন 
+  //  নতুন নাম ডাটাবেজে সেভ করার কোর Better Auth ফাংশন
   const handleSaveName = async () => {
     if (!updatedName.trim()) {
       return toast.error("Name cannot be empty! ❌");
@@ -93,9 +92,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
     }
 
     setIsSavingName(true);
-    const toastId = toast.loading(
-      "Updating librarian profile parameters... ",
-    );
+    const toastId = toast.loading("Updating librarian profile parameters... ");
 
     try {
       const result = await authClient.updateUser({
@@ -111,7 +108,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
           autoClose: 2000,
         });
         setIsEditingName(false);
-        router.refresh(); 
+        router.refresh();
       }
 
       if (result?.error) {
@@ -228,7 +225,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
             alt="Library Cover"
             className="w-full h-full object-cover opacity-80"
           />
-          <button className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-xs px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer">
+          <button className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer">
             <Camera size={14} /> Edit Cover Photo
           </button>
         </div>
@@ -284,7 +281,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
                     value={updatedName}
                     onChange={(e) => setUpdatedName(e.target.value)}
                     disabled={isSavingName}
-                    className="bg-transparent text-sm font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
+                    className="bg-transparent text-base font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
                     placeholder="Enter full name"
                     autoFocus
                   />
@@ -317,19 +314,19 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
                   >
                     <Edit2 size={16} />
                   </button>
-                  <span className="text-xs bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
+                  <span className="text-sm bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
                     {activeUser?.role || "Librarian"}
                   </span>
                 </h1>
               )}
             </div>
 
-            <p className="text-sm text-muted-foreground mt-2 font-medium">
+            <p className="text-base text-muted-foreground mt-2 font-medium">
               Managing knowledge, one doorstep at a time.
             </p>
 
             {/* ইন্ট্রো মেটা ট্যাগ */}
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-xs text-muted-foreground font-semibold">
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-sm text-muted-foreground font-semibold">
               <span className="flex items-center gap-1">
                 <Briefcase size={14} /> Official Provider
               </span>
@@ -346,7 +343,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
           <div className="flex gap-2 mt-4 md:mt-0 flex-shrink-0">
             <Link
               href="/dashboard/librarian/addBook"
-              className="px-4 py-2 bg-primary text-background font-bold text-sm rounded-xl flex items-center gap-1.5 hover:opacity-90 transition-all shadow-md cursor-pointer"
+              className="px-4 py-2 bg-primary text-background font-bold text-base rounded-xl flex items-center gap-1.5 hover:opacity-90 transition-all shadow-md cursor-pointer"
               style={{
                 background:
                   theme === "dark"
@@ -369,8 +366,8 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
         <div className="space-y-6">
           <div className="dashboard-card">
             <h3 className="text-lg font-bold font-poppins mb-3">Intro</h3>
-            <div className="space-y-4 text-sm text-foreground/90 font-medium">
-              <p className="text-center text-muted-foreground text-xs italic border-b border-border/40 pb-3">
+            <div className="space-y-4 text-base text-foreground/90 font-medium">
+              <p className="text-center text-muted-foreground text-sm italic border-b border-border/40 pb-3">
                 "Books are a uniquely portable magic." — Stephen King
               </p>
               <div className="flex items-center gap-3">
@@ -390,7 +387,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
                 <span className="text-lg">🛡️</span>
                 <span>
                   Security Token:{" "}
-                  <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">
+                  <span className="text-sm bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">
                     JWT Locked
                   </span>
                 </span>
@@ -470,7 +467,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
               <h3 className="text-xl font-bold font-poppins text-foreground">
                 Performance Insights
               </h3>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <p className="text-sm text-muted-foreground mt-0.5">
                 Monthly revenue generation analytics feed
               </p>
             </div>
@@ -537,7 +534,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
               </ResponsiveContainer>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1 text-xs text-muted-foreground font-semibold">
+            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1 text-sm text-muted-foreground font-semibold">
               <TrendingUp size={14} className="text-primary" />
               <span>
                 Investment metrics synced via active delivery logs pipeline

@@ -16,7 +16,7 @@ export default function PopularCategories() {
     <section className=" py-16 bg-background text-foreground select-none">
       {/* Header */}
       <div className="flex flex-col items-center text-center space-y-4 mb-16">
-        <span className="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 Urbanist">
+        <span className="text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 Urbanist">
           Genre Gateway
         </span>
         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight italic font-serif">
@@ -37,7 +37,6 @@ export default function PopularCategories() {
         className="w-11/12 mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6"
       >
         {categories.map((cat, idx) => (
-          
           <Link key={idx} href={`/books?category=${cat.slug}`}>
             <motion.div
               variants={{
@@ -56,7 +55,7 @@ export default function PopularCategories() {
                 <h4 className="font-bold text-base tracking-tight text-foreground group-hover:text-primary transition-colors Poppins">
                   {cat.name}
                 </h4>
-                <p className="text-xs text-muted-foreground font-medium Urbanist">
+                <p className="text-sm text-muted-foreground font-medium Urbanist">
                   {cat.count}
                 </p>
               </div>

@@ -100,7 +100,7 @@ const MyReviews = ({ comments = [] }) => {
           <h2 className="font-poppins font-bold text-xl tracking-tight">
             My Reviews
           </h2>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Manage, update, or clear history of all reviews submitted by you.
           </p>
         </div>
@@ -110,8 +110,8 @@ const MyReviews = ({ comments = [] }) => {
       {reviewList.length === 0 ? (
         <div className="border border-dashed border-border bg-card/20 rounded-lg p-12 text-center text-muted-foreground flex flex-col items-center justify-center gap-2">
           <MessageSquare size={32} className="text-muted-foreground/40" />
-          <p className="font-bold text-sm">No Active Reviews Found</p>
-          <p className="text-xs text-muted-foreground/70">
+          <p className="font-bold text-base">No Active Reviews Found</p>
+          <p className="text-sm text-muted-foreground/70">
             Reviews logged via your Reading List panel will stack here.
           </p>
         </div>
@@ -139,7 +139,7 @@ const MyReviews = ({ comments = [] }) => {
                     )}
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm font-poppins text-foreground flex items-center gap-2 leading-none">
+                    <h4 className="font-bold text-base font-poppins text-foreground flex items-center gap-2 leading-none">
                       {review?.userName || "Anonymous"}
                       <span className="px-2 py-0.5 rounded-md text-[9px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20">
                         {review?.role || "user"}
@@ -152,7 +152,7 @@ const MyReviews = ({ comments = [] }) => {
                 </div>
 
                 {/* Stars Indicator Generation Engine */}
-                <div className="flex items-center gap-1 text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-xl border border-amber-500/20 text-xs font-bold font-poppins self-start sm:self-center">
+                <div className="flex items-center gap-1 text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-xl border border-amber-500/20 text-sm font-bold font-poppins self-start sm:self-center">
                   {review.rating} <Star size={13} fill="currentColor" />
                 </div>
               </div>
@@ -191,14 +191,14 @@ const MyReviews = ({ comments = [] }) => {
                         onChange={(e) => setEditText(e.target.value)}
                         rows={3}
                         disabled={isSubmitting}
-                        className="w-full p-3 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all disabled:opacity-50"
+                        className="w-full p-3 rounded-xl border border-border bg-background text-base text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all disabled:opacity-50"
                       />
                       <div className="flex items-center gap-2 justify-end">
                         <Button
                           size="sm"
                           variant="light"
                           disabled={isSubmitting}
-                          className="rounded-xl font-bold text-xs h-8"
+                          className="rounded-xl font-bold text-sm h-8"
                           onClick={() => setEditingId(null)}
                         >
                           Cancel
@@ -207,7 +207,7 @@ const MyReviews = ({ comments = [] }) => {
                           size="sm"
                           color="success"
                           isLoading={isSubmitting}
-                          className="rounded-xl font-bold text-xs h-8 text-white"
+                          className="rounded-xl font-bold text-sm h-8 text-white"
                           onClick={() => handleSaveEdit(review._id)}
                         >
                           Save Changes
@@ -215,7 +215,7 @@ const MyReviews = ({ comments = [] }) => {
                       </div>
                     </div>
                   ) : (
-                    <p className="text-sm text-muted-foreground/90 italic font-medium leading-relaxed pt-0.5">
+                    <p className="text-base text-muted-foreground/90 italic font-medium leading-relaxed pt-0.5">
                       {typeof review.comment === "object"
                         ? review.comment.comment
                         : review.comment}
@@ -231,7 +231,7 @@ const MyReviews = ({ comments = [] }) => {
                     size="sm"
                     variant="flat"
                     color="warning"
-                    className="h-8 rounded-xl text-xs font-bold"
+                    className="h-8 rounded-xl text-sm font-bold"
                     onClick={() => {
                       setEditingId(review._id);
                       setEditText(review.comment);
@@ -244,7 +244,7 @@ const MyReviews = ({ comments = [] }) => {
                     size="sm"
                     variant="flat"
                     color="danger"
-                    className="h-8 rounded-xl text-xs font-bold"
+                    className="h-8 rounded-xl text-sm font-bold"
                     onClick={() => askDeleteConfirmation(review._id)}
                     startContent={<Trash2 size={13} />}
                   >
@@ -268,7 +268,7 @@ const MyReviews = ({ comments = [] }) => {
             </div>
 
             {/* Modal Warning Body Message */}
-            <p className="text-sm text-muted-foreground font-urbanist leading-relaxed">
+            <p className="text-base text-muted-foreground font-urbanist leading-relaxed">
               Are you absolutely sure you want to permanently delete this
               review? This action cannot be undone.
             </p>
@@ -278,7 +278,7 @@ const MyReviews = ({ comments = [] }) => {
               <Button
                 size="sm"
                 variant="light"
-                className="rounded-xl font-bold text-xs"
+                className="rounded-xl font-bold text-sm"
                 onClick={() => !isSubmitting && setIsModalOpen(false)}
                 disabled={isSubmitting}
               >
@@ -287,7 +287,7 @@ const MyReviews = ({ comments = [] }) => {
               <Button
                 size="sm"
                 color="danger"
-                className="rounded-xl font-bold text-xs text-white"
+                className="rounded-xl font-bold text-sm text-white"
                 isLoading={isSubmitting}
                 onClick={handleDeleteReview}
               >

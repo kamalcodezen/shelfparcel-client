@@ -11,9 +11,6 @@ import { toast } from "react-toastify";
 import { Avatar, Dropdown } from "@heroui/react";
 import logo from "../../../public/images/fav.png";
 
-
-
-
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -95,7 +92,7 @@ export default function Navbar() {
                     key={link.path}
                     href={link.path}
                     scroll
-                    className="relative pb-2 pt-1 px-1 text-sm font-semibold transition-all duration-300 flex flex-col items-center group"
+                    className="relative pb-2 pt-1 px-1 text-base font-semibold transition-all duration-300 flex flex-col items-center group"
                   >
                     <span
                       className={`transition-colors duration-300 ${isActive ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground"}`}
@@ -119,7 +116,7 @@ export default function Navbar() {
                 <div className="relative pb-2 pt-1">
                   <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className={`text-sm font-semibold transition-all flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
+                    className={`text-base font-semibold transition-all flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
                       pathname.startsWith("/dashboard")
                         ? "text-primary font-bold"
                         : "text-muted-foreground hover:text-foreground"
@@ -147,7 +144,7 @@ export default function Navbar() {
                           <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
                             Active Session
                           </span>
-                          <span className="text-xs text-muted-foreground font-medium truncate block">
+                          <span className="text-sm text-muted-foreground font-medium truncate block">
                             {user?.email}
                           </span>
                         </div>
@@ -181,7 +178,7 @@ export default function Navbar() {
                           }
                           setDropdownOpen(false);
                         }}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${
+                        className={`flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-colors ${
                           user?.role === "user"
                             ? "bg-primary/10 text-primary hover:bg-primary/20"
                             : "cursor-not-allowed opacity-40 pointer-events-none select-none"
@@ -204,7 +201,7 @@ export default function Navbar() {
                           }
                           setDropdownOpen(false);
                         }}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${
+                        className={`flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-colors ${
                           user?.role === "librarian"
                             ? "bg-primary/10 text-primary hover:bg-primary/20"
                             : "cursor-not-allowed opacity-40 pointer-events-none select-none"
@@ -223,7 +220,7 @@ export default function Navbar() {
                           }
                           setDropdownOpen(false);
                         }}
-                        className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-colors ${
+                        className={`flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-colors ${
                           user?.role === "admin"
                             ? "bg-primary/10 text-primary hover:bg-primary/20"
                             : "cursor-not-allowed opacity-40 pointer-events-none select-none"
@@ -261,7 +258,7 @@ export default function Navbar() {
                           src={user?.image}
                           referrerPolicy="no-referrer"
                         />
-                        <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-sm">
+                        <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-base">
                           {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
                         </Avatar.Fallback>
                       </Avatar>
@@ -288,10 +285,10 @@ export default function Navbar() {
                             </Avatar.Fallback>
                           </Avatar>
                           <div className="flex flex-col gap-0 overflow-hidden">
-                            <p className="text-sm font-semibold text-foreground font-poppins truncate">
+                            <p className="text-base font-semibold text-foreground font-poppins truncate">
                               {user?.name || "Anonymous User"}
                             </p>
-                            <p className="text-xs text-muted-foreground truncate font-urbanist">
+                            <p className="text-sm text-muted-foreground truncate font-urbanist">
                               {user?.email}
                             </p>
                           </div>
@@ -359,7 +356,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-2">
                   <Link
                     href="/signin"
-                    className="btn-primary !py-2 !px-5 !text-sm !rounded-md font-bold"
+                    className="btn-primary !py-2 !px-5 !text-base !rounded-md font-bold"
                   >
                     Login
                   </Link>
@@ -484,7 +481,7 @@ export default function Navbar() {
           {/* মোবাইল বটম কন্ট্রোল প্যানেল */}
           <div className="p-6 border-t border-border space-y-3 mt-auto bg-muted/10">
             <div className="flex items-center justify-between p-3 rounded-xl border border-border bg-card shadow-xs">
-              <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
                 Appearance
               </span>
               <button

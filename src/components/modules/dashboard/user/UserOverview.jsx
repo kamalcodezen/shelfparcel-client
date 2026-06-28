@@ -72,7 +72,7 @@ const UserOverview = ({ userPayment = [], user = {} }) => {
             className="text-primary flex-shrink-0 animate-pulse"
           />
         </h2>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Welcome back! Here is your real-time reading and payment summary.
         </p>
       </div>
@@ -85,7 +85,7 @@ const UserOverview = ({ userPayment = [], user = {} }) => {
             <BookOpen size={24} />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground font-medium">
+            <p className="text-sm text-muted-foreground font-medium">
               Total Books Read
             </p>
             <h3 className="text-2xl font-bold font-poppins text-foreground mt-0.5">
@@ -100,7 +100,7 @@ const UserOverview = ({ userPayment = [], user = {} }) => {
             <Truck size={24} />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground font-medium">
+            <p className="text-sm text-muted-foreground font-medium">
               Pending Deliveries
             </p>
             <h3 className="text-2xl font-bold font-poppins text-foreground mt-0.5">
@@ -115,7 +115,7 @@ const UserOverview = ({ userPayment = [], user = {} }) => {
             <DollarSign size={24} />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground font-medium">
+            <p className="text-sm text-muted-foreground font-medium">
               Total Spent on Fees
             </p>
             <h3 className="text-2xl font-bold font-poppins text-foreground mt-0.5">
@@ -128,10 +128,10 @@ const UserOverview = ({ userPayment = [], user = {} }) => {
       {/* Recharts Area Container Bound To Core Variable Tokens */}
       <div className="border border-border bg-card/20 rounded-3xl p-5 shadow-sm space-y-4">
         <div>
-          <h4 className="font-poppins font-bold text-sm text-foreground">
+          <h4 className="font-poppins font-bold text-base  text-foreground">
             Monthly Fee Analytics
           </h4>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Visual representation of your subscription and delivery spendings.
           </p>
         </div>

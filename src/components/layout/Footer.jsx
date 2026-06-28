@@ -31,7 +31,7 @@ export default function Footer() {
               Biblio<span>Drop</span>
             </span>
           </Link>
-          <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
+          <p className="text-base text-muted-foreground leading-relaxed max-w-sm">
             Your premium local library delivery ecosystem. Connecting passionate
             readers with extensive physical catalogs via smart logistics.
           </p>
@@ -84,10 +84,10 @@ export default function Footer() {
 
         {/* কলাম ২: Quick Links */}
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-sm font-bold tracking-widest uppercase text-foreground">
+          <h4 className="text-base font-bold tracking-widest uppercase text-foreground">
             Quick Links
           </h4>
-          <ul className="space-y-2.5 text-sm">
+          <ul className="space-y-2.5 text-base">
             <li>
               <Link
                 href="/about"
@@ -125,10 +125,10 @@ export default function Footer() {
 
         {/* কলাম ৩: HQ Contact */}
         <div className="lg:col-span-3 space-y-4">
-          <h4 className="text-sm font-bold tracking-widest uppercase text-foreground">
+          <h4 className="text-base font-bold tracking-widest uppercase text-foreground">
             HQ Contact
           </h4>
-          <ul className="space-y-3.5 text-sm text-muted-foreground">
+          <ul className="space-y-3.5 text-base text-muted-foreground">
             <li className="flex items-start gap-3">
               <FiMapPin size={16} className="text-primary shrink-0 mt-0.5" />
               <span>Central Library Avenue, Suite 404, Delhi, India</span>
@@ -156,10 +156,10 @@ export default function Footer() {
 
         {/* কলাম ৪: Newsletter Placeholder */}
         <div className="lg:col-span-3 space-y-4">
-          <h4 className="text-sm font-bold tracking-widest uppercase text-foreground">
+          <h4 className="text-base font-bold tracking-widest uppercase text-foreground">
             Newsletter
           </h4>
-          <p className="text-xs text-muted-foreground leading-relaxed">
+          <p className="text-sm text-muted-foreground leading-relaxed">
             Subscribe to receive real-time updates on newly approved book
             catalogs.
           </p>
@@ -171,7 +171,7 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="input-field pr-10 !text-xs !h-10 !rounded-lg"
+                className="input-field pr-10 !text-sm !h-10 !rounded-lg"
                 required
               />
               <button
@@ -184,7 +184,7 @@ export default function Footer() {
             <button
               suppressHydrationWarning
               type="submit"
-              className="btn-primary w-full !py-2 !h-10 !text-xs !rounded-lg font-medium cursor-pointer"
+              className="btn-primary w-full !py-2 !h-10 !text-sm !rounded-lg font-medium cursor-pointer"
             >
               Subscribe
             </button>
@@ -194,7 +194,7 @@ export default function Footer() {
 
       {/*底部 Copyright Bar */}
       <div className="w-full border-t border-border bg-card-soft/40 py-6 text-center select-none relative z-10">
-        <div className="container-custom flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+        <div className="container-custom flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <p>
             © {currentYear}{" "}
             <span className="font-serif italic font-medium">BiblioDrop</span>.

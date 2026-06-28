@@ -35,7 +35,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
           <h2 className="font-poppins font-bold text-xl tracking-tight">
             Delivery History
           </h2>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Real-time tracking of your requested books and shipment logs.
           </p>
         </div>
@@ -53,7 +53,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
           <div className="hidden md:block border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-muted/40 text-muted-foreground text-xs font-semibold uppercase tracking-wider border-b border-border">
+                <tr className="bg-muted/40 text-muted-foreground text-sm font-semibold uppercase tracking-wider border-b border-border">
                   <th className="p-4">
                     <span className="flex items-center gap-1.5">
                       <BookOpen size={13} /> Book Title
@@ -77,7 +77,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-border/60 text-sm font-medium">
+              <tbody className="divide-y divide-border/60 text-base font-medium">
                 {userPayment.map((item) => (
                   <tr
                     key={item?._id || item?.transactionId}
@@ -90,20 +90,20 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
 
                     {/* Delivery Fee Column */}
                     <td className="p-4 text-muted-foreground">
-                      <span className="px-2 py-0.5 rounded-md bg-muted/60 text-foreground font-poppins text-xs border border-border/40">
+                      <span className="px-2 py-0.5 rounded-md bg-muted/60 text-foreground font-poppins text-sm border border-border/40">
                         ${item?.amount || 0}
                       </span>
                     </td>
 
                     {/* Request Date Column parsed via createdAt */}
-                    <td className="p-4 text-muted-foreground text-xs">
+                    <td className="p-4 text-muted-foreground text-sm">
                       {formatDate(item?.createdAt)}
                     </td>
 
                     {/* Live Pipeline Status Badge */}
                     <td className="p-4">
                       <span
-                        className={`px-2.5 py-0.5 rounded-md text-xs font-bold uppercase border ${statusStyles[item?.status] || statusStyles["Pending"]}`}
+                        className={`px-2.5 py-0.5 rounded-md text-sm font-bold uppercase border ${statusStyles[item?.status] || statusStyles["Pending"]}`}
                       >
                         {item?.status || "Pending"}
                       </span>
@@ -127,7 +127,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
                     <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
                       Book Title
                     </p>
-                    <h4 className="font-bold text-foreground text-sm font-poppins line-clamp-1">
+                    <h4 className="font-bold text-foreground text-base font-poppins line-clamp-1">
                       {item?.bookTitle || "Untitled Book"}
                     </h4>
                   </div>
@@ -139,7 +139,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
                 </div>
 
                 {/* Mobile Card Body: Pricing Grid and Structured Timestamp */}
-                <div className="grid grid-cols-2 gap-2 border-t border-border/40 pt-2.5 text-xs font-medium">
+                <div className="grid grid-cols-2 gap-2 border-t border-border/40 pt-2.5 text-sm font-medium">
                   <div>
                     <p className="text-muted-foreground text-[11px] mb-0.5">
                       Delivery Fee

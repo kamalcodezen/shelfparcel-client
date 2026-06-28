@@ -29,14 +29,14 @@ const BookCard = ({ book }) => {
               {book?.title || "Untitled Book"}
             </h3>
 
-            <p className="text-sm text-muted-foreground line-clamp-1">
+            <p className="text-base text-muted-foreground line-clamp-1">
               by {book?.author || "Unknown Author"}
             </p>
           </div>
 
           {/* Category + Fee */}
           <div className="flex items-center justify-between rounded-xl border border-border/40 bg-card-soft/50 px-4 py-3">
-            <span className="text-xs text-muted-foreground">
+            <span className="text-sm text-muted-foreground">
               {book?.category || "General"}
             </span>
 
@@ -47,7 +47,7 @@ const BookCard = ({ book }) => {
         {/* Button */}
         <Link
           href={`/books/${book?._id}`}
-          className="btn-primary mt-auto w-full inline-flex items-center justify-center text-sm font-semibold"
+          className="btn-primary mt-auto w-full inline-flex items-center justify-center text-base font-semibold"
         >
           View Details
         </Link>
@@ -58,12 +58,12 @@ const BookCard = ({ book }) => {
         <div>
           {/* Top Badges */}
           <div className="flex items-center justify-between">
-            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
+            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
               {book?.category || "General"}
             </span>
 
             <span
-              className={`px-3 py-1 rounded-full text-xs font-semibold ${
+              className={`px-3 py-1 rounded-full text-sm font-semibold ${
                 book?.status === "Published"
                   ? "bg-green-500/10 text-green-500"
                   : "bg-red-500/10 text-red-500"
@@ -79,13 +79,13 @@ const BookCard = ({ book }) => {
               {book?.title}
             </h3>
 
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-base text-muted-foreground">
               by {book?.author}
             </p>
           </div>
 
           {/* Details */}
-          <div className="mt-5 space-y-3 text-sm">
+          <div className="mt-5 space-y-3 text-base">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Delivery Fee</span>
               <span className="font-semibold text-primary">
@@ -103,7 +103,7 @@ const BookCard = ({ book }) => {
               <span>{book?.category || "General"}</span>
             </div>
 
-            <div className="rounded-xl bg-primary/5 border border-primary/10 p-3 text-xs text-primary">
+            <div className="rounded-xl bg-primary/5 border border-primary/10 p-3 text-sm text-primary">
               ✓ Home Delivery Available
             </div>
           </div>
@@ -112,7 +112,7 @@ const BookCard = ({ book }) => {
         {/* Bottom Button */}
         <Link
           href={`/books/${book?._id}`}
-          className="btn-primary w-full inline-flex items-center justify-center text-sm font-semibold"
+          className="btn-primary w-full inline-flex items-center justify-center text-base font-semibold"
         >
           View Details
         </Link>

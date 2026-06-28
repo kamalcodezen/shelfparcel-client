@@ -226,7 +226,7 @@ const DashboardSidebar = () => {
                 Biblio<span>Drop</span>
               </span>
             </h2>
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
+            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
               {user?.role || "user"} Dashboard
             </p>
           </div>
@@ -250,7 +250,7 @@ const DashboardSidebar = () => {
                 key={ind}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-all ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
               >
                 <Icon size={18} /> {item.title}
               </Link>
@@ -269,7 +269,7 @@ const DashboardSidebar = () => {
                     src={user?.image}
                     referrerPolicy="no-referrer"
                   />
-                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-sm">
+                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-base">
                     {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
                   </Avatar.Fallback>
                 </Avatar>
@@ -332,10 +332,10 @@ const DashboardSidebar = () => {
             </Dropdown>
 
             <div className="overflow-hidden">
-              <p className="font-semibold text-sm text-foreground truncate">
+              <p className="font-semibold text-base text-foreground truncate">
                 {session?.user?.name}
               </p>
-              <p className="text-xs text-muted-foreground truncate">
+              <p className="text-sm text-muted-foreground truncate">
                 {session?.user?.email}
               </p>
             </div>
@@ -343,7 +343,7 @@ const DashboardSidebar = () => {
           <div className="p-4">
             <button
               onClick={handleLogout}
-              className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer Urbanist"
+              className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-base cursor-pointer Urbanist"
             >
               <LogOut size={16} /> Logout
             </button>
@@ -361,7 +361,7 @@ const DashboardSidebar = () => {
               </span>
             </Link>
           </h2>
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
+          <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
             {user?.role || "user"} Dashboard
           </p>
         </div>
@@ -378,7 +378,7 @@ const DashboardSidebar = () => {
               <Link
                 key={ind}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-all duration-200 ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
               >
                 <Icon size={18} /> {item.title}
               </Link>
@@ -397,7 +397,7 @@ const DashboardSidebar = () => {
                     src={user?.image}
                     referrerPolicy="no-referrer"
                   />
-                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-sm">
+                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-base">
                     {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
                   </Avatar.Fallback>
                 </Avatar>
@@ -460,17 +460,17 @@ const DashboardSidebar = () => {
             </Dropdown>
 
             <div className="overflow-hidden">
-              <p className="font-semibold text-sm text-foreground truncate">
+              <p className="font-semibold text-base text-foreground truncate">
                 {session?.user?.name}
               </p>
-              <p className="text-xs text-muted-foreground truncate">
+              <p className="text-sm text-muted-foreground truncate">
                 {session?.user?.email}
               </p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-sm cursor-pointer Urbanist"
+            className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-base cursor-pointer Urbanist"
           >
             <LogOut size={16} /> Logout
           </button>

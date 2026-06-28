@@ -52,16 +52,15 @@ export default function HeroMarquee() {
   return (
     <section className="relative py-20 bg-background overflow-hidden  select-none">
       <div className="container-custom grid lg:grid-cols-12 gap-12 items-center">
-       
         <div className="lg:col-span-5 space-y-4">
-          <span className="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 w-fit inline-block">
+          <span className="text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 w-fit inline-block">
             Live Ecosystem
           </span>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight italic font-serif text-foreground">
             Elegance in <br />
             <span className="text-primary font-serif">Every Chapter.</span>
           </h2>
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-sm">
+          <p className="text-base md:text-base text-muted-foreground leading-relaxed max-w-sm">
             Real-time status of trending categories, verified library catalogs,
             and fast doorstep distribution routes.
           </p>
@@ -95,7 +94,7 @@ export default function HeroMarquee() {
                       {item.count}
                     </span>
                   </div>
-                  <span className="font-bold text-sm tracking-wide text-foreground mt-1">
+                  <span className="font-bold text-base tracking-wide text-foreground mt-1">
                     {item.text}
                   </span>
                 </div>
@@ -125,7 +124,7 @@ export default function HeroMarquee() {
                       {item.count}
                     </span>
                   </div>
-                  <span className="font-bold text-sm tracking-wide text-foreground mt-1">
+                  <span className="font-bold text-base tracking-wide text-foreground mt-1">
                     {item.text}
                   </span>
                 </div>

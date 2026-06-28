@@ -33,7 +33,7 @@ const ViewTransactions = ({ payments = [] }) => {
           <h2 className="font-poppins font-bold text-xl tracking-tight">
             Financial Transactions
           </h2>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Platform-wide financial audit trail and logs.
           </p>
         </div>
@@ -54,7 +54,7 @@ const ViewTransactions = ({ payments = [] }) => {
         <div className="border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
-              <tr className="bg-muted/40 text-muted-foreground text-xs font-semibold uppercase tracking-wider border-b border-border">
+              <tr className="bg-muted/40 text-muted-foreground text-sm font-semibold uppercase tracking-wider border-b border-border">
                 <th className="p-4">
                   <span className="flex items-center gap-1.5">
                     <Hash size={13} /> Transaction ID
@@ -83,33 +83,33 @@ const ViewTransactions = ({ payments = [] }) => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-border/60 text-sm font-medium">
+            <tbody className="divide-y divide-border/60 text-base font-medium">
               {payments.map((txn) => (
                 <tr key={txn._id} className="transition-all hover:bg-muted/10">
                   {/* 1. Transaction ID - Binded with real transactionId field */}
-                  <td className="p-4 font-mono text-xs font-bold text-primary select-all max-w-[200px] truncate">
+                  <td className="p-4 font-mono text-sm font-bold text-primary select-all max-w-[200px] truncate">
                     {txn.transactionId || txn._id}
                   </td>
 
                   {/* 2. User Email */}
-                  <td className="p-4 text-muted-foreground text-xs">
+                  <td className="p-4 text-muted-foreground text-sm">
                     {txn.userEmail || "Unknown User"}
                   </td>
 
                   {/* 3. Librarian Email */}
-                  <td className="p-4 text-muted-foreground/80 text-xs">
+                  <td className="p-4 text-muted-foreground/80 text-sm">
                     {txn.librarianEmail || "Unknown Librarian"}
                   </td>
 
                   {/* 4. Amount parsed in $ configuration */}
                   <td className="p-4">
-                    <span className="px-2.5 py-0.5 rounded-md text-xs font-bold font-poppins bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 whitespace-nowrap">
+                    <span className="px-2.5 py-0.5 rounded-md text-sm font-bold font-poppins bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 whitespace-nowrap">
                       {txn.amount ? `${txn.amount} $` : "0 $"}
                     </span>
                   </td>
 
                   {/* 5. System timestamp configuration */}
-                  <td className="p-4 text-muted-foreground text-xs whitespace-nowrap">
+                  <td className="p-4 text-muted-foreground text-sm whitespace-nowrap">
                     {formatDate(txn.createdAt)}
                   </td>
                 </tr>

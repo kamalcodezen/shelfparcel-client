@@ -132,7 +132,7 @@ const LibrarianAddBook = () => {
         <h1 className="text-3xl font-bold tracking-tight Poppins">
           Add New Book
         </h1>
-        <p className="text-xs text-muted-foreground mt-1 Urbanist">
+        <p className="text-sm text-muted-foreground mt-1 Urbanist">
           List a physical book into the repository pipeline. Requires admin
           clearance.
         </p>
@@ -149,7 +149,7 @@ const LibrarianAddBook = () => {
           className="grid grid-cols-1 md:grid-cols-2 gap-5 Urbanist"
         >
           <div>
-            <label className="text-xs font-bold text-muted-foreground block mb-2">
+            <label className="text-sm font-bold text-muted-foreground block mb-2">
               Book Title
             </label>
             <input
@@ -164,7 +164,7 @@ const LibrarianAddBook = () => {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-muted-foreground block mb-2">
+            <label className="text-sm font-bold text-muted-foreground block mb-2">
               Author Name
             </label>
             <input
@@ -179,7 +179,7 @@ const LibrarianAddBook = () => {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-muted-foreground block mb-2">
+            <label className="text-sm font-bold text-muted-foreground block mb-2">
               Delivery Fee ($)
             </label>
             <input
@@ -194,7 +194,7 @@ const LibrarianAddBook = () => {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-muted-foreground block mb-2">
+            <label className="text-sm font-bold text-muted-foreground block mb-2">
               Genre Category
             </label>
             <select
@@ -211,7 +211,7 @@ const LibrarianAddBook = () => {
           </div>
 
           <div className="md:col-span-2">
-            <label className="text-xs font-bold text-muted-foreground block mb-2">
+            <label className="text-sm font-bold text-muted-foreground block mb-2">
               Full Description Summary
             </label>
             <textarea
@@ -227,7 +227,7 @@ const LibrarianAddBook = () => {
           {/* 🖼️ IMGBB IMAGE UPLOAD CONTAINER WITH LIVE PREVIEW */}
           <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4 items-center border-2 border-dashed border-border/60 rounded-xl p-5 bg-card-soft/10">
             <div className="md:col-span-2 text-center md:text-left space-y-1">
-              <h5 className="text-sm font-bold flex items-center justify-center md:justify-start gap-2">
+              <h5 className="text-base font-bold flex items-center justify-center md:justify-start gap-2">
                 <FiUploadCloud className="text-primary" /> Cover Image Upload
               </h5>
               <p className="text-[11px] text-muted-foreground">
@@ -238,7 +238,7 @@ const LibrarianAddBook = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="text-xs mt-3 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary file:cursor-pointer"
+                className="text-sm mt-3 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary file:cursor-pointer"
                 required
               />
             </div>
@@ -267,7 +267,7 @@ const LibrarianAddBook = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full py-3.5 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {loading ? (
                 <>

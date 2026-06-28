@@ -2,13 +2,22 @@
 
 import React, { useState } from "react";
 import { Avatar, Tooltip } from "@heroui/react";
-import { Edit3, Trash2, Eye, EyeOff, Lock, BookAIcon, BookHeartIcon, BookOpen } from "lucide-react";
+import {
+  Edit3,
+  Trash2,
+  Eye,
+  EyeOff,
+  Lock,
+  BookAIcon,
+  BookHeartIcon,
+  BookOpen,
+} from "lucide-react";
 
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import EditBookModal from "./EditBookModal";
 import DeleteBookModal from "./DeleteBookModal";
-import Link from "next/link"; 
+import Link from "next/link";
 import { toggleBooksStatusById } from "@/lib/actions/librarian";
 
 const ManageInventory = ({ books = [] }) => {
@@ -37,7 +46,7 @@ const ManageInventory = ({ books = [] }) => {
     }
   };
 
-  // edit book modal 
+  // edit book modal
   const handleEditClick = (book) => {
     setSelectedBook(book);
     setIsEditing(true);
@@ -62,7 +71,7 @@ const ManageInventory = ({ books = [] }) => {
     <div className="space-y-6 font-urbanist p-4 md:p-6 text-foreground">
       <div>
         <h2 className="text-2xl font-bold font-poppins">Manage Inventory</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-base text-muted-foreground">
           Track, publish, or edit your added book collection
         </p>
       </div>
@@ -77,7 +86,7 @@ const ManageInventory = ({ books = [] }) => {
           <div className="hidden md:block table-wrapper border border-border bg-card rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-muted/40 text-muted-foreground font-semibold text-xs uppercase tracking-wider border-b border-border">
+                <tr className="bg-muted/40 text-muted-foreground font-semibold text-sm uppercase tracking-wider border-b border-border">
                   <th className="p-4">Book Details</th>
                   <th className="p-4">Category</th>
                   <th className="p-4">Fee</th>
@@ -86,7 +95,7 @@ const ManageInventory = ({ books = [] }) => {
                   <th className="p-4 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/60 text-sm font-medium">
+              <tbody className="divide-y divide-border/60 text-base font-medium">
                 {books.map((book) => (
                   <tr
                     key={book._id}
@@ -99,10 +108,10 @@ const ManageInventory = ({ books = [] }) => {
                         className="w-14 h-14 flex-shrink-0 object-cover rounded-full"
                       />
                       <div className="overflow-hidden">
-                        <h4 className="font-bold text-foreground text-sm font-poppins truncate max-w-[180px] ">
+                        <h4 className="font-bold text-foreground text-base font-poppins truncate max-w-[180px] ">
                           {book.title.slice(0, 10)}
                         </h4>
-                        <p className="text-xs text-muted-foreground truncate max-w-[180px]">
+                        <p className="text-sm text-muted-foreground truncate max-w-[180px]">
                           by {book.author}
                         </p>
                       </div>
@@ -116,7 +125,7 @@ const ManageInventory = ({ books = [] }) => {
                     </td>
                     <td className="p-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold font-poppins tracking-wide ${
+                        className={`px-3 py-1 rounded-full text-sm font-bold font-poppins tracking-wide ${
                           book.status === "Published"
                             ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
                             : book.status === "Unpublished"
@@ -220,13 +229,13 @@ const ManageInventory = ({ books = [] }) => {
                   />
                   <div className="overflow-hidden flex-1">
                     <div className="flex justify-between items-start gap-1">
-                      <h4 className="font-bold text-foreground text-sm font-poppins truncate flex-1">
+                      <h4 className="font-bold text-foreground text-base font-poppins truncate flex-1">
                         {book.title}
                       </h4>
                       {/* Status change */}
                       <div className="flex items-center gap-1.5">
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-bold font-poppins tracking-wide ${
+                          className={`px-3 py-1 rounded-full text-sm font-bold font-poppins tracking-wide ${
                             book.status === "Published"
                               ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
                               : book.status === "Unpublished"
@@ -251,14 +260,14 @@ const ManageInventory = ({ books = [] }) => {
                         </button>
                       </div>
                     </div>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="text-sm text-muted-foreground truncate">
                       by {book.author}
                     </p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs font-semibold text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-md">
+                      <span className="text-sm font-semibold text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-md">
                         {book.category}
                       </span>
-                      <span className="text-sm font-bold text-foreground font-poppins">
+                      <span className="text-base font-bold text-foreground font-poppins">
                         ${book.fee}
                       </span>
                     </div>
@@ -269,21 +278,21 @@ const ManageInventory = ({ books = [] }) => {
                   {/* details page */}
                   <Link
                     href={`/books/${book._id}`}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-blue-500 bg-blue-500/10 rounded-xl font-medium"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-blue-500 bg-blue-500/10 rounded-xl font-medium"
                   >
                     <Eye size={14} /> View
                   </Link>
 
                   <button
                     onClick={() => handleEditClick(book)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-primary bg-primary/10 rounded-xl font-medium cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-primary bg-primary/10 rounded-xl font-medium cursor-pointer"
                   >
                     <Edit3 size={14} /> Edit
                   </button>
                   {/* Delete Book Button */}
                   <button
                     onClick={() => handleDeleteClick(book)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-red-500 bg-red-500/10 rounded-xl font-medium cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-red-500 bg-red-500/10 rounded-xl font-medium cursor-pointer"
                   >
                     <Trash2 size={14} /> Delete
                   </button>

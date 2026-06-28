@@ -56,14 +56,14 @@ const AdminHomePage = async () => {
         {/* Email badge*/}
         <div className="inline-flex items-center gap-2 bg-muted/40 border border-border/60 rounded-full px-4 py-1.5 mx-auto max-w-full">
           <Mail size={12} className="text-muted-foreground" />
-          <span className="text-xs text-muted-foreground font-medium truncate max-w-[220px]">
+          <span className="text-sm text-muted-foreground font-medium truncate max-w-[220px]">
             {admin?.email || "admin-core@bibliodrop.com"}
           </span>
         </div>
 
         {/*  Static aesthetic operational narrative badge */}
         <div className="bg-muted/30 border border-border/40 rounded-2xl p-4 max-w-sm mx-auto shadow-sm">
-          <p className="text-xs md:text-sm italic text-muted-foreground/90 font-medium leading-relaxed">
+          <p className="text-base italic text-muted-foreground/90 font-medium leading-relaxed">
             "The platform architecture is optimized. Core data layers are
             completely locked and secure."
           </p>
@@ -115,7 +115,7 @@ const AdminHomePage = async () => {
         <div className="pt-4 flex items-center justify-center">
           <Link
             href="/dashboard/admin"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-foreground text-background font-poppins font-bold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-md group cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-foreground text-background font-poppins font-bold text-sm uppercase tracking-wider rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-md group cursor-pointer"
           >
             <LayoutDashboard size={14} />
             <span>Launch Management Console</span>

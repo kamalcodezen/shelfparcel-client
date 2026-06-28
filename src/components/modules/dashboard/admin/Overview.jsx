@@ -112,7 +112,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
               className="text-primary flex-shrink-0 animate-pulse"
             />
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-base text-muted-foreground">
             Platform-wide insights and transactional analytics dashboard.
           </p>
         </div>
@@ -174,14 +174,14 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
             <h3 className="text-base font-bold font-poppins tracking-tight">
               Growth & Revenue Dynamic
             </h3>
-            <span className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+            <span className="text-sm font-semibold text-muted-foreground flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />{" "}
               Live System Monitor
             </span>
           </div>
 
           {/* area chart  */}
-          <div className="h-64 md:h-72 w-full min-w-0 text-xs">
+          <div className="h-64 md:h-72 w-full min-w-0 text-sm">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={liveTrendData}
@@ -238,7 +238,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
           </h3>
 
           {liveCategoryData.length === 0 ? (
-            <div className="text-center py-10 text-xs text-muted-foreground italic">
+            <div className="text-center py-10 text-sm text-muted-foreground italic">
               No categories found in database.
             </div>
           ) : (
@@ -332,11 +332,11 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
               key={i}
               className="flex items-center gap-3 p-3 rounded-xl border border-border/40 bg-card-soft/20 hover:bg-card-soft/40 transition-colors"
             >
-              <span className="font-poppins font-black text-sm text-muted-foreground/50 w-4">
+              <span className="font-poppins font-black text-base text-muted-foreground/50 w-4">
                 {i + 1}
               </span>
               <div className="overflow-hidden flex-1">
-                <h4 className="text-xs font-bold font-poppins truncate text-foreground">
+                <h4 className="text-sm font-bold font-poppins truncate text-foreground">
                   {book.title}
                 </h4>
                 <p className="text-[11px] text-muted-foreground truncate">
