@@ -16,14 +16,14 @@ const Banner = () => {
         spaceBetween={0}
         centeredSlides={true}
         autoplay={{
-          delay: 9000,
+          delay: 500000,
           disableOnInteraction: false,
         }}
         modules={[Autoplay, Pagination, Navigation]}
         className="h-full"
       >
         {/* =========================================
-           🎬 STYLE 1: 3D CARD DECK & BOLD TEXT (LEFT GRID)
+            STYLE 1: 3D CARD DECK & BOLD TEXT (LEFT GRID)
         ========================================= */}
         <SwiperSlide>
           <div
@@ -31,7 +31,7 @@ const Banner = () => {
             style={{ backgroundImage: "url('/images/slider1.png')" }}
           >
             <div className="absolute inset-0  z-10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/0 via-[30%] to-[95%]  z-10" />
 
             <div className="relative z-20 h-full max-w-7xl mx-auto px-6 flex items-center">
               <div className="grid lg:grid-cols-12 w-full items-center gap-12 pt-16">
@@ -42,7 +42,7 @@ const Banner = () => {
                   transition={{ duration: 0.8 }}
                   className="lg:col-span-7 space-y-5 flex flex-col"
                 >
-                  <span className="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 inline-block w-fit">
+                  <span className="text-xs font-bold tracking-widest dark:text-primary text-gray-800/90 uppercase bg-primary/50 dark:bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 inline-block w-fit">
                     Premium Logistics Integrated
                   </span>
                   <span className="text-5xl md:text-6xl font-semibold tracking-tight leading-none italic font-serif">
@@ -52,7 +52,7 @@ const Banner = () => {
                     </span>{" "}
                     Delivered.
                   </span>
-                  <p className="text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
+                  <p className="text-base md:text-lg text-muted-foreground/100 max-w-md leading-relaxed">
                     Connect with local libraries and independent book owners.
                     Browse diverse collections and request doorstep delivery
                     seamlessly.
@@ -69,7 +69,7 @@ const Banner = () => {
                     </Link>
                     <motion.button
                       whileTap={{ scale: 0.95 }}
-                      className="btn-secondary bg-transparent border border-primary text-foreground cursor-pointer"
+                      className="btn-secondary bg-white/50 dark:bg-transparent border border-primary text-foreground cursor-pointer"
                     >
                       Learn More
                     </motion.button>
@@ -92,7 +92,7 @@ const Banner = () => {
             style={{ backgroundImage: "url('/images/slider2.png')" }}
           >
             <div className="absolute inset-0   z-10" />
-            <div className="absolute inset-0 bg-gradient-to-l from-background via-background/30 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-l from-background/90 via-background/80 md:from-background md:via-background/70 to-transparent z-10" />
 
             <div className="relative z-20 h-full max-w-7xl mx-auto px-6 flex items-center">
               <div className="grid lg:grid-cols-12 w-full items-center gap-10 pt-16">
@@ -165,7 +165,7 @@ const Banner = () => {
                 </span>
 
                 {/* 📊 বুক ডেলিভারি প্ল্যাটফর্মের স্ট্যাটস - নিয়ন গ্রিড লেআউট */}
-                <div className="grid grid-cols-3 gap-6 md:gap-12 mt-10 border border-border/80 bg-card/10   px-8 py-6 rounded-[24px] w-full max-w-2xl shadow-xl">
+                <div className="grid grid-cols-3 gap-6 md:gap-12 mt-10 border border-border/80 bg-card/80   px-8 py-6 rounded-[24px] w-full max-w-2xl shadow-xl">
                   <div>
                     <h3 className="text-3xl md:text-4xl font-black text-primary tracking-tight">
                       12K+
