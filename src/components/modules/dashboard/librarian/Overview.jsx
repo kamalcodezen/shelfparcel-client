@@ -66,9 +66,8 @@ export default function LibrarianOverview({
 
   return (
     <div className="space-y-8 pt-4 font-urbanist text-foreground ">
-      <div>
-        <h2 className="text-xl md:text-2xl font-semibold font-serif tracking-tight flex flex-wrap items-center gap-2 capitalize text-foreground pl-3">
-          <span>Welcome,</span>
+      <div className=" pl-3">
+        <h2 className="text-xl md:text-2xl font-semibold font-serif tracking-tight flex flex-wrap items-center gap-2 capitalize text-foreground ">
           <span className="text-primary font-bold">
             {librarian?.name || "Librarian"}
           </span>
@@ -80,6 +79,9 @@ export default function LibrarianOverview({
             className="text-primary flex-shrink-0 animate-pulse"
           />
         </h2>
+        <p className="text-sm text-muted-foreground">
+          Monitor your inventory, delivery requests, and earnings in one place.
+        </p>
       </div>
 
       {/* =========================================

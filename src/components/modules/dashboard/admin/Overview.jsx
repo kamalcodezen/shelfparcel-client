@@ -101,7 +101,6 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/40 pb-5">
         <div>
           <h2 className="text-xl md:text-2xl font-semibold font-serif tracking-tight flex flex-wrap items-center gap-2 capitalize text-foreground">
-            <span>Welcome,</span>
             <span className="text-primary font-bold">
               {admin?.name || "Admin"}
             </span>
