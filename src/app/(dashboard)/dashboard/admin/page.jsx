@@ -25,9 +25,17 @@ const AdminHomePage = async () => {
         {/*  Minimal administrative shield icon layout */}
         <div className="flex justify-center pt-4">
           <div className="w-16 h-16 bg-primary/10 rounded-2xl border border-primary/20 flex items-center justify-center text-primary shadow-inner relative">
-            <Shield size={28} className="stroke-[1.5]" />
-            {/* Pulsing online network radar dot */}
-            <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            {admin?.image ? (
+              <img
+                src={admin.image}
+                alt="admin avatar"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+            ) : (
+              <Shield size={28} className="stroke-[1.5]" />
+            )}
+
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-background animate-pulse z-10" />
           </div>
         </div>
 

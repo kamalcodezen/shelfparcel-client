@@ -331,7 +331,7 @@ const DashboardSidebar = () => {
           {menus?.map((item, ind) => {
             const Icon = item.icon;
 
-            // 🎯 উইন্ডো ছাড়া শুধুমাত্র ব্রাউজারের পাথনেম ম্যাচিং দিয়ে ক্লিন একটিভ কন্ডিশন
+            // উইন্ডো ছাড়া শুধুমাত্র ব্রাউজারের পাথনেম ম্যাচিং দিয়ে ক্লিন একটিভ কন্ডিশন
             const isActive =
               pathname === item.href || item.href.includes(pathname + "?");
 
