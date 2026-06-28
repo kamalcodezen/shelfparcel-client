@@ -18,6 +18,7 @@ import {
   HomeIcon,
   BookOpen,
   UserPen,
+  Home,
 } from "lucide-react";
 
 import { toast } from "react-toastify";
@@ -30,15 +31,17 @@ const DashboardSidebar = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [showMobileGuide, setShowMobileGuide] = useState(true);
   const { theme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session } = authClient.useSession();
   const user = session?.user;
 
+  // logout
   const handleLogout = async () => {
     await authClient.signOut({
       fetchOptions: {
@@ -78,6 +81,11 @@ const DashboardSidebar = () => {
       href: "/dashboard/user/myReviews",
       icon: CreditCard,
     },
+    {
+      title: "Home",
+      href: "/",
+      icon: Home,
+    },
   ];
 
   // Librarian Tabs Links
@@ -106,6 +114,11 @@ const DashboardSidebar = () => {
       title: "Manage Deliveries",
       href: "/dashboard/librarian/manageDeliveries",
       icon: Building2,
+    },
+    {
+      title: "Home",
+      href: "/",
+      icon: Home,
     },
   ];
 
@@ -137,6 +150,11 @@ const DashboardSidebar = () => {
       href: "/dashboard/admin/viewTransactions",
       icon: CreditCard,
     },
+    {
+      title: "Home",
+      href: "/",
+      icon: Home,
+    },
   ];
 
   const dashboardNavLinks = {
@@ -161,14 +179,35 @@ const DashboardSidebar = () => {
             </span>
           </Link>
         </h2>
-        <button
-          onClick={() => setOpen(true)}
-          className="w-10 h-10 rounded-xl border border-border bg-background flex items-center justify-center text-foreground cursor-pointer"
-        >
-          <Menu size={20} />
-        </button>
+
+        {/* গাইডবাবল এলাইনমেন্টের জন্য বাটনটিকে একটি রিলেটিভ কন্টেইনারে */}
+        <div className="relative">
+          <button
+            onClick={() => {
+              setOpen(true);
+              setShowMobileGuide(false);
+            }}
+            className="w-10 h-10 rounded-xl border border-border bg-background flex items-center justify-center text-foreground cursor-pointer relative z-50"
+          >
+            <Menu size={20} />
+          </button>
+
+          {/* অ্যানিমেটেড মোবাইল গাইড বাবল লেআউট */}
+          {showMobileGuide && (
+            <div className="absolute top-full right-0 mt-3 flex flex-col items-end z-50 pointer-events-none animate-bounce">
+              {/* মেসেজ বাবল */}
+              <div className="bg-primary text-background text-[11px] font-black font-urbanist px-2.5 py-1.5 rounded-xl shadow-xl border border-primary/20 whitespace-nowrap relative">
+                Tap here to open menu dashboard!
+              </div>
+              <div className="text-2xl mt-1 mr-3 drop-shadow-md select-none">
+                👆
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
+      {/*  MOBILE DRAWER BACKDROP */}
       {open && (
         <div
           onClick={() => setOpen(false)}
@@ -176,7 +215,7 @@ const DashboardSidebar = () => {
         />
       )}
 
-      {/*  MOBILE DRAWER */}
+      {/*  MOBILE DRAWER CONTAINER */}
       <div
         className={`lg:hidden fixed top-0 left-0 w-[280px] h-screen bg-card border-r border-border z-50 transition-transform duration-300 flex flex-col ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
@@ -219,7 +258,7 @@ const DashboardSidebar = () => {
           })}
         </div>
 
-        {/* bottom profile section */}
+        {/*  BOTTOM PROFILE SECTION */}
         <div className="mt-auto pt-4 border-t border-border/60">
           <div className="flex items-center gap-3 py-4 px-4">
             <Dropdown>

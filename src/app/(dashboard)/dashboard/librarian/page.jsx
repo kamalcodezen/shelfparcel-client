@@ -12,7 +12,7 @@ import Link from "next/link";
 import { getUserSession } from "@/lib/core/session";
 
 const LibrarianHomePage = async () => {
-  // 📡 সার্ভার সাইড থেকে সরাসরি লাইব্রেরিয়ানের সেশন ডেটা নিয়ে আসলাম ভাই
+  //  সার্ভার সাইড থেকে সরাসরি লাইব্রেরিয়ানের সেশন ডেটা নিয়ে আসলাম ভাই
   const librarian = await getUserSession();
 
   return (
@@ -20,7 +20,7 @@ const LibrarianHomePage = async () => {
       {/* Main Container Layout with Left Alignment Shift */}
       <div className="max-w-2xl w-full border border-border/50 bg-gradient-to-b from-card/60 to-card/20 rounded-[32px] p-6 md:p-10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-8 backdrop-blur-md">
         {/* Top librarian bookmark decoration banner */}
-        <div className="absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl flex items-end justify-center pb-2 text-primary animate-bounce duration-1000">
+        <div className="hidden md:flex absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl  items-end justify-center pb-2 text-primary animate-bounce duration-1000">
           <Bookmark size={14} className="fill-current" />
         </div>
 
@@ -32,7 +32,6 @@ const LibrarianHomePage = async () => {
               <BookOpen size={24} className="stroke-[1.5]" />
             </div>
             <div className="space-y-0.5">
-             
               <h1 className="text-2xl md:text-3xl font-bold font-poppins text-foreground tracking-tight capitalize">
                 Hello, {librarian?.name || "Premium Librarian"}
               </h1>

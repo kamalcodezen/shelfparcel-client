@@ -3,14 +3,13 @@ import { BookOpen, Bookmark, Compass, Stars, User, Mail } from "lucide-react";
 import { getUserSession } from "@/lib/core/session";
 
 const UserDashboardHomePage = async () => {
- 
   const user = await getUserSession();
 
   return (
     <div className="w-full min-h-[100vh] flex items-center justify-center p-4 font-urbanist bg-background">
       <div className="max-w-xl w-full border border-border/50 bg-gradient-to-b from-card/60 to-card/20 rounded-[32px] p-8 md:p-12 shadow-2xl text-center space-y-6 relative overflow-hidden backdrop-blur-md">
         {/*  Top bookmark decoration banner */}
-        <div className="absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl flex items-end justify-center pb-2 text-primary animate-bounce duration-1000">
+        <div className="hidden md:flex absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl items-end justify-center pb-2 text-primary animate-bounce duration-1000">
           <Bookmark size={14} className="fill-current" />
         </div>
 
