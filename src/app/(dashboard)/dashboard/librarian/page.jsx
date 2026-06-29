@@ -18,7 +18,7 @@ const LibrarianHomePage = async () => {
   return (
     <div className="w-full min-h-[100vh] flex items-center justify-center p-4 md:p-6 font-urbanist text-foreground bg-background">
       {/* Main Container Layout with Left Alignment Shift */}
-      <div className="max-w-2xl w-full border border-border/50 bg-gradient-to-b from-card/60 to-card/20 rounded-[32px] p-6 md:p-10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-8 backdrop-blur-md">
+      <div className="max-w-2xl w-full border border-border/50 bg-gradient-to-b from-card/60 to-card/20 rounded-[32px] p-6 md:p-10 shadow-md relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-8 backdrop-blur-md">
         {/* Top librarian bookmark decoration banner */}
         <div className="hidden md:flex absolute top-0 right-12 w-8 h-16 bg-primary/20 border-x border-b border-primary/30 rounded-b-xl  items-end justify-center pb-2 text-primary animate-bounce duration-1000">
           <Bookmark size={14} className="fill-current" />
