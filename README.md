@@ -41,7 +41,7 @@ Below are the deployment endpoints, source code repositories, and secure testing
 For evaluating system management grids, role modifications, and book queues, use the pre-seeded admin profile below:
 
 - **Admin Email:** `admin@gmail.com`            **Librarian Email:** `airbnb@airbnb.com`
-- **Admin Password:** `Admin@123`               **Admin Password:** `1234Abcd`
+- **Admin Password:** `Admin@123`               **Librarian Password:** `1234Abcd`
 
 ---
 
