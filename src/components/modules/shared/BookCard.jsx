@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const BookCard = ({ book }) => {
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-border bg-card h-[370px] shadow-sm transition-all duration-300 hover:shadow-lg">
+    <div className="group relative overflow-hidden rounded-xl border border-border bg-card h-[375px] shadow-sm transition-all duration-300 ">
       {/* Glow Effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-primary/5 blur-[140px] rounded-full pointer-events-none" />
 
@@ -74,7 +74,7 @@ const BookCard = ({ book }) => {
           </div>
 
           {/* Title */}
-          <div className="mt-5">
+          <div className="mt-4 sm:mt-5">
             <h3 className="text-xl font-bold font-poppins line-clamp-1">
               {book?.title}
             </h3>
@@ -85,7 +85,7 @@ const BookCard = ({ book }) => {
           </div>
 
           {/* Details */}
-          <div className="mt-5 space-y-3 text-lg sm:text-base">
+          <div className="mt-2 sm:mt-5 space-y-2 sm:space-y-3 text-lg sm:text-base">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Delivery Fee</span>
               <span className="font-semibold text-primary">
