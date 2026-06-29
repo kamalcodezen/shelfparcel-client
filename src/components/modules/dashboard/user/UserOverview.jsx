@@ -128,7 +128,7 @@ const UserOverview = ({ userPayment = [], user = {} }) => {
       {/* Recharts Area Container Bound To Core Variable Tokens */}
       <div className="border border-border bg-card/20 rounded-3xl p-5 shadow-sm space-y-4">
         <div>
-          <h4 className="font-poppins font-bold text-base  text-foreground">
+          <h4 className="font-poppins font-bold text-lg sm:text-base  text-foreground">
             Monthly Fee Analytics
           </h4>
           <p className="text-sm text-muted-foreground">

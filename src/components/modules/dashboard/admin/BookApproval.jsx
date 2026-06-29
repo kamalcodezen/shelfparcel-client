@@ -77,7 +77,7 @@ const BookApproval = ({ books = [] }) => {
           <h2 className="text-2xl font-bold font-poppins flex items-center gap-2">
             Book Approval Queue <Clock size={22} className="text-amber-500" />
           </h2>
-          <p className="text-base text-muted-foreground">
+          <p className="text-lg sm:text-base text-muted-foreground">
             Review and authorize incoming librarian listings before public
             distribution.
           </p>
@@ -116,7 +116,7 @@ const BookApproval = ({ books = [] }) => {
                   <th className="p-4 text-center">Authorization Actions</th>
                 </tr>
               </thead>
-              <motion.tbody className="divide-y divide-border/60 text-base font-medium">
+              <motion.tbody className="divide-y divide-border/60 text-lg sm:text-base font-medium">
                 <AnimatePresence>
                   {books.map((book) => (
                     <motion.tr
@@ -135,7 +135,7 @@ const BookApproval = ({ books = [] }) => {
                           className="w-15 h-15 rounded-full flex-shrink-0 object-cover border border-border"
                         />
                         <div className="overflow-hidden">
-                          <h4 className="font-bold text-foreground text-base font-poppins truncate max-w-[220px]">
+                          <h4 className="font-bold text-foreground text-lg sm:text-base font-poppins truncate max-w-[220px]">
                             {book.title}
                           </h4>
                           <p className="text-sm text-muted-foreground truncate max-w-[220px]">
@@ -203,7 +203,7 @@ const BookApproval = ({ books = [] }) => {
                       className="w-18 h-18 rounded-full object-cover flex-shrink-0 border border-border"
                     />
                     <div className="overflow-hidden flex-1 space-y-1">
-                      <h4 className="font-bold text-foreground text-base font-poppins truncate">
+                      <h4 className="font-bold text-foreground text-lg sm:text-base font-poppins truncate">
                         {book.title}
                       </h4>
                       <p className="text-sm text-muted-foreground truncate">

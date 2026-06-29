@@ -273,7 +273,7 @@ const AdminProfile = ({
                     value={updatedName}
                     onChange={(e) => setUpdatedName(e.target.value)}
                     disabled={isSavingName}
-                    className="bg-transparent text-base font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
+                    className="bg-transparent text-lg sm:text-base font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
                     placeholder="Enter admin name"
                     autoFocus
                   />
@@ -312,7 +312,7 @@ const AdminProfile = ({
                 </h1>
               )}
             </div>
-            <p className="text-base text-muted-foreground mt-2 font-medium">
+            <p className="text-lg sm:text-base text-muted-foreground mt-2 font-medium">
               Ecosystem Director | Overseeing dynamic platform matrix core
               infrastructure.
             </p>
@@ -343,7 +343,7 @@ const AdminProfile = ({
             <h3 className="text-lg font-bold font-poppins mb-3">
               System Framework
             </h3>
-            <div className="space-y-4 text-base text-foreground/90 font-medium">
+            <div className="space-y-4 text-lg sm:text-base text-foreground/90 font-medium">
               <p className="text-center text-muted-foreground text-sm italic border-b border-border/40 pb-3">
                 "Data security is the core engine of clean web architecture."
               </p>

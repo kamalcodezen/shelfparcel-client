@@ -141,7 +141,9 @@ const LibrarianAddBook = () => {
       <div className="dashboard-card p-6 border border-border/40 rounded-2xl bg-card">
         <div className="flex items-center gap-2 mb-6 border-b border-border/40 pb-3">
           <FiPlusCircle className="text-primary" size={18} />
-          <h3 className="text-base font-bold Poppins">Book Specifications</h3>
+          <h3 className="text-lg sm:text-base font-bold Poppins">
+            Book Specifications
+          </h3>
         </div>
 
         <form
@@ -227,7 +229,7 @@ const LibrarianAddBook = () => {
           {/* 🖼️ IMGBB IMAGE UPLOAD CONTAINER WITH LIVE PREVIEW */}
           <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4 items-center border-2 border-dashed border-border/60 rounded-xl p-5 bg-card-soft/10">
             <div className="md:col-span-2 text-center md:text-left space-y-1">
-              <h5 className="text-base font-bold flex items-center justify-center md:justify-start gap-2">
+              <h5 className="text-lg sm:text-base font-bold flex items-center justify-center md:justify-start gap-2">
                 <FiUploadCloud className="text-primary" /> Cover Image Upload
               </h5>
               <p className="text-[11px] text-muted-foreground">

@@ -59,7 +59,7 @@ export default async function Success({ searchParams }) {
             <p className="text-[10px] font-black uppercase tracking-widest text-primary">
               Order Status Strictly Set to: Pending Delivery
             </p>
-            <p className="text-base text-muted-foreground max-w-sm mx-auto pt-2 leading-relaxed">
+            <p className="text-lg sm:text-base text-muted-foreground max-w-sm mx-auto pt-2 leading-relaxed">
               Thank you for your request. A digital confirmation receipt has
               been issued and cataloged for{" "}
               <span className="text-foreground font-semibold underline decoration-primary/40 underline-offset-4">

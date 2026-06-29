@@ -121,7 +121,7 @@ const ManageDeliveries = ({ payments = [] }) => {
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-border/60 text-base font-medium">
+              <tbody className="divide-y divide-border/60 text-lg sm:text-base font-medium">
                 {deliveries.map((delivery) => (
                   <tr
                     key={delivery._id}

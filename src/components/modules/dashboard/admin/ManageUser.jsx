@@ -143,7 +143,7 @@ const ManageUser = ({ users = [] }) => {
                   <th className="p-4 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/60 text-base font-medium">
+              <tbody className="divide-y divide-border/60 text-lg sm:text-base font-medium">
                 <AnimatePresence>
                   {users.map((account, ind) => (
                     <motion.tr
@@ -237,7 +237,7 @@ const ManageUser = ({ users = [] }) => {
                           account.name?.charAt(0)
                         )}
                       </div>
-                      <h4 className="font-bold text-base font-poppins">
+                      <h4 className="font-bold text-lg sm:text-base font-poppins">
                         {account.name}
                       </h4>
                     </div>
@@ -344,7 +344,7 @@ const ManageUser = ({ users = [] }) => {
                       key={item.key}
                       type="button"
                       onClick={() => setSelectedRole(item.key)}
-                      className={`flex items-center justify-between p-3 rounded-xl border text-base font-bold transition-all ${
+                      className={`flex items-center justify-between p-3 rounded-xl border text-lg sm:text-base font-bold transition-all ${
                         selectedRole === item.key
                           ? item.activeClass
                           : "border-border/60 bg-muted/20 text-muted-foreground hover:bg-muted/40"

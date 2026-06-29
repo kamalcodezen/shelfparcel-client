@@ -31,7 +31,7 @@ export default function Footer() {
               Biblio<span>Drop</span>
             </span>
           </Link>
-          <p className="text-base text-muted-foreground leading-relaxed max-w-sm">
+          <p className="text-lg sm:text-base text-muted-foreground leading-relaxed max-w-sm">
             Your premium local library delivery ecosystem. Connecting passionate
             readers with extensive physical catalogs via smart logistics.
           </p>
@@ -84,10 +84,10 @@ export default function Footer() {
 
         {/* কলাম ২: Quick Links */}
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-base font-bold tracking-widest uppercase text-foreground">
+          <h4 className="text-lg sm:text-base font-bold tracking-widest uppercase text-foreground">
             Quick Links
           </h4>
-          <ul className="space-y-2.5 text-base">
+          <ul className="space-y-2.5 text-lg sm:text-base">
             <li>
               <Link
                 href="/about"
@@ -125,10 +125,10 @@ export default function Footer() {
 
         {/* কলাম ৩: HQ Contact */}
         <div className="lg:col-span-3 space-y-4">
-          <h4 className="text-base font-bold tracking-widest uppercase text-foreground">
+          <h4 className="text-lg sm:text-base font-bold tracking-widest uppercase text-foreground">
             HQ Contact
           </h4>
-          <ul className="space-y-3.5 text-base text-muted-foreground">
+          <ul className="space-y-3.5 text-lg sm:text-base text-muted-foreground">
             <li className="flex items-start gap-3">
               <FiMapPin size={16} className="text-primary shrink-0 mt-0.5" />
               <span>Central Library Avenue, Suite 404, Delhi, India</span>
@@ -156,7 +156,7 @@ export default function Footer() {
 
         {/* কলাম ৪: Newsletter Placeholder */}
         <div className="lg:col-span-3 space-y-4">
-          <h4 className="text-base font-bold tracking-widest uppercase text-foreground">
+          <h4 className="text-lg sm:text-base font-bold tracking-widest uppercase text-foreground">
             Newsletter
           </h4>
           <p className="text-sm text-muted-foreground leading-relaxed">

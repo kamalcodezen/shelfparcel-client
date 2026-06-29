@@ -67,7 +67,7 @@ const UserDashboardHomePage = async () => {
 
         {/*  Static aesthetic quote badge */}
         <div className="bg-muted/30 border border-border/40 rounded-2xl p-4 max-w-sm mx-auto shadow-sm">
-          <p className="text-base italic text-muted-foreground/90 font-medium leading-relaxed">
+          <p className="text-lg sm:text-base italic text-muted-foreground/90 font-medium leading-relaxed">
             "A reader lives a thousand lives before he dies."
           </p>
         </div>

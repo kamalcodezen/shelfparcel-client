@@ -52,7 +52,7 @@ export default function PopularCategories() {
               </div>
 
               <div className="space-y-0.5">
-                <h4 className="font-bold text-base tracking-tight text-foreground group-hover:text-primary transition-colors Poppins">
+                <h4 className="font-bold text-lg sm:text-base tracking-tight text-foreground group-hover:text-primary transition-colors Poppins">
                   {cat.name}
                 </h4>
                 <p className="text-sm text-muted-foreground font-medium Urbanist">

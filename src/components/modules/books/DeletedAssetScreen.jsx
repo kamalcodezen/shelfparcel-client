@@ -20,7 +20,7 @@ const DeletedAssetScreen = () => {
           <h3 className="text-2xl font-black font-poppins text-foreground">
             Asset Deregistered Successfully
           </h3>
-          <p className="text-base text-muted-foreground max-w-sm mx-auto">
+          <p className="text-lg sm:text-base text-muted-foreground max-w-sm mx-auto">
             This book record has been completely purged from the library ledger
             database and is no longer available.
           </p>

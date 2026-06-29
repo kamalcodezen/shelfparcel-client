@@ -29,7 +29,7 @@ const BookCard = ({ book }) => {
               {book?.title || "Untitled Book"}
             </h3>
 
-            <p className="text-base text-muted-foreground line-clamp-1">
+            <p className="text-lg sm:text-base text-muted-foreground line-clamp-1">
               by {book?.author || "Unknown Author"}
             </p>
           </div>
@@ -47,7 +47,7 @@ const BookCard = ({ book }) => {
         {/* Button */}
         <Link
           href={`/books/${book?._id}`}
-          className="btn-primary mt-auto w-full inline-flex items-center justify-center text-base font-semibold"
+          className="btn-primary mt-auto w-full inline-flex items-center justify-center text-lg sm:text-base font-semibold"
         >
           View Details
         </Link>
@@ -79,13 +79,13 @@ const BookCard = ({ book }) => {
               {book?.title}
             </h3>
 
-            <p className="mt-1 text-base text-muted-foreground">
+            <p className="mt-1 text-lg sm:text-base text-muted-foreground">
               by {book?.author}
             </p>
           </div>
 
           {/* Details */}
-          <div className="mt-5 space-y-3 text-base">
+          <div className="mt-5 space-y-3 text-lg sm:text-base">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Delivery Fee</span>
               <span className="font-semibold text-primary">
@@ -112,7 +112,7 @@ const BookCard = ({ book }) => {
         {/* Bottom Button */}
         <Link
           href={`/books/${book?._id}`}
-          className="btn-primary w-full inline-flex items-center justify-center text-base font-semibold"
+          className="btn-primary w-full inline-flex items-center justify-center text-lg sm:text-base font-semibold"
         >
           View Details
         </Link>

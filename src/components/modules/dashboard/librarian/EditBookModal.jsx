@@ -130,7 +130,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
               {/* Book Title & Author Name */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="w-full space-y-1.5">
-                  <label className="text-base font-semibold text-foreground font-poppins">
+                  <label className="text-lg sm:text-base font-semibold text-foreground font-poppins">
                     Book Title
                   </label>
                   <input
@@ -144,7 +144,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
                 </div>
 
                 <div className="w-full space-y-1.5">
-                  <label className="text-base font-semibold text-foreground font-poppins">
+                  <label className="text-lg sm:text-base font-semibold text-foreground font-poppins">
                     Author Name
                   </label>
                   <input
@@ -161,7 +161,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
               {/* Category & Fee */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="w-full space-y-1.5">
-                  <label className="text-base font-semibold text-foreground font-poppins">
+                  <label className="text-lg sm:text-base font-semibold text-foreground font-poppins">
                     Delivery Fee ($)
                   </label>
                   <input
@@ -175,7 +175,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
                 </div>
 
                 <div className="w-full space-y-1.5">
-                  <label className="text-base font-semibold text-foreground font-poppins">
+                  <label className="text-lg sm:text-base font-semibold text-foreground font-poppins">
                     Category
                   </label>
                   <input
@@ -191,7 +191,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
 
               {/* Description*/}
               <div className="w-full space-y-1.5">
-                <label className="text-base font-semibold text-foreground font-poppins">
+                <label className="text-lg sm:text-base font-semibold text-foreground font-poppins">
                   Description
                 </label>
                 <input
@@ -208,7 +208,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
                 <Button
                   onClick={onCancel}
                   variant="flat"
-                  className="btn-secondary h-12 px-6 font-bold text-base"
+                  className="btn-secondary h-12 px-6 font-bold text-lg sm:text-base"
                 >
                   Cancel
                 </Button>
@@ -216,7 +216,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
                 <Button
                   type="submit"
                   isLoading={isUpdating}
-                  className="btn-primary h-12 px-6 font-bold text-base"
+                  className="btn-primary h-12 px-6 font-bold text-lg sm:text-base"
                   startContent={!isUpdating && <Save size={18} />}
                   spinner={
                     <RefreshCw

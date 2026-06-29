@@ -28,7 +28,7 @@ const NotFoundPage = () => {
           </h2>
         </div>
 
-        <p className="text-base text-muted-foreground leading-relaxed">
+        <p className="text-lg sm:text-base text-muted-foreground leading-relaxed">
           The library shelf you are looking for doesn't exist or has been
           relocated permanently within the BiblioDrop matrix.
         </p>

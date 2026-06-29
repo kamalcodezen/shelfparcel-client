@@ -77,7 +77,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-border/60 text-base font-medium">
+              <tbody className="divide-y divide-border/60 text-lg sm:text-base font-medium">
                 {userPayment.map((item) => (
                   <tr
                     key={item?._id || item?.transactionId}
@@ -127,7 +127,7 @@ const UserDeliveryHistory = ({ userPayment = [] }) => {
                     <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
                       Book Title
                     </p>
-                    <h4 className="font-bold text-foreground text-base font-poppins line-clamp-1">
+                    <h4 className="font-bold text-foreground text-lg sm:text-base font-poppins line-clamp-1">
                       {item?.bookTitle || "Untitled Book"}
                     </h4>
                   </div>

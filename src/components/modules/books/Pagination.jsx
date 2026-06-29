@@ -56,7 +56,7 @@ export default function Pagination({
           return (
             <span
               key={`ellipsis-node-${i}`}
-              className="flex items-center justify-center text-muted-foreground/50 text-base tracking-widest w-9 h-9"
+              className="flex items-center justify-center text-muted-foreground/50 text-lg sm:text-base tracking-widest w-9 h-9"
             >
               ...
             </span>

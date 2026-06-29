@@ -58,7 +58,7 @@ const DeleteBookModal = ({
             <h3 className="text-xl font-bold font-poppins text-foreground">
               Confirm Permanent Delete
             </h3>
-            <p className="text-base text-muted-foreground px-2">
+            <p className="text-lg sm:text-base text-muted-foreground px-2">
               Are you absolutely sure you want to delete{" "}
               <span className="text-primary font-semibold">
                 {bookToDelete?.title}
@@ -71,7 +71,7 @@ const DeleteBookModal = ({
             <Button
               onClick={onClose}
               variant="flat"
-              className="btn-secondary h-11 px-5 font-bold text-base cursor-pointer flex-1"
+              className="btn-secondary h-11 px-5 font-bold text-lg sm:text-base cursor-pointer flex-1"
             >
               Cancel
             </Button>
@@ -79,7 +79,7 @@ const DeleteBookModal = ({
             <Button
               onClick={handleConfirmDelete}
               isLoading={isDeleting}
-              className="bg-red-500 hover:bg-red-600 text-white h-11 px-5 font-bold text-base cursor-pointer flex-1 rounded-xl active:scale-95 transition-all shadow-md shadow-red-500/10"
+              className="bg-red-500 hover:bg-red-600 text-white h-11 px-5 font-bold text-lg sm:text-base cursor-pointer flex-1 rounded-xl active:scale-95 transition-all shadow-md shadow-red-500/10"
             >
               {isDeleting ? "Deleting..." : "Yes, Delete"}
             </Button>

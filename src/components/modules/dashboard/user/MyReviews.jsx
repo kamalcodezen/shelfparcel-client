@@ -110,7 +110,9 @@ const MyReviews = ({ comments = [] }) => {
       {reviewList.length === 0 ? (
         <div className="border border-dashed border-border bg-card/20 rounded-lg p-12 text-center text-muted-foreground flex flex-col items-center justify-center gap-2">
           <MessageSquare size={32} className="text-muted-foreground/40" />
-          <p className="font-bold text-base">No Active Reviews Found</p>
+          <p className="font-bold text-lg sm:text-base">
+            No Active Reviews Found
+          </p>
           <p className="text-sm text-muted-foreground/70">
             Reviews logged via your Reading List panel will stack here.
           </p>
@@ -139,7 +141,7 @@ const MyReviews = ({ comments = [] }) => {
                     )}
                   </div>
                   <div>
-                    <h4 className="font-bold text-base font-poppins text-foreground flex items-center gap-2 leading-none">
+                    <h4 className="font-bold text-lg sm:text-base font-poppins text-foreground flex items-center gap-2 leading-none">
                       {review?.userName || "Anonymous"}
                       <span className="px-2 py-0.5 rounded-md text-[9px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20">
                         {review?.role || "user"}
@@ -191,7 +193,7 @@ const MyReviews = ({ comments = [] }) => {
                         onChange={(e) => setEditText(e.target.value)}
                         rows={3}
                         disabled={isSubmitting}
-                        className="w-full p-3 rounded-xl border border-border bg-background text-base text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all disabled:opacity-50"
+                        className="w-full p-3 rounded-xl border border-border bg-background text-lg sm:text-base text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all disabled:opacity-50"
                       />
                       <div className="flex items-center gap-2 justify-end">
                         <Button
@@ -215,7 +217,7 @@ const MyReviews = ({ comments = [] }) => {
                       </div>
                     </div>
                   ) : (
-                    <p className="text-base text-muted-foreground/90 italic font-medium leading-relaxed pt-0.5">
+                    <p className="text-lg sm:text-base text-muted-foreground/90 italic font-medium leading-relaxed pt-0.5">
                       {typeof review.comment === "object"
                         ? review.comment.comment
                         : review.comment}
@@ -262,13 +264,13 @@ const MyReviews = ({ comments = [] }) => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="border border-border bg-background max-w-sm rounded-3xl p-5 w-full space-y-4 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
             {/* Modal Title Banner Section */}
-            <div className="flex items-center gap-2 font-poppins text-base font-bold text-danger">
+            <div className="flex items-center gap-2 font-poppins text-lg sm:text-base font-bold text-danger">
               <AlertTriangle size={20} />
               Confirm Deletion
             </div>
 
             {/* Modal Warning Body Message */}
-            <p className="text-base text-muted-foreground font-urbanist leading-relaxed">
+            <p className="text-lg sm:text-base text-muted-foreground font-urbanist leading-relaxed">
               Are you absolutely sure you want to permanently delete this
               review? This action cannot be undone.
             </p>

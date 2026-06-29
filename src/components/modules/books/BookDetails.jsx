@@ -199,7 +199,7 @@ export default function BookDetails({ books, userComments }) {
               <h1 className="text-3xl md:text-5xl font-semibold font-poppins text-foreground tracking-tight leading-none">
                 {books?.title || "Untitled Asset"}
               </h1>
-              <p className="text-base md:text-base text-muted-foreground font-medium flex items-center gap-2 pt-1">
+              <p className="text-lg sm:text-base md:text-lg sm:text-base text-muted-foreground font-medium flex items-center gap-2 pt-1">
                 <User size={16} className="text-primary/70" />
                 <span>
                   By{" "}
@@ -220,7 +220,7 @@ export default function BookDetails({ books, userComments }) {
                   {!isBookCheckedOut ? "Available For Delivery" : "Checked Out"}
                 </span>
               </div>
-              <p className="text-base md:text-base text-foreground/80 leading-relaxed font-urbanist antialiased">
+              <p className="text-lg sm:text-base md:text-lg sm:text-base text-foreground/80 leading-relaxed font-urbanist antialiased">
                 {books?.description ||
                   "No index description is registered for this ledger asset."}
               </p>
@@ -238,7 +238,7 @@ export default function BookDetails({ books, userComments }) {
                   <span className="text-[9px] text-muted-foreground uppercase tracking-widest block font-bold">
                     Delivery Fee
                   </span>
-                  <span className="text-base font-black font-poppins text-foreground">
+                  <span className="text-lg sm:text-base font-black font-poppins text-foreground">
                     ${books?.fee ? books.fee.toFixed(2) : "0.00"}
                   </span>
                 </div>
@@ -359,8 +359,10 @@ export default function BookDetails({ books, userComments }) {
         {userComments.length === 0 ? (
           <div className="text-center py-10 border border-dashed border-border/60 rounded-2xl bg-card-soft/20 flex flex-col items-center justify-center gap-2 text-muted-foreground">
             <MessageSquare size={32} className="opacity-30" />
-            <p className="text-base font-bold">No reviews posted yet</p>
-            <p className="text-base opacity-70">
+            <p className="text-lg sm:text-base font-bold">
+              No reviews posted yet
+            </p>
+            <p className="text-lg sm:text-base opacity-70">
               Be the first reader to share your insights on this book!
             </p>
           </div>
@@ -372,7 +374,7 @@ export default function BookDetails({ books, userComments }) {
                 className="p-5 rounded-2xl border border-border/30 bg-card-soft/40 space-y-3 shadow-sm hover:border-border/60 transition-colors"
               >
                 <div className="flex justify-between items-center">
-                  <span className="font-bold text-base text-foreground">
+                  <span className="font-bold text-lg sm:text-base text-foreground">
                     {review.userName}
                   </span>
                   <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">
@@ -384,7 +386,7 @@ export default function BookDetails({ books, userComments }) {
                     <Star key={i} size={14} fill="currentColor" />
                   ))}
                 </div>
-                <p className="text-base text-foreground/80 font-urbanist leading-relaxed">
+                <p className="text-lg sm:text-base text-foreground/80 font-urbanist leading-relaxed">
                   {review.comment}
                 </p>
               </div>

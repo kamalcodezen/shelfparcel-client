@@ -52,7 +52,7 @@ const Banner = () => {
                     </span>{" "}
                     Delivered.
                   </span>
-                  <p className="text-base md:text-lg text-muted-foreground/100 max-w-md leading-relaxed">
+                  <p className="text-lg text-muted-foreground/100 max-w-md leading-relaxed">
                     Connect with local libraries and independent book owners.
                     Browse diverse collections and request doorstep delivery
                     seamlessly.
@@ -115,7 +115,7 @@ const Banner = () => {
                       Book Collections.
                     </span>
                   </span>
-                  <p className="text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
+                  <p className="text-lg sm:text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
                     Get secure borrowing privileges, manage personal reading
                     lists, and read verified reviews left by other community
                     readers.

@@ -92,7 +92,7 @@ export default function Navbar() {
                     key={link.path}
                     href={link.path}
                     scroll
-                    className="relative pb-2 pt-1 px-1 text-base font-semibold transition-all duration-300 flex flex-col items-center group"
+                    className="relative pb-2 pt-1 px-1 text-lg sm:text-base font-semibold transition-all duration-300 flex flex-col items-center group"
                   >
                     <span
                       className={`transition-colors duration-300 ${isActive ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground"}`}
@@ -116,7 +116,7 @@ export default function Navbar() {
                 <div className="relative pb-2 pt-1">
                   <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className={`text-base font-semibold transition-all flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
+                    className={`text-lg sm:text-base font-semibold transition-all flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
                       pathname.startsWith("/dashboard")
                         ? "text-primary font-bold"
                         : "text-muted-foreground hover:text-foreground"
@@ -258,7 +258,7 @@ export default function Navbar() {
                           src={user?.image}
                           referrerPolicy="no-referrer"
                         />
-                        <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-base">
+                        <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-lg sm:text-base">
                           {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
                         </Avatar.Fallback>
                       </Avatar>
@@ -285,7 +285,7 @@ export default function Navbar() {
                             </Avatar.Fallback>
                           </Avatar>
                           <div className="flex flex-col gap-0 overflow-hidden">
-                            <p className="text-base font-semibold text-foreground font-poppins truncate">
+                            <p className="text-lg sm:text-base font-semibold text-foreground font-poppins truncate">
                               {user?.name || "Anonymous User"}
                             </p>
                             <p className="text-sm text-muted-foreground truncate font-urbanist">
@@ -356,7 +356,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-2">
                   <Link
                     href="/signin"
-                    className="btn-primary !py-2 !px-5 !text-base !rounded-md font-bold"
+                    className="btn-primary !py-2 !px-5 !text-lg sm:text-base !rounded-md font-bold"
                   >
                     Login
                   </Link>

@@ -60,7 +60,7 @@ export default function HeroMarquee() {
             Elegance in <br />
             <span className="text-primary font-serif">Every Chapter.</span>
           </h2>
-          <p className="text-base md:text-base text-muted-foreground leading-relaxed max-w-sm">
+          <p className="text-lg sm:text-base md:text-lg sm:text-base text-muted-foreground leading-relaxed max-w-sm">
             Real-time status of trending categories, verified library catalogs,
             and fast doorstep distribution routes.
           </p>
@@ -94,7 +94,7 @@ export default function HeroMarquee() {
                       {item.count}
                     </span>
                   </div>
-                  <span className="font-bold text-base tracking-wide text-foreground mt-1">
+                  <span className="font-bold text-lg sm:text-base tracking-wide text-foreground mt-1">
                     {item.text}
                   </span>
                 </div>
@@ -124,7 +124,7 @@ export default function HeroMarquee() {
                       {item.count}
                     </span>
                   </div>
-                  <span className="font-bold text-base tracking-wide text-foreground mt-1">
+                  <span className="font-bold text-lg sm:text-base tracking-wide text-foreground mt-1">
                     {item.text}
                   </span>
                 </div>

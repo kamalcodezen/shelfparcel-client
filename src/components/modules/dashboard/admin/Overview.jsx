@@ -112,7 +112,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
               className="text-primary flex-shrink-0 animate-pulse"
             />
           </h2>
-          <p className="text-base text-muted-foreground">
+          <p className="text-lg sm:text-base text-muted-foreground">
             Platform-wide insights and transactional analytics dashboard.
           </p>
         </div>
@@ -125,7 +125,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
 
       {/* Stats Cards Dashboard */}
       <div className="space-y-4">
-        <h3 className="text-base font-bold font-poppins tracking-tight">
+        <h3 className="text-lg sm:text-base font-bold font-poppins tracking-tight">
           Quick Stats Dashboard
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -171,7 +171,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
           className="lg:col-span-8 p-6 border border-border bg-card/40 backdrop-blur-md rounded-3xl space-y-4 min-w-0"
         >
           <div className="flex justify-between items-center">
-            <h3 className="text-base font-bold font-poppins tracking-tight">
+            <h3 className="text-lg sm:text-base font-bold font-poppins tracking-tight">
               Growth & Revenue Dynamic
             </h3>
             <span className="text-sm font-semibold text-muted-foreground flex items-center gap-1">
@@ -233,7 +233,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
           animate={{ opacity: 1, x: 0 }}
           className="lg:col-span-4 p-6 border border-border bg-card/40 backdrop-blur-md rounded-3xl flex flex-col justify-between space-y-4 min-w-0"
         >
-          <h3 className="text-base font-bold font-poppins tracking-tight">
+          <h3 className="text-lg sm:text-base font-bold font-poppins tracking-tight">
             Books by Category
           </h3>
 
@@ -314,7 +314,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
         animate={{ opacity: 1, y: 0 }}
         className="p-5 border border-border bg-card/40 backdrop-blur-md rounded-3xl space-y-4"
       >
-        <h3 className="text-base font-bold font-poppins tracking-tight flex items-center gap-2">
+        <h3 className="text-lg sm:text-base font-bold font-poppins tracking-tight flex items-center gap-2">
           <BookMarked size={18} className="text-primary" /> Mini-list of
           Featured Books
           <span className="text-[10px] font-normal text-muted-foreground uppercase tracking-widest">
@@ -332,7 +332,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
               key={i}
               className="flex items-center gap-3 p-3 rounded-xl border border-border/40 bg-card-soft/20 hover:bg-card-soft/40 transition-colors"
             >
-              <span className="font-poppins font-black text-base text-muted-foreground/50 w-4">
+              <span className="font-poppins font-black text-lg sm:text-base text-muted-foreground/50 w-4">
                 {i + 1}
               </span>
               <div className="overflow-hidden flex-1">

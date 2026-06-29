@@ -70,7 +70,7 @@ const ManageBooks = ({ books = [] }) => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-border/60 text-base font-medium">
+            <tbody className="divide-y divide-border/60 text-lg sm:text-base font-medium">
               {books.map((book) => (
                 <tr key={book._id} className="transition-all hover:bg-muted/10">
                   {/* Book cover image and localized title display */}

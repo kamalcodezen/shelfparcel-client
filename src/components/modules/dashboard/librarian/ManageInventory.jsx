@@ -71,7 +71,7 @@ const ManageInventory = ({ books = [] }) => {
     <div className="space-y-6 font-urbanist p-4 md:p-6 text-foreground">
       <div>
         <h2 className="text-2xl font-bold font-poppins">Manage Inventory</h2>
-        <p className="text-base text-muted-foreground">
+        <p className="text-lg sm:text-base text-muted-foreground">
           Track, publish, or edit your added book collection
         </p>
       </div>
@@ -95,7 +95,7 @@ const ManageInventory = ({ books = [] }) => {
                   <th className="p-4 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/60 text-base font-medium">
+              <tbody className="divide-y divide-border/60 text-lg sm:text-base font-medium">
                 {books.map((book) => (
                   <tr
                     key={book._id}
@@ -108,7 +108,7 @@ const ManageInventory = ({ books = [] }) => {
                         className="w-14 h-14 flex-shrink-0 object-cover rounded-full"
                       />
                       <div className="overflow-hidden">
-                        <h4 className="font-bold text-foreground text-base font-poppins truncate max-w-[180px] ">
+                        <h4 className="font-bold text-foreground text-lg sm:text-base font-poppins truncate max-w-[180px] ">
                           {book.title.slice(0, 10)}
                         </h4>
                         <p className="text-sm text-muted-foreground truncate max-w-[180px]">
@@ -229,7 +229,7 @@ const ManageInventory = ({ books = [] }) => {
                   />
                   <div className="overflow-hidden flex-1">
                     <div className="flex justify-between items-start gap-1">
-                      <h4 className="font-bold text-foreground text-base font-poppins truncate flex-1">
+                      <h4 className="font-bold text-foreground text-lg sm:text-base font-poppins truncate flex-1">
                         {book.title}
                       </h4>
                       {/* Status change */}
@@ -267,7 +267,7 @@ const ManageInventory = ({ books = [] }) => {
                       <span className="text-sm font-semibold text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-md">
                         {book.category}
                       </span>
-                      <span className="text-base font-bold text-foreground font-poppins">
+                      <span className="text-lg sm:text-base font-bold text-foreground font-poppins">
                         ${book.fee}
                       </span>
                     </div>

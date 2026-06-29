@@ -15,7 +15,7 @@ const AboutSection = () => {
               Democratizing Access to Knowledge, One Doorstep at a Time.
             </h2>
 
-            <p className="section-description text-base md:text-lg leading-relaxed">
+            <p className="section-description text-lg sm:text-base md:text-lg leading-relaxed">
               BiblioDrop targets students and busy professionals preparing for
               high-impact careers by providing a seamless peer-to-peer book
               delivery marketplace. Traditional library infrastructures demand
@@ -50,9 +50,9 @@ const AboutSection = () => {
                 Why BiblioDrop Stands Out
               </h3>
 
-              <div className="space-y-4 text-base">
+              <div className="space-y-4 text-lg sm:text-base">
                 <div className="flex gap-3 items-start">
-                  <p className="section-description text-base">
+                  <p className="section-description text-lg sm:text-base">
                     <strong>Verified Review Shield:</strong> Programmatic data
                     guardrails restrict active review submissions solely to
                     verified borrowers with a{" "}
@@ -64,7 +64,7 @@ const AboutSection = () => {
                 </div>
 
                 <div className="flex gap-3 items-start">
-                  <p className="section-description text-base">
+                  <p className="section-description text-lg sm:text-base">
                     <strong>Granular RBAC Dashboards:</strong> Dedicated system
                     views tailored explicitly for Readers, Librarians, and
                     Ecosystem Admins with full analytics charts.
@@ -72,7 +72,7 @@ const AboutSection = () => {
                 </div>
 
                 <div className="flex gap-3 items-start">
-                  <p className="section-description text-base">
+                  <p className="section-description text-lg sm:text-base">
                     <strong>Automated Stripe Pipelines:</strong> Isolated
                     delivery fee processing with resilient database state
                     transitions post-checkout.

@@ -281,7 +281,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
                     value={updatedName}
                     onChange={(e) => setUpdatedName(e.target.value)}
                     disabled={isSavingName}
-                    className="bg-transparent text-base font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
+                    className="bg-transparent text-lg sm:text-base font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
                     placeholder="Enter full name"
                     autoFocus
                   />
@@ -321,7 +321,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
               )}
             </div>
 
-            <p className="text-base text-muted-foreground mt-2 font-medium">
+            <p className="text-lg sm:text-base text-muted-foreground mt-2 font-medium">
               Managing knowledge, one doorstep at a time.
             </p>
 
@@ -343,7 +343,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
           <div className="flex gap-2 mt-4 md:mt-0 flex-shrink-0">
             <Link
               href="/dashboard/librarian/addBook"
-              className="px-4 py-2 bg-primary text-background font-bold text-base rounded-xl flex items-center gap-1.5 hover:opacity-90 transition-all shadow-md cursor-pointer"
+              className="px-4 py-2 bg-primary text-background font-bold text-lg sm:text-base rounded-xl flex items-center gap-1.5 hover:opacity-90 transition-all shadow-md cursor-pointer"
               style={{
                 background:
                   theme === "dark"
@@ -366,7 +366,7 @@ const LibrarianProfile = ({ earnings = [], myBooks = [] }) => {
         <div className="space-y-6">
           <div className="dashboard-card">
             <h3 className="text-lg font-bold font-poppins mb-3">Intro</h3>
-            <div className="space-y-4 text-base text-foreground/90 font-medium">
+            <div className="space-y-4 text-lg sm:text-base text-foreground/90 font-medium">
               <p className="text-center text-muted-foreground text-sm italic border-b border-border/40 pb-3">
                 "Books are a uniquely portable magic." — Stephen King
               </p>

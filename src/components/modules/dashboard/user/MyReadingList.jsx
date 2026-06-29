@@ -150,7 +150,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                   />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base font-poppins line-clamp-1 text-foreground">
+                  <h4 className="font-bold text-lg sm:text-base font-poppins line-clamp-1 text-foreground">
                     {book?.bookTitle || "Untitled Book"}
                   </h4>
                   <p className="text-sm text-muted-foreground mt-1">
@@ -232,7 +232,7 @@ const MyReadingList = ({ userPayment = [] }) => {
           <Card className="p-5 border border-border w-full max-w-sm bg-background rounded-3xl space-y-4 shadow-xl">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h3 className="font-poppins font-bold text-base text-foreground">
+                <h3 className="font-poppins font-bold text-lg sm:text-base text-foreground">
                   Review: {selectedBook?.bookTitle}
                 </h3>
                 <p className="text-[11px] text-muted-foreground">
@@ -295,7 +295,7 @@ const MyReadingList = ({ userPayment = [] }) => {
                   required
                   rows={4}
                   disabled={isSubmitting}
-                  className="w-full p-3 rounded-xl border border-border bg-muted/40 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all disabled:opacity-50"
+                  className="w-full p-3 rounded-xl border border-border bg-muted/40 text-lg sm:text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all disabled:opacity-50"
                 />
               </div>
 

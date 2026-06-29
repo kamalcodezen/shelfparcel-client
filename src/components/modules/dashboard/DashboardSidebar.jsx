@@ -250,7 +250,7 @@ const DashboardSidebar = () => {
                 key={ind}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-all ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-lg sm:text-base font-semibold transition-all ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
               >
                 <Icon size={18} /> {item.title}
               </Link>
@@ -269,7 +269,7 @@ const DashboardSidebar = () => {
                     src={user?.image}
                     referrerPolicy="no-referrer"
                   />
-                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-base">
+                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-lg sm:text-base">
                     {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
                   </Avatar.Fallback>
                 </Avatar>
@@ -332,7 +332,7 @@ const DashboardSidebar = () => {
             </Dropdown>
 
             <div className="overflow-hidden">
-              <p className="font-semibold text-base text-foreground truncate">
+              <p className="font-semibold text-lg sm:text-base text-foreground truncate">
                 {session?.user?.name}
               </p>
               <p className="text-sm text-muted-foreground truncate">
@@ -343,7 +343,7 @@ const DashboardSidebar = () => {
           <div className="p-4">
             <button
               onClick={handleLogout}
-              className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-base cursor-pointer Urbanist"
+              className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-lg sm:text-base cursor-pointer Urbanist"
             >
               <LogOut size={16} /> Logout
             </button>
@@ -378,7 +378,7 @@ const DashboardSidebar = () => {
               <Link
                 key={ind}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-all duration-200 ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-lg sm:text-base font-semibold transition-all duration-200 ${isActive ? "bg-primary text-background font-bold shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"}`}
               >
                 <Icon size={18} /> {item.title}
               </Link>
@@ -397,7 +397,7 @@ const DashboardSidebar = () => {
                     src={user?.image}
                     referrerPolicy="no-referrer"
                   />
-                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-base">
+                  <Avatar.Fallback className="bg-primary text-background font-semibold font-poppins text-lg sm:text-base">
                     {user?.name ? user.name.charAt(0).toUpperCase() : "B"}
                   </Avatar.Fallback>
                 </Avatar>
@@ -460,7 +460,7 @@ const DashboardSidebar = () => {
             </Dropdown>
 
             <div className="overflow-hidden">
-              <p className="font-semibold text-base text-foreground truncate">
+              <p className="font-semibold text-lg sm:text-base text-foreground truncate">
                 {session?.user?.name}
               </p>
               <p className="text-sm text-muted-foreground truncate">
@@ -470,7 +470,7 @@ const DashboardSidebar = () => {
           </div>
           <button
             onClick={handleLogout}
-            className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-base cursor-pointer Urbanist"
+            className="w-full h-11 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center justify-center gap-2 font-semibold text-lg sm:text-base cursor-pointer Urbanist"
           >
             <LogOut size={16} /> Logout
           </button>

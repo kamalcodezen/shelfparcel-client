@@ -52,7 +52,7 @@ export default function FeaturedBooks() {
         </div>
 
         <Link href="/books" className="hidden md:flex text-center">
-          <div className="uppercase text-primary text-base flex items-center justify-center gap-2 hover:gap-4 transition-all duration-500 cursor-pointer group">
+          <div className="uppercase text-primary text-lg sm:text-base flex items-center justify-center gap-2 hover:gap-4 transition-all duration-500 cursor-pointer group">
             <IoIosArrowDroprightCircle className="text-primary text-4xl transition-transform" />
           </div>
         </Link>

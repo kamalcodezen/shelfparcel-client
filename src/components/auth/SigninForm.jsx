@@ -132,15 +132,15 @@ export default function SigninForm() {
           <div className="grid grid-cols-3 gap-4">
             <div className="rounded-lg border border-white/20 bg-white/10 backdrop-blur-xl p-5">
               <h3 className="text-3xl font-bold">12K+</h3>
-              <p className="text-base text-white/70">Books</p>
+              <p className="text-lg sm:text-base text-white/70">Books</p>
             </div>
             <div className="rounded-lg border border-white/20 bg-white/10 backdrop-blur-xl p-5">
               <h3 className="text-3xl font-bold">500+</h3>
-              <p className="text-base text-white/70">Readers</p>
+              <p className="text-lg sm:text-base text-white/70">Readers</p>
             </div>
             <div className="rounded-lg border border-white/20 bg-white/10 backdrop-blur-xl p-5">
               <h3 className="text-3xl font-bold">120+</h3>
-              <p className="text-base text-white/70">Libraries</p>
+              <p className="text-lg sm:text-base text-white/70">Libraries</p>
             </div>
           </div>
         </div>
@@ -235,7 +235,6 @@ export default function SigninForm() {
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
                   <span>Signing in...</span>{" "}
-                 
                 </>
               ) : (
                 <>
@@ -249,11 +248,12 @@ export default function SigninForm() {
           {/* DIVIDER MESH */}
           <div className="flex items-center gap-3 my-6">
             <div className="h-px flex-1 bg-border" />
-            <span className="text-base text-muted-foreground">OR</span>
+            <span className="text-lg sm:text-base text-muted-foreground">
+              OR
+            </span>
             <div className="h-px flex-1 bg-border" />
           </div>
 
-         
           {/*  গুগল ওথ লগইন বাটন (প্রফেশনাল লোডিং টেক্সট ও স্পিনার সহ) */}
           <button
             onClick={() => {
@@ -286,7 +286,7 @@ export default function SigninForm() {
           </button>
 
           {/* DUAL LINK ROTATION */}
-          <p className="text-center mt-6 text-base">
+          <p className="text-center mt-6 text-lg sm:text-base">
             Don't have an account?
             <Link
               href="/signup"

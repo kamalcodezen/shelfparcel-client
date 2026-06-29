@@ -83,7 +83,7 @@ const ViewTransactions = ({ payments = [] }) => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-border/60 text-base font-medium">
+            <tbody className="divide-y divide-border/60 text-lg sm:text-base font-medium">
               {payments.map((txn) => (
                 <tr key={txn._id} className="transition-all hover:bg-muted/10">
                   {/* 1. Transaction ID - Binded with real transactionId field */}

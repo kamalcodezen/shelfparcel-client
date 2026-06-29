@@ -63,7 +63,7 @@ const AdminHomePage = async () => {
 
         {/*  Static aesthetic operational narrative badge */}
         <div className="bg-muted/30 border border-border/40 rounded-2xl p-4 max-w-sm mx-auto shadow-sm">
-          <p className="text-base italic text-muted-foreground/90 font-medium leading-relaxed">
+          <p className="text-lg sm:text-base italic text-muted-foreground/90 font-medium leading-relaxed">
             "The platform architecture is optimized. Core data layers are
             completely locked and secure."
           </p>

@@ -79,7 +79,7 @@ export default function LibrarianOverview({
             className="text-primary flex-shrink-0 animate-pulse"
           />
         </h2>
-        <p className="text-base text-muted-foreground">
+        <p className="text-lg sm:text-base text-muted-foreground">
           Monitor your inventory, delivery requests, and earnings in one place.
         </p>
       </div>
@@ -94,7 +94,7 @@ export default function LibrarianOverview({
             <div key={index} className="dashboard-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-base font-semibold text-muted-foreground uppercase tracking-wider">
+                  <p className="text-lg sm:text-base font-semibold text-muted-foreground uppercase tracking-wider">
                     {stat.title}
                   </p>
                   <h3 className="text-3xl font-bold mt-2 font-poppins text-foreground">
@@ -124,7 +124,7 @@ export default function LibrarianOverview({
             <h3 className="text-xl font-bold font-poppins text-foreground">
               Earnings Analytics
             </h3>
-            <p className="text-base text-muted-foreground mb-6">
+            <p className="text-lg sm:text-base text-muted-foreground mb-6">
               Monthly revenue generation overview
             </p>
           </div>
@@ -191,7 +191,7 @@ export default function LibrarianOverview({
             <h3 className="text-xl font-bold font-poppins text-foreground">
               Most Requested
             </h3>
-            <p className="text-base text-muted-foreground mb-6">
+            <p className="text-lg sm:text-base text-muted-foreground mb-6">
               Your top performing book listings
             </p>
           </div>
@@ -214,7 +214,7 @@ export default function LibrarianOverview({
                       className="w-11 h-11 flex-shrink-0 rounded-sm object-cover"
                     />
                     <div className="overflow-hidden">
-                      <h4 className="font-semibold text-foreground text-base truncate font-poppins">
+                      <h4 className="font-semibold text-foreground text-lg sm:text-base truncate font-poppins">
                         {book.title}
                       </h4>
                       <p className="text-[10px] text-muted-foreground uppercase tracking-tight font-bold">

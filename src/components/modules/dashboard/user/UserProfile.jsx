@@ -275,7 +275,7 @@ const UserProfile = ({ userPayment = [] }) => {
                     value={updatedName}
                     onChange={(e) => setUpdatedName(e.target.value)}
                     disabled={isSavingName}
-                    className="bg-transparent text-base font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
+                    className="bg-transparent text-lg sm:text-base font-bold font-poppins w-full focus:outline-none px-1 text-foreground"
                     placeholder="Enter full name"
                     autoFocus
                   />
@@ -315,7 +315,7 @@ const UserProfile = ({ userPayment = [] }) => {
               )}
             </div>
 
-            <p className="text-base text-muted-foreground mt-2 font-medium">
+            <p className="text-lg sm:text-base text-muted-foreground mt-2 font-medium">
               Avid Reader | Exploring worlds through pages.
             </p>
 
@@ -335,7 +335,7 @@ const UserProfile = ({ userPayment = [] }) => {
           <div className="flex gap-2 mt-4 md:mt-0 flex-shrink-0">
             <Link
               href="/books"
-              className="px-4 py-2 bg-primary text-background font-bold text-base rounded-xl flex items-center gap-1.5 hover:opacity-90 transition-all shadow-md cursor-pointer"
+              className="px-4 py-2 bg-primary text-background font-bold text-lg sm:text-base rounded-xl flex items-center gap-1.5 hover:opacity-90 transition-all shadow-md cursor-pointer"
               style={{
                 background:
                   theme === "dark"
@@ -356,7 +356,7 @@ const UserProfile = ({ userPayment = [] }) => {
         <div className="space-y-6">
           <div className="border border-border bg-card/40 rounded-3xl p-5 shadow-sm">
             <h3 className="text-lg font-bold font-poppins mb-3">Intro</h3>
-            <div className="space-y-4 text-base text-foreground/90 font-medium">
+            <div className="space-y-4 text-lg sm:text-base text-foreground/90 font-medium">
               <p className="text-center text-muted-foreground text-sm italic border-b border-border/40 pb-3">
                 "So many books, so little time." — Frank Zappa
               </p>
