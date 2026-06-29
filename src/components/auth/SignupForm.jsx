@@ -289,7 +289,7 @@ export default function SignupForm() {
                 accept="image/*"
                 onChange={handleImageUpload}
                 disabled={uploadingImage}
-                className="input-field pl-11 pt-2.5 file:mr-4 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer text-muted-foreground"
+                className="input-field pl-11 pt-2.5 file:mr-4 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-base sm:text-sm file:font-semibold file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer text-muted-foreground"
               />
             </div>
 

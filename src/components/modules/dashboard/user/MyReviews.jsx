@@ -100,7 +100,7 @@ const MyReviews = ({ comments = [] }) => {
           <h2 className="font-poppins font-bold text-xl tracking-tight">
             My Reviews
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-base sm:text-sm text-muted-foreground">
             Manage, update, or clear history of all reviews submitted by you.
           </p>
         </div>
@@ -113,7 +113,7 @@ const MyReviews = ({ comments = [] }) => {
           <p className="font-bold text-lg sm:text-base">
             No Active Reviews Found
           </p>
-          <p className="text-sm text-muted-foreground/70">
+          <p className="text-base sm:text-sm text-muted-foreground/70">
             Reviews logged via your Reading List panel will stack here.
           </p>
         </div>
@@ -154,7 +154,7 @@ const MyReviews = ({ comments = [] }) => {
                 </div>
 
                 {/* Stars Indicator Generation Engine */}
-                <div className="flex items-center gap-1 text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-xl border border-amber-500/20 text-sm font-bold font-poppins self-start sm:self-center">
+                <div className="flex items-center gap-1 text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-xl border border-amber-500/20 text-base sm:text-sm font-bold font-poppins self-start sm:self-center">
                   {review.rating} <Star size={13} fill="currentColor" />
                 </div>
               </div>
@@ -200,7 +200,7 @@ const MyReviews = ({ comments = [] }) => {
                           size="sm"
                           variant="light"
                           disabled={isSubmitting}
-                          className="rounded-xl font-bold text-sm h-8"
+                          className="rounded-xl font-bold text-base sm:text-sm h-8"
                           onClick={() => setEditingId(null)}
                         >
                           Cancel
@@ -209,7 +209,7 @@ const MyReviews = ({ comments = [] }) => {
                           size="sm"
                           color="success"
                           isLoading={isSubmitting}
-                          className="rounded-xl font-bold text-sm h-8 text-white"
+                          className="rounded-xl font-bold text-base sm:text-sm h-8 text-white"
                           onClick={() => handleSaveEdit(review._id)}
                         >
                           Save Changes
@@ -233,7 +233,7 @@ const MyReviews = ({ comments = [] }) => {
                     size="sm"
                     variant="flat"
                     color="warning"
-                    className="h-8 rounded-xl text-sm font-bold"
+                    className="h-8 rounded-xl text-base sm:text-sm font-bold"
                     onClick={() => {
                       setEditingId(review._id);
                       setEditText(review.comment);
@@ -246,7 +246,7 @@ const MyReviews = ({ comments = [] }) => {
                     size="sm"
                     variant="flat"
                     color="danger"
-                    className="h-8 rounded-xl text-sm font-bold"
+                    className="h-8 rounded-xl text-base sm:text-sm font-bold"
                     onClick={() => askDeleteConfirmation(review._id)}
                     startContent={<Trash2 size={13} />}
                   >
@@ -280,7 +280,7 @@ const MyReviews = ({ comments = [] }) => {
               <Button
                 size="sm"
                 variant="light"
-                className="rounded-xl font-bold text-sm"
+                className="rounded-xl font-bold text-base sm:text-sm"
                 onClick={() => !isSubmitting && setIsModalOpen(false)}
                 disabled={isSubmitting}
               >
@@ -289,7 +289,7 @@ const MyReviews = ({ comments = [] }) => {
               <Button
                 size="sm"
                 color="danger"
-                className="rounded-xl font-bold text-sm text-white"
+                className="rounded-xl font-bold text-base sm:text-sm text-white"
                 isLoading={isSubmitting}
                 onClick={handleDeleteReview}
               >

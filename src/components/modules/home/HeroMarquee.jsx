@@ -53,7 +53,7 @@ export default function HeroMarquee() {
     <section className="relative py-20 bg-background overflow-hidden  select-none">
       <div className="container-custom grid lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-5 space-y-4">
-          <span className="text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 w-fit inline-block">
+          <span className="text-base sm:text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20 w-fit inline-block">
             Live Ecosystem
           </span>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight italic font-serif text-foreground">

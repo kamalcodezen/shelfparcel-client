@@ -144,7 +144,7 @@ export default function Navbar() {
                           <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
                             Active Session
                           </span>
-                          <span className="text-sm text-muted-foreground font-medium truncate block">
+                          <span className="text-base sm:text-sm text-muted-foreground font-medium truncate block">
                             {user?.email}
                           </span>
                         </div>
@@ -178,7 +178,7 @@ export default function Navbar() {
                           }
                           setDropdownOpen(false);
                         }}
-                        className={`flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-colors ${
+                        className={`flex items-center px-4 py-2.5 text-base sm:text-sm font-semibold rounded-xl transition-colors ${
                           user?.role === "user"
                             ? "bg-primary/10 text-primary hover:bg-primary/20"
                             : "cursor-not-allowed opacity-40 pointer-events-none select-none"
@@ -201,7 +201,7 @@ export default function Navbar() {
                           }
                           setDropdownOpen(false);
                         }}
-                        className={`flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-colors ${
+                        className={`flex items-center px-4 py-2.5 text-base sm:text-sm font-semibold rounded-xl transition-colors ${
                           user?.role === "librarian"
                             ? "bg-primary/10 text-primary hover:bg-primary/20"
                             : "cursor-not-allowed opacity-40 pointer-events-none select-none"
@@ -220,7 +220,7 @@ export default function Navbar() {
                           }
                           setDropdownOpen(false);
                         }}
-                        className={`flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-colors ${
+                        className={`flex items-center px-4 py-2.5 text-base sm:text-sm font-semibold rounded-xl transition-colors ${
                           user?.role === "admin"
                             ? "bg-primary/10 text-primary hover:bg-primary/20"
                             : "cursor-not-allowed opacity-40 pointer-events-none select-none"
@@ -288,7 +288,7 @@ export default function Navbar() {
                             <p className="text-lg sm:text-base font-semibold text-foreground font-poppins truncate">
                               {user?.name || "Anonymous User"}
                             </p>
-                            <p className="text-sm text-muted-foreground truncate font-urbanist">
+                            <p className="text-base sm:text-sm text-muted-foreground truncate font-urbanist">
                               {user?.email}
                             </p>
                           </div>
@@ -481,7 +481,7 @@ export default function Navbar() {
           {/* মোবাইল বটম কন্ট্রোল প্যানেল */}
           <div className="p-6 border-t border-border space-y-3 mt-auto bg-muted/10">
             <div className="flex items-center justify-between p-3 rounded-xl border border-border bg-card shadow-xs">
-              <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+              <span className="text-base sm:text-sm font-bold text-muted-foreground uppercase tracking-wider">
                 Appearance
               </span>
               <button

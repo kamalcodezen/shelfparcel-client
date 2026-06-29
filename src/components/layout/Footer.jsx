@@ -159,7 +159,7 @@ export default function Footer() {
           <h4 className="text-lg sm:text-base font-bold tracking-widest uppercase text-foreground">
             Newsletter
           </h4>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-base sm:text-sm text-muted-foreground leading-relaxed">
             Subscribe to receive real-time updates on newly approved book
             catalogs.
           </p>
@@ -171,7 +171,7 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="input-field pr-10 !text-sm !h-10 !rounded-lg"
+                className="input-field pr-10 !text-base sm:text-sm !h-10 !rounded-lg"
                 required
               />
               <button
@@ -184,7 +184,7 @@ export default function Footer() {
             <button
               suppressHydrationWarning
               type="submit"
-              className="btn-primary w-full !py-2 !h-10 !text-sm !rounded-lg font-medium cursor-pointer"
+              className="btn-primary w-full !py-2 !h-10 !text-base sm:text-sm !rounded-lg font-medium cursor-pointer"
             >
               Subscribe
             </button>
@@ -194,7 +194,7 @@ export default function Footer() {
 
       {/*底部 Copyright Bar */}
       <div className="w-full border-t border-border bg-card-soft/40 py-6 text-center select-none relative z-10">
-        <div className="container-custom flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+        <div className="container-custom flex flex-col sm:flex-row items-center justify-between gap-4 text-base sm:text-sm text-muted-foreground">
           <p>
             © {currentYear}{" "}
             <span className="font-serif italic font-medium">BiblioDrop</span>.

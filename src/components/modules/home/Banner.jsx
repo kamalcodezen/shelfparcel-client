@@ -42,7 +42,7 @@ const Banner = () => {
                   transition={{ duration: 0.8 }}
                   className="lg:col-span-7 space-y-5 flex flex-col"
                 >
-                  <span className="text-sm font-bold tracking-widest dark:text-primary text-gray-800/90 uppercase bg-primary/50 dark:bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 inline-block w-fit">
+                  <span className="text-base sm:text-sm font-bold tracking-widest dark:text-primary text-gray-800/90 uppercase bg-primary/50 dark:bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 inline-block w-fit">
                     Premium Logistics Integrated
                   </span>
                   <span className="text-5xl md:text-6xl font-semibold tracking-tight leading-none italic font-serif">
@@ -106,7 +106,7 @@ const Banner = () => {
                   transition={{ duration: 0.8 }}
                   className="lg:col-span-7 text-right flex flex-col items-end space-y-6 "
                 >
-                  <span className="text-sm font-semibold tracking-widest text-primary uppercase">
+                  <span className="text-base sm:text-sm font-semibold tracking-widest text-primary uppercase">
                     Community Feedback System
                   </span>
                   <span className="text-5xl md:text-6xl font-semibold leading-none tracking-tight italic font-serif">
@@ -153,7 +153,7 @@ const Banner = () => {
                 transition={{ duration: 0.8 }}
                 className="space-y-6 flex flex-col items-center"
               >
-                <span className="text-sm font-bold tracking-widest text-primary uppercase border-b-2 border-primary pb-1">
+                <span className="text-base sm:text-sm font-bold tracking-widest text-primary uppercase border-b-2 border-primary pb-1">
                   Democratizing Access to Literature
                 </span>
 
@@ -171,7 +171,7 @@ const Banner = () => {
                       12K+
                     </h3>
                     <div className="w-8 h-0.5 bg-primary/40 mx-auto my-1.5" />
-                    <p className="text-muted-foreground text-sm md:text-sm font-semibold uppercase tracking-wider">
+                    <p className="text-muted-foreground text-base sm:text-sm md:text-base sm:text-sm font-semibold uppercase tracking-wider">
                       Books
                     </p>
                   </div>
@@ -180,7 +180,7 @@ const Banner = () => {
                       500+
                     </h3>
                     <div className="w-8 h-0.5 bg-primary/40 mx-auto my-1.5" />
-                    <p className="text-muted-foreground text-sm md:text-sm font-semibold uppercase tracking-wider">
+                    <p className="text-muted-foreground text-base sm:text-sm md:text-base sm:text-sm font-semibold uppercase tracking-wider">
                       Readers
                     </p>
                   </div>
@@ -189,7 +189,7 @@ const Banner = () => {
                       99%
                     </h3>
                     <div className="w-8 h-0.5 bg-primary/40 mx-auto my-1.5" />
-                    <p className="text-muted-foreground text-sm md:text-sm font-semibold uppercase tracking-wider">
+                    <p className="text-muted-foreground text-base sm:text-sm md:text-base sm:text-sm font-semibold uppercase tracking-wider">
                       Deliveries
                     </p>
                   </div>

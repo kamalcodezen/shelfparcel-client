@@ -224,7 +224,7 @@ const UserProfile = ({ userPayment = [] }) => {
             alt="Reader Cover"
             className="w-full h-full object-cover opacity-80"
           />
-          <button className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer">
+          <button className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-base sm:text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer">
             <Camera size={14} /> Edit Cover Photo
           </button>
         </div>
@@ -308,7 +308,7 @@ const UserProfile = ({ userPayment = [] }) => {
                   >
                     <Edit2 size={16} />
                   </button>
-                  <span className="text-sm bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
+                  <span className="text-base sm:text-sm bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
                     {user?.role || "User"}
                   </span>
                 </h1>
@@ -319,7 +319,7 @@ const UserProfile = ({ userPayment = [] }) => {
               Avid Reader | Exploring worlds through pages.
             </p>
 
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-sm text-muted-foreground font-semibold">
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-base sm:text-sm text-muted-foreground font-semibold">
               <span className="flex items-center gap-1">
                 <User size={14} /> Verified Member
               </span>
@@ -357,7 +357,7 @@ const UserProfile = ({ userPayment = [] }) => {
           <div className="border border-border bg-card/40 rounded-3xl p-5 shadow-sm">
             <h3 className="text-lg font-bold font-poppins mb-3">Intro</h3>
             <div className="space-y-4 text-lg sm:text-base text-foreground/90 font-medium">
-              <p className="text-center text-muted-foreground text-sm italic border-b border-border/40 pb-3">
+              <p className="text-center text-muted-foreground text-base sm:text-sm italic border-b border-border/40 pb-3">
                 "So many books, so little time." — Frank Zappa
               </p>
               <div className="flex items-center gap-3">
@@ -370,7 +370,7 @@ const UserProfile = ({ userPayment = [] }) => {
                 <span className="text-lg">🛡️</span>
                 <span>
                   Security Token:{" "}
-                  <span className="text-sm bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">
+                  <span className="text-base sm:text-sm bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">
                     JWT Active
                   </span>
                 </span>
@@ -445,7 +445,7 @@ const UserProfile = ({ userPayment = [] }) => {
               <h3 className="text-xl font-bold font-poppins text-foreground">
                 Spending Insights
               </h3>
-              <p className="text-sm text-muted-foreground mt-0.5">
+              <p className="text-base sm:text-sm text-muted-foreground mt-0.5">
                 Monthly delivery fee funding flow metrics feed
               </p>
             </div>
@@ -512,7 +512,7 @@ const UserProfile = ({ userPayment = [] }) => {
               </ResponsiveContainer>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1 text-sm text-muted-foreground font-semibold">
+            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1 text-base sm:text-sm text-muted-foreground font-semibold">
               <TrendingUp size={14} className="text-primary" />
               <span>
                 Investment metrics synced via active delivery logs pipeline

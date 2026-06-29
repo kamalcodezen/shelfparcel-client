@@ -221,7 +221,7 @@ const AdminProfile = ({
             alt="Admin Cover"
             className="w-full h-full object-cover opacity-80"
           />
-          <button className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer">
+          <button className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-base sm:text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer">
             <Camera size={14} /> Edit System Banner
           </button>
         </div>
@@ -306,7 +306,7 @@ const AdminProfile = ({
                   >
                     <Edit2 size={16} />
                   </button>
-                  <span className="text-sm bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
+                  <span className="text-base sm:text-sm bg-primary/20 text-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider h-5 flex items-center font-urbanist">
                     {activeUser?.role || "Admin"}
                   </span>
                 </h1>
@@ -318,7 +318,7 @@ const AdminProfile = ({
             </p>
 
             {/* Operational framework descriptive meta tags */}
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-sm text-muted-foreground font-semibold">
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-base sm:text-sm text-muted-foreground font-semibold">
               <span className="flex items-center gap-1">
                 <ShieldAlert size={14} /> Mainframe Root
               </span>
@@ -344,7 +344,7 @@ const AdminProfile = ({
               System Framework
             </h3>
             <div className="space-y-4 text-lg sm:text-base text-foreground/90 font-medium">
-              <p className="text-center text-muted-foreground text-sm italic border-b border-border/40 pb-3">
+              <p className="text-center text-muted-foreground text-base sm:text-sm italic border-b border-border/40 pb-3">
                 "Data security is the core engine of clean web architecture."
               </p>
               <div className="flex items-center gap-3">
@@ -434,7 +434,7 @@ const AdminProfile = ({
               <h3 className="text-xl font-bold font-poppins text-foreground">
                 Performance Insights
               </h3>
-              <p className="text-sm text-muted-foreground mt-0.5">
+              <p className="text-base sm:text-sm text-muted-foreground mt-0.5">
                 Global operational platform revenue flow chart metrics feed
               </p>
             </div>
@@ -501,7 +501,7 @@ const AdminProfile = ({
               </ResponsiveContainer>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1 text-sm text-muted-foreground font-semibold">
+            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1 text-base sm:text-sm text-muted-foreground font-semibold">
               <TrendingUp size={14} className="text-primary" />
               <span>Ecosystem global financial synchronization active</span>
             </div>

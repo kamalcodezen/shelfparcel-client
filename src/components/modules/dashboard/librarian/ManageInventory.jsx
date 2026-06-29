@@ -86,7 +86,7 @@ const ManageInventory = ({ books = [] }) => {
           <div className="hidden md:block table-wrapper border border-border bg-card rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-muted/40 text-muted-foreground font-semibold text-sm uppercase tracking-wider border-b border-border">
+                <tr className="bg-muted/40 text-muted-foreground font-semibold text-base sm:text-sm uppercase tracking-wider border-b border-border">
                   <th className="p-4">Book Details</th>
                   <th className="p-4">Category</th>
                   <th className="p-4">Fee</th>
@@ -111,7 +111,7 @@ const ManageInventory = ({ books = [] }) => {
                         <h4 className="font-bold text-foreground text-lg sm:text-base font-poppins truncate max-w-[180px] ">
                           {book.title.slice(0, 10)}
                         </h4>
-                        <p className="text-sm text-muted-foreground truncate max-w-[180px]">
+                        <p className="text-base sm:text-sm text-muted-foreground truncate max-w-[180px]">
                           by {book.author}
                         </p>
                       </div>
@@ -125,7 +125,7 @@ const ManageInventory = ({ books = [] }) => {
                     </td>
                     <td className="p-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-sm font-bold font-poppins tracking-wide ${
+                        className={`px-3 py-1 rounded-full text-base sm:text-sm font-bold font-poppins tracking-wide ${
                           book.status === "Published"
                             ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
                             : book.status === "Unpublished"
@@ -235,7 +235,7 @@ const ManageInventory = ({ books = [] }) => {
                       {/* Status change */}
                       <div className="flex items-center gap-1.5">
                         <span
-                          className={`px-3 py-1 rounded-full text-sm font-bold font-poppins tracking-wide ${
+                          className={`px-3 py-1 rounded-full text-base sm:text-sm font-bold font-poppins tracking-wide ${
                             book.status === "Published"
                               ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
                               : book.status === "Unpublished"
@@ -260,11 +260,11 @@ const ManageInventory = ({ books = [] }) => {
                         </button>
                       </div>
                     </div>
-                    <p className="text-sm text-muted-foreground truncate">
+                    <p className="text-base sm:text-sm text-muted-foreground truncate">
                       by {book.author}
                     </p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-sm font-semibold text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-md">
+                      <span className="text-base sm:text-sm font-semibold text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-md">
                         {book.category}
                       </span>
                       <span className="text-lg sm:text-base font-bold text-foreground font-poppins">
@@ -278,21 +278,21 @@ const ManageInventory = ({ books = [] }) => {
                   {/* details page */}
                   <Link
                     href={`/books/${book._id}`}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-blue-500 bg-blue-500/10 rounded-xl font-medium"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-base sm:text-sm text-blue-500 bg-blue-500/10 rounded-xl font-medium"
                   >
                     <Eye size={14} /> View
                   </Link>
 
                   <button
                     onClick={() => handleEditClick(book)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-primary bg-primary/10 rounded-xl font-medium cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-base sm:text-sm text-primary bg-primary/10 rounded-xl font-medium cursor-pointer"
                   >
                     <Edit3 size={14} /> Edit
                   </button>
                   {/* Delete Book Button */}
                   <button
                     onClick={() => handleDeleteClick(book)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-red-500 bg-red-500/10 rounded-xl font-medium cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-base sm:text-sm text-red-500 bg-red-500/10 rounded-xl font-medium cursor-pointer"
                   >
                     <Trash2 size={14} /> Delete
                   </button>

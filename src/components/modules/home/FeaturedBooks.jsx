@@ -41,7 +41,7 @@ export default function FeaturedBooks() {
       <div className="w-11/12 mx-auto flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-6">
         {/* বাম পাশের মেইন টাইটেল */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-4 flex-1">
-          <span className="text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+          <span className="text-base sm:text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
             Curated Catalog
           </span>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight italic font-serif">

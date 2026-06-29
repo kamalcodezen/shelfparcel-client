@@ -83,7 +83,7 @@ const ManageDeliveries = ({ payments = [] }) => {
           <h2 className="font-poppins font-bold text-xl tracking-tight">
             Manage Deliveries
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-base sm:text-sm text-muted-foreground">
             Track and update platform-wide book shipments.
           </p>
         </div>
@@ -100,7 +100,7 @@ const ManageDeliveries = ({ payments = [] }) => {
           <div className="hidden md:block border border-border bg-card/30 rounded-3xl shadow-sm overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-muted/40 text-muted-foreground text-sm font-semibold uppercase tracking-wider border-b border-border">
+                <tr className="bg-muted/40 text-muted-foreground text-base sm:text-sm font-semibold uppercase tracking-wider border-b border-border">
                   <th className="p-4">
                     <span className="flex items-center gap-1.5">
                       <User size={13} /> Client Email
@@ -127,13 +127,13 @@ const ManageDeliveries = ({ payments = [] }) => {
                     key={delivery._id}
                     className="transition-all hover:bg-muted/10"
                   >
-                    <td className="p-4 font-bold text-foreground text-sm">
+                    <td className="p-4 font-bold text-foreground text-base sm:text-sm">
                       {delivery.userEmail} {/* Real time date format */}
                     </td>
-                    <td className="p-4 text-muted-foreground font-poppins text-sm truncate max-w-[180px]">
+                    <td className="p-4 text-muted-foreground font-poppins text-base sm:text-sm truncate max-w-[180px]">
                       {delivery.bookTitle}
                     </td>
-                    <td className="p-4 text-muted-foreground text-sm">
+                    <td className="p-4 text-muted-foreground text-base sm:text-sm">
                       {formatDate(delivery.createdAt || delivery.date)}
                     </td>
                     <td className="p-4">
@@ -155,7 +155,7 @@ const ManageDeliveries = ({ payments = [] }) => {
                             onClick={() =>
                               handleStatusClick(delivery._id, delivery.status)
                             }
-                            className="font-bold text-sm rounded-xl h-9"
+                            className="font-bold text-base sm:text-sm rounded-xl h-9"
                             endContent={<ArrowRight size={14} />}
                           >
                             Ship Book
@@ -170,14 +170,14 @@ const ManageDeliveries = ({ payments = [] }) => {
                             onClick={() =>
                               handleStatusClick(delivery._id, delivery.status)
                             }
-                            className="font-bold text-sm rounded-xl h-9 text-amber-600"
+                            className="font-bold text-base sm:text-sm rounded-xl h-9 text-amber-600"
                             endContent={<Check size={14} />}
                           >
                             Confirm Delivery ✅
                           </Button>
                         )}
                         {delivery.status === "Delivered" && (
-                          <span className="text-sm text-emerald-500/70 italic font-semibold">
+                          <span className="text-base sm:text-sm text-emerald-500/70 italic font-semibold">
                             Client Reading
                           </span>
                         )}
@@ -190,14 +190,14 @@ const ManageDeliveries = ({ payments = [] }) => {
                             onClick={() =>
                               handleStatusClick(delivery._id, delivery.status)
                             }
-                            className="font-bold text-sm rounded-xl h-9 bg-purple-500/10 text-purple-500"
+                            className="font-bold text-base sm:text-sm rounded-xl h-9 bg-purple-500/10 text-purple-500"
                             endContent={<Check size={14} />}
                           >
                             Receive Returned Book
                           </Button>
                         )}
                         {delivery.status === "Returned" && (
-                          <span className="text-sm text-gray-400 italic font-normal">
+                          <span className="text-base sm:text-sm text-gray-400 italic font-normal">
                             Returned to Shelf ✅
                           </span>
                         )}
@@ -221,7 +221,7 @@ const ManageDeliveries = ({ payments = [] }) => {
                     <p className="text-[10px] text-muted-foreground font-medium">
                       Client Email
                     </p>
-                    <h4 className="font-bold text-foreground text-sm truncate max-w-[160px]">
+                    <h4 className="font-bold text-foreground text-base sm:text-sm truncate max-w-[160px]">
                       {delivery.userEmail}
                     </h4>
                   </div>
@@ -232,7 +232,7 @@ const ManageDeliveries = ({ payments = [] }) => {
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 border-t border-b border-border/40 py-2.5 text-sm">
+                <div className="grid grid-cols-2 gap-2 border-t border-b border-border/40 py-2.5 text-base sm:text-sm">
                   <div>
                     <p className="text-[10px] text-muted-foreground font-medium mb-0.5">
                       Book Title
@@ -245,7 +245,7 @@ const ManageDeliveries = ({ payments = [] }) => {
                     <p className="text-[10px] text-muted-foreground font-medium mb-0.5">
                       Order Date
                     </p>
-                    <p className="font-semibold text-foreground text-sm">
+                    <p className="font-semibold text-foreground text-base sm:text-sm">
                       {formatDate(delivery.createdAt || delivery.date)}
                     </p>
                   </div>
@@ -262,7 +262,7 @@ const ManageDeliveries = ({ payments = [] }) => {
                       onClick={() =>
                         handleStatusClick(delivery._id, delivery.status)
                       }
-                      className="font-bold text-sm rounded-xl h-9"
+                      className="font-bold text-base sm:text-sm rounded-xl h-9"
                       endContent={<ArrowRight size={14} />}
                     >
                       Ship Book
@@ -278,14 +278,14 @@ const ManageDeliveries = ({ payments = [] }) => {
                       onClick={() =>
                         handleStatusClick(delivery._id, delivery.status)
                       }
-                      className="font-bold text-sm rounded-xl h-9 text-amber-600"
+                      className="font-bold text-base sm:text-sm rounded-xl h-9 text-amber-600"
                       endContent={<Check size={14} />}
                     >
                       Mark as Delivered
                     </Button>
                   )}
                   {delivery.status === "Delivered" && (
-                    <div className="w-full text-center py-1.5 bg-emerald-500/5 border border-emerald-500/10 rounded-xl text-sm text-emerald-600 font-bold italic">
+                    <div className="w-full text-center py-1.5 bg-emerald-500/5 border border-emerald-500/10 rounded-xl text-base sm:text-sm text-emerald-600 font-bold italic">
                       Client Reading 📖
                     </div>
                   )}
@@ -299,14 +299,14 @@ const ManageDeliveries = ({ payments = [] }) => {
                       onClick={() =>
                         handleStatusClick(delivery._id, delivery.status)
                       }
-                      className="font-bold text-sm rounded-xl h-9 bg-purple-500/10 text-purple-500"
+                      className="font-bold text-base sm:text-sm rounded-xl h-9 bg-purple-500/10 text-purple-500"
                       endContent={<Check size={14} />}
                     >
                       Receive Returned Book
                     </Button>
                   )}
                   {delivery.status === "Returned" && (
-                    <div className="w-full text-center py-1.5 bg-gray-500/5 border border-gray-500/10 rounded-xl text-sm text-gray-500 font-medium italic">
+                    <div className="w-full text-center py-1.5 bg-gray-500/5 border border-gray-500/10 rounded-xl text-base sm:text-sm text-gray-500 font-medium italic">
                       Returned to Shelf ✅
                     </div>
                   )}

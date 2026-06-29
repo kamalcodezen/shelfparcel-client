@@ -7,7 +7,7 @@ const AboutSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left side */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-bold tracking-wider uppercase rounded-full bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/20">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 text-base sm:text-sm font-bold tracking-wider uppercase rounded-full bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/20">
               📖 Our Core Mission
             </div>
 
@@ -56,7 +56,7 @@ const AboutSection = () => {
                     <strong>Verified Review Shield:</strong> Programmatic data
                     guardrails restrict active review submissions solely to
                     verified borrowers with a{" "}
-                    <code className="px-1.5 py-0.5 rounded bg-[rgb(var(--muted))] text-sm">
+                    <code className="px-1.5 py-0.5 rounded bg-[rgb(var(--muted))] text-base sm:text-sm">
                       Delivered
                     </code>{" "}
                     status loop.
@@ -81,7 +81,7 @@ const AboutSection = () => {
               </div>
 
               <div className="pt-4 border-t border-[rgb(var(--border))]">
-                <blockquote className="text-sm italic text-[rgb(var(--muted-foreground))] leading-relaxed">
+                <blockquote className="text-base sm:text-sm italic text-[rgb(var(--muted-foreground))] leading-relaxed">
                   "Engineered carefully matching advanced full-stack assignment
                   constraints to eliminate physical logistics
                   context-switching."

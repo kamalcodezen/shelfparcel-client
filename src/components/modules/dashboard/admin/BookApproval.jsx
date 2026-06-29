@@ -95,7 +95,7 @@ const BookApproval = ({ books = [] }) => {
         >
           <AlertCircle size={32} className="text-muted-foreground/60" />
           <p className="font-bold">Queue is Completely Clear!</p>
-          <p className="text-sm">
+          <p className="text-base sm:text-sm">
             No books are currently awaiting administrative authorization.
           </p>
         </motion.div>
@@ -108,7 +108,7 @@ const BookApproval = ({ books = [] }) => {
           >
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-muted/40 text-muted-foreground text-sm font-semibold uppercase tracking-wider border-b border-border">
+                <tr className="bg-muted/40 text-muted-foreground text-base sm:text-sm font-semibold uppercase tracking-wider border-b border-border">
                   <th className="p-4">Book Details</th>
                   <th className="p-4">Librarian</th>
                   <th className="p-4">Category</th>
@@ -138,7 +138,7 @@ const BookApproval = ({ books = [] }) => {
                           <h4 className="font-bold text-foreground text-lg sm:text-base font-poppins truncate max-w-[220px]">
                             {book.title}
                           </h4>
-                          <p className="text-sm text-muted-foreground truncate max-w-[220px]">
+                          <p className="text-base sm:text-sm text-muted-foreground truncate max-w-[220px]">
                             by {book.author}
                           </p>
                         </div>
@@ -150,7 +150,7 @@ const BookApproval = ({ books = [] }) => {
                         </div>
                       </td>
                       <td className="p-4">
-                        <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/20 text-sm font-bold font-poppins uppercase tracking-wider">
+                        <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/20 text-base sm:text-sm font-bold font-poppins uppercase tracking-wider">
                           {book.category}
                         </span>
                       </td>
@@ -162,7 +162,7 @@ const BookApproval = ({ books = [] }) => {
                           <Button
                             size="sm"
                             onClick={() => handleApprove(book._id, book.status)}
-                            className="bg-emerald-500 text-white font-bold rounded-xl text-sm uppercase font-poppins tracking-wider h-9 cursor-pointer"
+                            className="bg-emerald-500 text-white font-bold rounded-xl text-base sm:text-sm uppercase font-poppins tracking-wider h-9 cursor-pointer"
                             startContent={<Check size={14} strokeWidth={3} />}
                           >
                             Approve
@@ -206,21 +206,21 @@ const BookApproval = ({ books = [] }) => {
                       <h4 className="font-bold text-foreground text-lg sm:text-base font-poppins truncate">
                         {book.title}
                       </h4>
-                      <p className="text-sm text-muted-foreground truncate">
+                      <p className="text-base sm:text-sm text-muted-foreground truncate">
                         by {book.author}
                       </p>
                       <div className="flex flex-wrap gap-1.5 items-center pt-1">
                         <span className="text-[10px] font-black uppercase tracking-wider text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded">
                           {book.category}
                         </span>
-                        <span className="text-sm font-bold text-foreground font-poppins ml-auto">
+                        <span className="text-base sm:text-sm font-bold text-foreground font-poppins ml-auto">
                           ${book.fee?.toFixed(2) || "0.00"}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="border-t border-border/40 pt-3 flex items-center justify-between text-sm text-muted-foreground font-semibold">
+                  <div className="border-t border-border/40 pt-3 flex items-center justify-between text-base sm:text-sm text-muted-foreground font-semibold">
                     <span className="flex items-center gap-1">
                       <User size={13} /> {book.librarianName || "Librarian"}
                     </span>
@@ -230,7 +230,7 @@ const BookApproval = ({ books = [] }) => {
                     <Button
                       size="sm"
                       onClick={() => handleApprove(book._id, book.status)}
-                      className="flex-1 bg-emerald-500 text-white font-bold rounded-xl text-sm uppercase font-poppins tracking-wider h-10"
+                      className="flex-1 bg-emerald-500 text-white font-bold rounded-xl text-base sm:text-sm uppercase font-poppins tracking-wider h-10"
                       startContent={<Check size={14} strokeWidth={3} />}
                     >
                       Approve
@@ -238,7 +238,7 @@ const BookApproval = ({ books = [] }) => {
                     <Button
                       size="sm"
                       onClick={() => handleDeleteClick(book)}
-                      className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-sm uppercase font-poppins tracking-wider h-10 px-4"
+                      className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-base sm:text-sm uppercase font-poppins tracking-wider h-10 px-4"
                     >
                       <Trash2 size={14} />
                     </Button>

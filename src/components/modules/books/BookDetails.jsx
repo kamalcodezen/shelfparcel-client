@@ -132,7 +132,7 @@ export default function BookDetails({ books, userComments }) {
       {/* Back Button */}
       <Button
         onClick={() => router.back()}
-        className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all mb-2 group"
+        className="inline-flex items-center gap-2 text-base sm:text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all mb-2 group"
       >
         <ChevronLeft
           size={16}
@@ -184,7 +184,7 @@ export default function BookDetails({ books, userComments }) {
                 {books?.category || "General"}
               </span>
 
-              <div className="flex items-center gap-1.5 text-sm font-bold text-muted-foreground">
+              <div className="flex items-center gap-1.5 text-base sm:text-sm font-bold text-muted-foreground">
                 <Hash size={14} className="text-primary/70" />
                 <span>
                   Popularity:{" "}
@@ -215,7 +215,7 @@ export default function BookDetails({ books, userComments }) {
                 <div
                   className={`w-2 h-2 rounded-full animate-pulse ${!isBookCheckedOut ? "bg-green-500" : "bg-red-500"}`}
                 />
-                <span className="text-sm font-black uppercase tracking-wider text-muted-foreground">
+                <span className="text-base sm:text-sm font-black uppercase tracking-wider text-muted-foreground">
                   Status:{" "}
                   {!isBookCheckedOut ? "Available For Delivery" : "Checked Out"}
                 </span>
@@ -252,7 +252,7 @@ export default function BookDetails({ books, userComments }) {
                   <span className="text-[9px] text-muted-foreground uppercase tracking-widest block font-bold">
                     Date Cataloged
                   </span>
-                  <span className="text-sm font-bold text-foreground/90">
+                  <span className="text-base sm:text-sm font-bold text-foreground/90">
                     {formattedDate}
                   </span>
                 </div>
@@ -264,7 +264,7 @@ export default function BookDetails({ books, userComments }) {
               <div className="grid grid-cols-3 gap-3 pt-2 w-full">
                 <Button
                   onClick={() => handleEditClick(books)}
-                  className="bg-blue-500/10 px-8 text-blue-500 border border-blue-500/20 h-10 font-bold rounded-lg text-sm uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  className="bg-blue-500/10 px-8 text-blue-500 border border-blue-500/20 h-10 font-bold rounded-lg text-base sm:text-sm uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<Edit3 size={14} />}
                 >
                   Edit
@@ -272,7 +272,7 @@ export default function BookDetails({ books, userComments }) {
 
                 <Button
                   onClick={() => handleToggleStatus(books?._id, books?.status)}
-                  className={`h-10 px-3  font-poppins tracking-wider text-sm uppercase cursor-pointer transition-transform active:scale-95 border rounded-lg ${
+                  className={`h-10 px-3  font-poppins tracking-wider text-base sm:text-sm uppercase cursor-pointer transition-transform active:scale-95 border rounded-lg ${
                     books?.status === "Published"
                       ? "bg-amber-500/10 text-amber-500 border-amber-500/20 hover:bg-amber-500/20"
                       : books?.status === "Unpublished"
@@ -285,7 +285,7 @@ export default function BookDetails({ books, userComments }) {
 
                 <Button
                   onClick={() => handleDeleteClick(books)}
-                  className="px-5 bg-red-500/10 text-red-500 border border-red-500/20 h-10 font-bold rounded-lg text-sm uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
+                  className="px-5 bg-red-500/10 text-red-500 border border-red-500/20 h-10 font-bold rounded-lg text-base sm:text-sm uppercase font-poppins tracking-wider cursor-pointer transition-transform active:scale-95"
                   startContent={<Trash2 size={14} />}
                 >
                   Delete
@@ -324,7 +324,7 @@ export default function BookDetails({ books, userComments }) {
                   disabled={
                     isBookCheckedOut || isOwnerLibrarian || isSubmitting
                   } // লগইন না থাকলেও বাটন এনাবল থাকবে পাবলিক এক্সেসের জন্য
-                  className={`w-full h-14 text-sm font-black font-poppins uppercase tracking-widest transition-all rounded-xl ${
+                  className={`w-full h-14 text-base sm:text-sm font-black font-poppins uppercase tracking-widest transition-all rounded-xl ${
                     !(isBookCheckedOut || isOwnerLibrarian || isSubmitting)
                       ? "btn-primary active:scale-[0.98] shadow-lg cursor-pointer"
                       : "bg-border/60 text-muted-foreground cursor-not-allowed border border-border/20 shadow-none opacity-60"

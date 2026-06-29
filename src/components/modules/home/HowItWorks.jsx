@@ -24,7 +24,7 @@ export default function HowItWorks() {
   return (
     <section className=" py-16 bg-background text-foreground">
       <div className="flex flex-col items-center text-center space-y-4 mb-16">
-        <span className="text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+        <span className="text-base sm:text-sm font-bold tracking-widest text-primary uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
           Seamless Process
         </span>
         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight italic font-serif">
@@ -59,7 +59,7 @@ export default function HowItWorks() {
             <h4 className="text-lg font-bold mt-5 tracking-tight">
               {step.title}
             </h4>
-            <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-xs">
+            <p className="text-base sm:text-sm text-muted-foreground mt-2 leading-relaxed max-w-xs">
               {step.desc}
             </p>
           </motion.div>

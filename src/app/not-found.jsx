@@ -37,7 +37,7 @@ const NotFoundPage = () => {
         <div className="pt-2 flex items-center justify-center">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-foreground text-background font-poppins font-bold text-sm uppercase tracking-wider rounded-xl hover:opacity-90 transition-all shadow-md group cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-foreground text-background font-poppins font-bold text-base sm:text-sm uppercase tracking-wider rounded-xl hover:opacity-90 transition-all shadow-md group cursor-pointer"
           >
             <ArrowLeft
               size={14}

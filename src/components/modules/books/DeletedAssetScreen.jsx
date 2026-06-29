@@ -30,7 +30,7 @@ const DeletedAssetScreen = () => {
         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Link href="/books">
             <Button
-              className="btn-primary h-12 px-6 text-sm font-bold font-poppins uppercase tracking-widest rounded-xl shadow-lg flex items-center gap-2"
+              className="btn-primary h-12 px-6 text-base sm:text-sm font-bold font-poppins uppercase tracking-widest rounded-xl shadow-lg flex items-center gap-2"
               startContent={<ArrowLeft size={16} />}
             >
               Return to Books Gallery

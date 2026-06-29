@@ -132,7 +132,7 @@ const LibrarianAddBook = () => {
         <h1 className="text-3xl font-bold tracking-tight Poppins">
           Add New Book
         </h1>
-        <p className="text-sm text-muted-foreground mt-1 Urbanist">
+        <p className="text-base sm:text-sm text-muted-foreground mt-1 Urbanist">
           List a physical book into the repository pipeline. Requires admin
           clearance.
         </p>
@@ -151,7 +151,7 @@ const LibrarianAddBook = () => {
           className="grid grid-cols-1 md:grid-cols-2 gap-5 Urbanist"
         >
           <div>
-            <label className="text-sm font-bold text-muted-foreground block mb-2">
+            <label className="text-base sm:text-sm font-bold text-muted-foreground block mb-2">
               Book Title
             </label>
             <input
@@ -166,7 +166,7 @@ const LibrarianAddBook = () => {
           </div>
 
           <div>
-            <label className="text-sm font-bold text-muted-foreground block mb-2">
+            <label className="text-base sm:text-sm font-bold text-muted-foreground block mb-2">
               Author Name
             </label>
             <input
@@ -181,7 +181,7 @@ const LibrarianAddBook = () => {
           </div>
 
           <div>
-            <label className="text-sm font-bold text-muted-foreground block mb-2">
+            <label className="text-base sm:text-sm font-bold text-muted-foreground block mb-2">
               Delivery Fee ($)
             </label>
             <input
@@ -196,7 +196,7 @@ const LibrarianAddBook = () => {
           </div>
 
           <div>
-            <label className="text-sm font-bold text-muted-foreground block mb-2">
+            <label className="text-base sm:text-sm font-bold text-muted-foreground block mb-2">
               Genre Category
             </label>
             <select
@@ -213,7 +213,7 @@ const LibrarianAddBook = () => {
           </div>
 
           <div className="md:col-span-2">
-            <label className="text-sm font-bold text-muted-foreground block mb-2">
+            <label className="text-base sm:text-sm font-bold text-muted-foreground block mb-2">
               Full Description Summary
             </label>
             <textarea
@@ -240,7 +240,7 @@ const LibrarianAddBook = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="text-sm mt-3 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary file:cursor-pointer"
+                className="text-base sm:text-sm mt-3 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-base sm:text-sm file:font-bold file:bg-primary/10 file:text-primary file:cursor-pointer"
                 required
               />
             </div>
@@ -269,7 +269,7 @@ const LibrarianAddBook = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="btn-primary w-full py-3.5 text-base sm:text-sm font-bold flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {loading ? (
                 <>

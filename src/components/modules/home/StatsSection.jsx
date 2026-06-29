@@ -54,7 +54,7 @@ export default function StatsSection() {
               </CountUp>
             </h3>
 
-            <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground pt-1 Urbanist">
+            <p className="text-base sm:text-sm font-bold uppercase tracking-widest text-muted-foreground pt-1 Urbanist">
               {stat.label}
             </p>
 

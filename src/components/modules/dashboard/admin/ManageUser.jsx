@@ -136,7 +136,7 @@ const ManageUser = ({ users = [] }) => {
           >
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-muted/40 text-muted-foreground text-sm font-semibold uppercase tracking-wider border-b border-border">
+                <tr className="bg-muted/40 text-muted-foreground text-base sm:text-sm font-semibold uppercase tracking-wider border-b border-border">
                   <th className="p-4">User Name</th>
                   <th className="p-4">Email Address</th>
                   <th className="p-4">System Role</th>
@@ -153,7 +153,7 @@ const ManageUser = ({ users = [] }) => {
                       className="transition-all hover:bg-muted/10"
                     >
                       <td className="p-4 flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-sm uppercase">
+                        <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-base sm:text-sm uppercase">
                           {account.image ? (
                             <img
                               src={account.image}
@@ -175,7 +175,7 @@ const ManageUser = ({ users = [] }) => {
                       </td>
                       <td className="p-4">
                         <span
-                          className={`px-2.5 py-0.5 rounded-md text-sm font-bold uppercase tracking-wider font-poppins border ${roleStyles[account.role] || roleStyles.user}`}
+                          className={`px-2.5 py-0.5 rounded-md text-base sm:text-sm font-bold uppercase tracking-wider font-poppins border ${roleStyles[account.role] || roleStyles.user}`}
                         >
                           {account.role || "user"}
                         </span>
@@ -189,7 +189,7 @@ const ManageUser = ({ users = [] }) => {
                               currentUserRole !== "admin" ||
                               account._id === currentUserId
                             }
-                            className="bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-sm uppercase font-poppins h-9 cursor-pointer"
+                            className="bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-base sm:text-sm uppercase font-poppins h-9 cursor-pointer"
                             startContent={<Shield size={14} />}
                           >
                             Change Role
@@ -226,7 +226,7 @@ const ManageUser = ({ users = [] }) => {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-sm">
+                      <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-base sm:text-sm">
                         {account.image ? (
                           <img
                             src={account.image}
@@ -247,7 +247,7 @@ const ManageUser = ({ users = [] }) => {
                       {account.role || "user"}
                     </span>
                   </div>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1.5 break-all">
+                  <p className="text-base sm:text-sm text-muted-foreground flex items-center gap-1.5 break-all">
                     <Mail size={13} /> {account.email}
                   </p>
                   <div className="flex gap-2 pt-2 border-t border-border/40">
@@ -258,7 +258,7 @@ const ManageUser = ({ users = [] }) => {
                         currentUserRole !== "admin" ||
                         account._id === currentUserId
                       }
-                      className="flex-1 bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-sm uppercase font-poppins h-10"
+                      className="flex-1 bg-primary/10 text-primary border border-primary/20 font-bold rounded-xl text-base sm:text-sm uppercase font-poppins h-10"
                       startContent={<Shield size={14} />}
                     >
                       Change Role
@@ -270,7 +270,7 @@ const ManageUser = ({ users = [] }) => {
                         account._id === currentUserId
                       }
                       size="sm"
-                      className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-sm h-10 px-4"
+                      className="bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl text-base sm:text-sm h-10 px-4"
                     >
                       <Trash2 size={14} />
                     </Button>
@@ -313,7 +313,7 @@ const ManageUser = ({ users = [] }) => {
               </div>
 
               <div className="py-4 space-y-4">
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-base sm:text-sm text-muted-foreground leading-relaxed">
                   Assign a new permission level for{" "}
                   <span className="text-foreground font-bold font-poppins">
                     {targetUser?.name}
@@ -362,7 +362,7 @@ const ManageUser = ({ users = [] }) => {
                   size="sm"
                   variant="flat"
                   onClick={() => setIsOpen(false)}
-                  className="font-bold rounded-xl text-sm uppercase h-10 px-4"
+                  className="font-bold rounded-xl text-base sm:text-sm uppercase h-10 px-4"
                 >
                   Cancel
                 </Button>
@@ -371,7 +371,7 @@ const ManageUser = ({ users = [] }) => {
                   color="primary"
                   isLoading={loading}
                   onClick={handleRoleConfirm}
-                  className="font-bold rounded-xl text-sm uppercase h-10 px-6"
+                  className="font-bold rounded-xl text-base sm:text-sm uppercase h-10 px-6"
                 >
                   Approve & Save
                 </Button>

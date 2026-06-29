@@ -70,7 +70,7 @@ export default function Pagination({
             key={`page-btn-${p}-${i}`}
             type="button"
             onClick={() => onChange(p)}
-            className={`text-sm font-semibold rounded-xl transition-all duration-200 cursor-pointer active:scale-95 ${
+            className={`text-base sm:text-sm font-semibold rounded-xl transition-all duration-200 cursor-pointer active:scale-95 ${
               isCompact ? "w-9 h-9" : "w-11 h-11"
             } ${
               isActive

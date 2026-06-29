@@ -36,7 +36,7 @@ const BookCard = ({ book }) => {
 
           {/* Category + Fee */}
           <div className="flex items-center justify-between rounded-xl border border-border/40 bg-card-soft/50 px-4 py-3">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-base sm:text-sm text-muted-foreground">
               {book?.category || "General"}
             </span>
 
@@ -58,12 +58,12 @@ const BookCard = ({ book }) => {
         <div>
           {/* Top Badges */}
           <div className="flex items-center justify-between">
-            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-base sm:text-sm font-semibold">
               {book?.category || "General"}
             </span>
 
             <span
-              className={`px-3 py-1 rounded-full text-sm font-semibold ${
+              className={`px-3 py-1 rounded-full text-base sm:text-sm font-semibold ${
                 book?.status === "Published"
                   ? "bg-green-500/10 text-green-500"
                   : "bg-red-500/10 text-red-500"
@@ -103,7 +103,7 @@ const BookCard = ({ book }) => {
               <span>{book?.category || "General"}</span>
             </div>
 
-            <div className="rounded-xl bg-primary/5 border border-primary/10 p-3 text-sm text-primary">
+            <div className="rounded-xl bg-primary/5 border border-primary/10 p-3 text-base sm:text-sm text-primary">
               ✓ Home Delivery Available
             </div>
           </div>

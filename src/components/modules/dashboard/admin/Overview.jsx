@@ -174,14 +174,14 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
             <h3 className="text-lg sm:text-base font-bold font-poppins tracking-tight">
               Growth & Revenue Dynamic
             </h3>
-            <span className="text-sm font-semibold text-muted-foreground flex items-center gap-1">
+            <span className="text-base sm:text-sm font-semibold text-muted-foreground flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />{" "}
               Live System Monitor
             </span>
           </div>
 
           {/* area chart  */}
-          <div className="h-64 md:h-72 w-full min-w-0 text-sm">
+          <div className="h-64 md:h-72 w-full min-w-0 text-base sm:text-sm">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={liveTrendData}
@@ -238,7 +238,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
           </h3>
 
           {liveCategoryData.length === 0 ? (
-            <div className="text-center py-10 text-sm text-muted-foreground italic">
+            <div className="text-center py-10 text-base sm:text-sm text-muted-foreground italic">
               No categories found in database.
             </div>
           ) : (
@@ -336,7 +336,7 @@ const AdminOverview = ({ stats = {}, booksCategories = [], admin = {} }) => {
                 {i + 1}
               </span>
               <div className="overflow-hidden flex-1">
-                <h4 className="text-sm font-bold font-poppins truncate text-foreground">
+                <h4 className="text-base sm:text-sm font-bold font-poppins truncate text-foreground">
                   {book.title}
                 </h4>
                 <p className="text-[11px] text-muted-foreground truncate">

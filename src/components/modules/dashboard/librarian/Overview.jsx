@@ -105,7 +105,7 @@ export default function LibrarianOverview({
                   <Icon size={24} />
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-1">
+              <p className="text-base sm:text-sm text-muted-foreground mt-4 flex items-center gap-1">
                 <TrendingUp size={14} className="text-primary" />
                 {stat.desc}
               </p>
@@ -198,7 +198,7 @@ export default function LibrarianOverview({
 
           <div className="space-y-4 flex-1">
             {mostRequestedBooks.length === 0 ? (
-              <p className="text-sm text-muted-foreground italic text-center pt-8">
+              <p className="text-base sm:text-sm text-muted-foreground italic text-center pt-8">
                 No book orders requested yet.
               </p>
             ) : (
@@ -224,7 +224,7 @@ export default function LibrarianOverview({
                   </div>
 
                   <div className="text-right flex-shrink-0 pl-2">
-                    <span className="text-sm font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full">
+                    <span className="text-base sm:text-sm font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full">
                       {book.requests} reqs
                     </span>
                   </div>

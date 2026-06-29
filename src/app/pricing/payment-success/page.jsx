@@ -75,7 +75,7 @@ export default async function Success({ searchParams }) {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </div>
-            <span className="text-sm font-semibold text-foreground/90 flex items-center gap-2">
+            <span className="text-base sm:text-sm font-semibold text-foreground/90 flex items-center gap-2">
               <Clock size={14} className="text-primary" />
               Waiting in the Librarian Approval queue.
             </span>
@@ -85,7 +85,7 @@ export default async function Success({ searchParams }) {
           <div className="pt-4 border-t border-border flex flex-col sm:flex-row gap-3 justify-center items-center">
             <Link
               href="/dashboard/user"
-              className="btn-primary w-full sm:w-auto text-center text-sm uppercase tracking-wider px-8 flex items-center justify-center gap-2"
+              className="btn-primary w-full sm:w-auto text-center text-base sm:text-sm uppercase tracking-wider px-8 flex items-center justify-center gap-2"
             >
               <LayoutDashboard size={14} />
               View on Dashboard
@@ -93,7 +93,7 @@ export default async function Success({ searchParams }) {
 
             <Link
               href="/books"
-              className="btn-secondary w-full sm:w-auto text-center text-sm uppercase tracking-wider px-8 text-foreground flex items-center justify-center gap-2"
+              className="btn-secondary w-full sm:w-auto text-center text-base sm:text-sm uppercase tracking-wider px-8 text-foreground flex items-center justify-center gap-2"
             >
               <BookOpen size={14} />
               Keep Browsing

@@ -157,10 +157,10 @@ export default function AllBooks({ allBooks = [], filters }) {
         />
       </motion.div>
 
-      <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+      <div className="text-base sm:text-sm font-semibold text-muted-foreground uppercase tracking-wider">
         <Button
           onClick={() => router.back()}
-          className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all group"
+          className="inline-flex items-center gap-2 text-base sm:text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all group"
         >
           <ChevronLeft
             size={16}
@@ -227,14 +227,14 @@ export default function AllBooks({ allBooks = [], filters }) {
                 setAvailability("all");
                 setPage(1);
               }}
-              className="mt-8 text-sm font-semibold text-primary/80 cursor-pointer border-b border-primary/30 pb-0.5"
+              className="mt-8 text-base sm:text-sm font-semibold text-primary/80 cursor-pointer border-b border-primary/30 pb-0.5"
             >
               Reset Search & Filters
             </button>
           </motion.div>
         )}
 
-        <div className="mb-4 text-sm font-semibold text-muted-foreground uppercase tracking-wider px-2 pt-8">
+        <div className="mb-4 text-base sm:text-sm font-semibold text-muted-foreground uppercase tracking-wider px-2 pt-8">
           Showing {paginatedBooks.length} of{" "}
           {serverMeta ? serverMeta.totalItems : books.length} available
           repository items

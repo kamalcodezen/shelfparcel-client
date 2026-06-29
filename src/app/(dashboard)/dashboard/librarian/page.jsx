@@ -61,14 +61,14 @@ const LibrarianHomePage = async () => {
           {/* email badge */}
           <div className="inline-flex items-center gap-2 bg-muted/40 border border-border/60 rounded-full px-4 py-1.5 max-w-full">
             <Mail size={12} className="text-muted-foreground" />
-            <span className="text-sm text-muted-foreground font-medium truncate max-w-[240px]">
+            <span className="text-base sm:text-sm text-muted-foreground font-medium truncate max-w-[240px]">
               {librarian?.email || "librarian-email@bibliodrop.com"}
             </span>
           </div>
 
           {/* Aesthetic Narrative Quote Block */}
           <div className="bg-muted/30 border border-border/40 rounded-2xl p-4 max-w-md shadow-sm">
-            <p className="text-sm italic text-muted-foreground/90 font-medium leading-relaxed">
+            <p className="text-base sm:text-sm italic text-muted-foreground/90 font-medium leading-relaxed">
               "A library is not a luxury but one of the necessities of life."
             </p>
           </div>
@@ -82,7 +82,7 @@ const LibrarianHomePage = async () => {
                 <span className="block text-[8px] uppercase font-bold tracking-wider opacity-60">
                   Status
                 </span>
-                <span className="block text-sm font-bold text-foreground truncate">
+                <span className="block text-base sm:text-sm font-bold text-foreground truncate">
                   Active
                 </span>
               </div>
@@ -95,7 +95,7 @@ const LibrarianHomePage = async () => {
                 <span className="block text-[8px] uppercase font-bold tracking-wider opacity-60">
                   Role
                 </span>
-                <span className="block text-sm font-bold text-primary truncate capitalize">
+                <span className="block text-base sm:text-sm font-bold text-primary truncate capitalize">
                   {librarian?.role || "Librarian"}
                 </span>
               </div>
@@ -108,7 +108,7 @@ const LibrarianHomePage = async () => {
                 <span className="block text-[8px] uppercase font-bold tracking-wider opacity-60">
                   Console
                 </span>
-                <span className="block text-sm font-bold text-foreground truncate">
+                <span className="block text-base sm:text-sm font-bold text-foreground truncate">
                   Verified
                 </span>
               </div>
@@ -120,7 +120,7 @@ const LibrarianHomePage = async () => {
         <div className="flex items-center justify-start md:justify-end flex-shrink-0">
           <Link
             href="/dashboard/librarian"
-            className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 bg-foreground text-background font-poppins font-bold text-sm uppercase tracking-wider rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-md group cursor-pointer whitespace-nowrap"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 bg-foreground text-background font-poppins font-bold text-base sm:text-sm uppercase tracking-wider rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-md group cursor-pointer whitespace-nowrap"
           >
             <LayoutDashboard size={14} />
             <span>Launch Console</span>

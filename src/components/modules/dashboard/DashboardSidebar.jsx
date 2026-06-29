@@ -226,7 +226,7 @@ const DashboardSidebar = () => {
                 Biblio<span>Drop</span>
               </span>
             </h2>
-            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
+            <p className="text-base sm:text-sm font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
               {user?.role || "user"} Dashboard
             </p>
           </div>
@@ -335,7 +335,7 @@ const DashboardSidebar = () => {
               <p className="font-semibold text-lg sm:text-base text-foreground truncate">
                 {session?.user?.name}
               </p>
-              <p className="text-sm text-muted-foreground truncate">
+              <p className="text-base sm:text-sm text-muted-foreground truncate">
                 {session?.user?.email}
               </p>
             </div>
@@ -361,7 +361,7 @@ const DashboardSidebar = () => {
               </span>
             </Link>
           </h2>
-          <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
+          <p className="text-base sm:text-sm font-semibold text-muted-foreground uppercase tracking-widest mt-1.5 pl-0.5 Urbanist">
             {user?.role || "user"} Dashboard
           </p>
         </div>
@@ -463,7 +463,7 @@ const DashboardSidebar = () => {
               <p className="font-semibold text-lg sm:text-base text-foreground truncate">
                 {session?.user?.name}
               </p>
-              <p className="text-sm text-muted-foreground truncate">
+              <p className="text-base sm:text-sm text-muted-foreground truncate">
                 {session?.user?.email}
               </p>
             </div>

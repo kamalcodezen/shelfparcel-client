@@ -61,7 +61,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
             <h3 className="text-xl font-bold font-poppins leading-tight">
               Edit Book Workspace
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-base sm:text-sm text-muted-foreground">
               Modify metadata for:{" "}
               <span className="text-primary font-semibold">
                 {selectedBook?.title}
@@ -86,7 +86,7 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
             ) : (
               <div className="w-40 h-56 rounded-2xl bg-muted flex flex-col items-center justify-center text-muted-foreground border-2 border-dashed border-border">
                 <BookOpen size={40} className="text-muted-foreground/60" />
-                <span className="text-sm mt-2 font-semibold">
+                <span className="text-base sm:text-sm mt-2 font-semibold">
                   No Book Cover
                 </span>
               </div>
@@ -96,13 +96,13 @@ const EditBookModal = ({ selectedBook, onCancel, onUpdateSuccess }) => {
               <h4 className="font-bold font-poppins text-lg truncate px-2 text-foreground">
                 {selectedBook?.title}
               </h4>
-              <p className="text-sm text-muted-foreground truncate">
+              <p className="text-base sm:text-sm text-muted-foreground truncate">
                 by {selectedBook?.author}
               </p>
             </div>
 
             {/* status & requests */}
-            <div className="w-full grid grid-cols-2 gap-2 pt-3 border-t border-border/60 text-sm font-semibold">
+            <div className="w-full grid grid-cols-2 gap-2 pt-3 border-t border-border/60 text-base sm:text-sm font-semibold">
               <div className="soft-card p-2 text-center rounded-2xl">
                 <span className="text-muted-foreground block text-[10px] uppercase tracking-wider mb-0.5">
                   Status
